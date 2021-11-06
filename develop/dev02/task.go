@@ -1,4 +1,9 @@
-package main
+package dev02
+
+import (
+	"unicode"
+	"errors"
+)
 
 /*
 === Задача на распаковку ===
@@ -18,6 +23,54 @@ package main
 Функция должна проходить все тесты. Код должен проходить проверки go vet и golint.
 */
 
-func main() {
+func UnpackString(s string) (string, error) {
+	var (
+		res     = make([]rune, 0)
+		sr      = []rune(s)
+		count   = 0
+		r_ rune
+	)
 
+	if s == "" {
+		return s, nil
+	}
+
+	for i := 0; i < len(sr); i++ {
+		if unicode.IsDigit(sr[i]) {
+
+			if len(res) == 0 {
+				return "", errors.New("Incorrect string")
+			}
+
+			if sr[i-1] == '\\' {
+				continue
+			}
+			count = count * 10 + (int(sr[i]) - '0')
+			if i == len(sr) - 1 && sr[i-1] != '\\' {
+				for j := 0; j < count - 1; j++ {
+					res = append(res, r_)
+				}
+			}
+		} else if sr[i] != '\\'{
+			if count != 0 {
+				for j := 0; j < count - 1; j++ {
+					res = append(res, r_)
+				}
+				count = 0
+			}
+			res = append(res, sr[i])
+			r_ = sr[i]
+
+		} else {
+			if i != len(sr) - 1 {
+				res = append(res, sr[i+1])
+				r_ = sr[i+1]
+			} else {
+				res = append(res, sr[i])
+			}
+		}
+	}
+
+	return string(res), nil
 }
+
