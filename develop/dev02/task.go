@@ -38,7 +38,6 @@ func UnpackString(s string) (string, error) {
 	}
 
 	for i := 0; i < len(sr); i++ {
-
 		if skip == 1 {
 			skip = 0
 			continue
@@ -76,4 +75,3 @@ func UnpackString(s string) (string, error) {
 	}
 	return string(res), nil
 }
-
