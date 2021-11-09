@@ -32,4 +32,9 @@ func TestUnpackString1(t *testing.T) {
 		println(res)
 		t.Errorf("%s != %s", res, "qwe\\\\\\\\\\")
 	}
+	res, _ = UnpackString("q10")
+	if res != "qqqqqqqqqq" {
+		println(res)
+		t.Errorf("%s != %s", res, "qwe\\\\\\\\\\")
+	}
 }
