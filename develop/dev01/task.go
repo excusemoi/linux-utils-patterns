@@ -1,4 +1,11 @@
-package main
+package dev01 
+
+import (
+	"io"
+	"os"
+
+	"github.com/beevik/ntp"
+)
 
 /*
 === Базовая задача ===
@@ -12,6 +19,13 @@ package main
 Программа должна проходить проверки go vet и golint.
 */
 
-func main() {
-
+//CurrentPreciseTime displays the current time
+func CurrentPreciseTime() {
+	time, err := ntp.Time("0.beevik-ntp.pool.ntp.org")
+	if err != nil {
+		io.WriteString(os.Stderr, err.Error())
+		os.Exit(1)
+	}
+	layout := "3:04:05 PM (MST) on Monday, January _2, 2006"
+	println(time.Local().Format(layout))
 }

@@ -22,6 +22,14 @@ func TestUnpackString1(t *testing.T) {
 	res, _ = UnpackString("")
 	if res != "" {
 		t.Errorf("%s != %s", res, "")
-	}	
-	
+	}
+	res, err := UnpackString("45")
+	if err == nil {
+		t.Errorf("%s is incorrect", "45")
+	}
+	res, _ = UnpackString("qwe\\\\5")
+	if res != "qwe\\\\\\\\\\" {
+		println(res)
+		t.Errorf("%s != %s", res, "qwe\\\\\\\\\\")
+	}
 }
