@@ -1,8 +1,8 @@
 package dev02
 
 import (
-	"unicode"
 	"errors"
+	"unicode"
 )
 
 /*
@@ -26,11 +26,10 @@ import (
 //UnpackString unpacks string :)
 func UnpackString(s string) (string, error) {
 	var (
-		res     = make([]rune, 0)
-		sr      = []rune(s)
-		count   = 0
-		r rune
-		skip    = 0
+		res   = make([]rune, 0)
+		sr    = []rune(s)
+		count = 0
+		r     rune
 	)
 
 	if s == "" {
@@ -38,24 +37,19 @@ func UnpackString(s string) (string, error) {
 	}
 
 	for i := 0; i < len(sr); i++ {
-		if skip == 1 {
-			skip = 0
-			continue
-		}
-
 		if unicode.IsDigit(sr[i]) {
 			if len(res) == 0 {
-				return "", errors.New("Incorrect string")
+				return "", errors.New("incorrect string")
 			}
-			count = count * 10 + (int(sr[i]) - '0')
-			if i == len(sr) - 1 {
-				for j := 0; j < count - 1; j++ {
+			count = count*10 + (int(sr[i]) - '0')
+			if i == len(sr)-1 {
+				for j := 0; j < count-1; j++ {
 					res = append(res, r)
 				}
 			}
-		} else if sr[i] != '\\'{
+		} else if sr[i] != '\\' {
 			if count != 0 {
-				for j := 0; j < count - 1; j++ {
+				for j := 0; j < count-1; j++ {
 					res = append(res, r)
 				}
 				count = 0
@@ -64,10 +58,10 @@ func UnpackString(s string) (string, error) {
 			r = sr[i]
 
 		} else {
-			if i != len(sr) - 1 {
+			if i != len(sr)-1 {
 				res = append(res, sr[i+1])
 				r = sr[i+1]
-				skip = 1
+				i++
 			} else {
 				res = append(res, sr[i])
 			}

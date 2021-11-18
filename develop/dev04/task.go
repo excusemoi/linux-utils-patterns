@@ -29,7 +29,7 @@ func GetMap(s []string) map[string][]string {
 	for _, str := range s {
 		str = strings.ToLower(str)
 		for k := range m {
-			if IsRuneSetsEqual([]rune(strings.ToLower(k)), []rune(str)) {
+			if isRuneSetsEqual([]rune(strings.ToLower(k)), []rune(str)) {
 				m[k] = append(m[k], str)
 				added = true
 			}
@@ -42,7 +42,7 @@ func GetMap(s []string) map[string][]string {
 	}
 	for k := range m {
 		if len(m[k]) != 0 {
-			m[k] = CreateSet(m[k])
+			m[k] = createSet(m[k])
 			sort.Strings(m[k])
 		} else {
 			delete(m, k)
@@ -51,7 +51,7 @@ func GetMap(s []string) map[string][]string {
 	return m
 }
 
-func IsRuneSetsEqual(s1, s2 []rune) bool {
+func isRuneSetsEqual(s1, s2 []rune) bool {
 
 	l1 := len(s1)
 	l2 := len(s2)
@@ -59,8 +59,8 @@ func IsRuneSetsEqual(s1, s2 []rune) bool {
 	s2cp := make([]rune, 0)
 	s1cp = append(s1cp, s1...)
 	s2cp = append(s2cp, s2...)
-	s1cp = QuickSort(s1cp, 0, l1-1)
-	s2cp = QuickSort(s2cp, 0, l2-1)
+	s1cp = quickSort(s1cp, 0, l1-1)
+	s2cp = quickSort(s2cp, 0, l2-1)
 
 	for i := 0; i < l1; i++ {
 		if s1cp[i] != s2cp[i] {
@@ -71,7 +71,7 @@ func IsRuneSetsEqual(s1, s2 []rune) bool {
 	return true
 }
 
-func CreateSet(s []string) (res []string) {
+func createSet(s []string) (res []string) {
 	m := make(map[string]struct{})
 	for _, val := range s {
 		m[val] = struct{}{}
@@ -82,7 +82,7 @@ func CreateSet(s []string) (res []string) {
 	return res
 }
 
-func Partition(arr []rune, low, high int) ([]rune, int) { //разделение массива на две части перестановками элементов
+func partition(arr []rune, low, high int) ([]rune, int) { //разделение массива на две части перестановками элементов
 	//в результате слева от индекса i элементы arr[k] < arr[i], справа элементы arr[k] > arr[i]
 	pivot := arr[high]
 	i := low
@@ -96,12 +96,12 @@ func Partition(arr []rune, low, high int) ([]rune, int) { //разделение
 	return arr, i
 }
 
-func QuickSort(arr []rune, low, high int) []rune {
+func quickSort(arr []rune, low, high int) []rune {
 	if low < high { //база рекурсии - длина подмассива > 2
 		var p int
-		arr, p = Partition(arr, low, high) //слева от p - элементы arr[i] < arr[p], справа от p - элементы arr[i] > arr[p]
-		arr = QuickSort(arr, low, p-1)     //рекурсивный вызов алгоритма для левого подмассива
-		arr = QuickSort(arr, p+1, high)    //рекурсивный вызов для правого подмассива
+		arr, p = partition(arr, low, high) //слева от p - элементы arr[i] < arr[p], справа от p - элементы arr[i] > arr[p]
+		arr = quickSort(arr, low, p-1)     //рекурсивный вызов алгоритма для левого подмассива
+		arr = quickSort(arr, p+1, high)    //рекурсивный вызов для правого подмассива
 	}
 	return arr
 }

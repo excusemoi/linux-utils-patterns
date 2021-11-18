@@ -2,8 +2,14 @@ package main
 
 import (
 	"errors"
-	"log"
+	"flag"
+	"fmt"
+	"io"
+	"io/ioutil"
 	"os"
+	"regexp"
+	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -32,40 +38,108 @@ import (
 Программа должна проходить все тесты. Код должен проходить проверки go vet и golint.
 */
 
+type commandLineArgs map[string]interface{}
+
 var supportedKeys = "knruMbch"
 
 func main() {
+	strs := []string{
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"dwd",
+		"",
+		"",
+		"",
+		"",
+	}
+
+	sort.Strings(strs)
+}
+
+func getStrungFirstNum(s string) (int, error) {
+	re := regexp.MustCompile("[0-9]+")
+	num, err := strconv.Atoi(re.FindString(s))
+	if err != nil {
+		return 0, err
+	}
+	return num, nil
 }
 
 func Sort() {
-	args, err := parseCommandLineArgs(os.Args)
+	_, err := parseCommandLineArgs()
 	if err != nil {
-		log.Fatal(err)
+		io.WriteString(os.Stderr, "grep: "+err.Error()+" ")
+		os.Exit(1)
 	}
-	println(string(args))
+
 }
 
-func parseCommandLineArgs(args []string) ([]rune, error) {
-	var (
-		res = make([]rune, 0)
-		err = errors.New("incorrect command line arguments")
-		l   = len(args)
-	)
-	if l < 2 {
+func parseFile(fileName string) ([][]string, error) {
+
+	fileContent, err := ioutil.ReadFile(fileName)
+	if err != nil {
 		return nil, err
 	}
-	for i := 1; i < l; i++ {
-		lai := len(args[i])
-		if lai < 2 || rune(args[i][0]) != '-' {
-			return nil, err
-		} else {
-			for j := 1; j < lai; j++ {
-				if !strings.Contains(supportedKeys, string(args[i][j])) {
-					return nil, err
-				}
-				res = append(res, rune(args[i][j]))
-			}
-		}
+	lines := strings.Split(string(fileContent), "\n")
+	fmt.Println(lines)
+
+	return nil, nil
+}
+
+func createSet(s []string) (res []string) {
+	m := make(map[string]struct{})
+	for _, val := range s {
+		m[val] = struct{}{}
 	}
-	return res, nil
+	for key, _ := range m {
+		res = append(res, key)
+	}
+	return res
+}
+
+func parseCommandLineArgs() (commandLineArgs, error) {
+	var (
+		columns      = flag.String("k", "", "specifying the column to sort")
+		numeric      = flag.Bool("n", false, "sort by numerical value")
+		reverse      = flag.Bool("r", false, "sort in reverse order")
+		unique       = flag.Bool("u", false, "do not print duplicate lines")
+		month        = flag.Bool("M", false, "sort by month name")
+		trimRight    = flag.Bool("b", false, "ignore trailing spaces")
+		isSorted     = flag.Bool("c", false, "check if data is sorted")
+		humanNumeric = flag.Bool("h", false, "sort by numerical value taking into account suffixes")
+		args         = make(map[string]interface{})
+	)
+	flag.Parse()
+
+	columnsStr := strings.Split(*columns, ",")
+	columnsInt := make([]int, 0)
+	for _, v := range columnsStr {
+		num, err := strconv.Atoi(v)
+		if err != nil {
+			return nil, err
+		}
+		columnsInt = append(columnsInt, num)
+	}
+
+	args["k"] = columnsInt
+	args["n"] = *numeric
+	args["r"] = *reverse
+	args["u"] = *unique
+	args["M"] = *month
+	args["b"] = *trimRight
+	args["c"] = *isSorted
+	args["h"] = *humanNumeric
+
+	notKeyArgs := flag.Args()
+
+	if len(notKeyArgs) < 1 {
+		return nil, errors.New("grep: not enough arguments")
+	}
+
+	args["fileName"] = notKeyArgs[0]
+
+	return args, nil
 }
