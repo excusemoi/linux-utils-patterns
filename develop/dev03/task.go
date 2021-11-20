@@ -10,6 +10,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 )
 
@@ -21,9 +22,9 @@ import (
 
 Поддержать ключи
 
--k — указание колонки для сортировки
--n — сортировать по числовому значению //
--r — сортировать в обратном порядке
+-k — указание колонки для сортировки //ok
+-n — сортировать по числовому значению //ok
+-r — сортировать в обратном порядке //ok
 -u — не выводить повторяющиеся строки  //ok
 
 Дополнительное
@@ -40,8 +41,6 @@ import (
 
 type commandLineArgs map[string]interface{}
 
-var supportedKeys = "knruMbch"
-
 func main() {
 	Sort()
 }
@@ -57,9 +56,12 @@ func getFileContent(fileName string) (string, error) {
 func getWordsFromText(text string) ([][]string, error) {
 
 	lines := strings.Split(strings.TrimLeft(text, " "), "\n")
+	linesCopy := make([]string, len(lines))
 	textWords := make([][]string, 0)
 	maxLen := 0
 	counter := 1
+
+	copy(linesCopy, lines)
 
 	for _, line := range lines {
 		textWords = append(
@@ -95,33 +97,7 @@ func getStringFirstNum(s string) (int, error) {
 	return num, nil
 }
 
-func isSlicesEqual(s1, s2 []string) bool {
-	l1 := len(s1)
-	if l1 != len(s2) {
-		return false
-	}
-	for i := range s1 {
-		if s1[i] != s2[i] {
-			return false
-		}
-	}
-	return true
-}
-
-func reverseWords(words [][]string) [][]string {
-	if len(words) == 0 {
-		return words
-	}
-
-	l := len(words[0])
-	for i := 0; i < l; i++ {
-		for j := 0; j < len(words)/2; j++ {
-			words[j][i], words[len(words)-j-1][i] = words[len(words)-j-1][i], words[j][i]
-		}
-	}
-	return words
-}
-
+//Sort sorts file content
 func Sort() {
 
 	args, err := parseCommandLineArgs()
@@ -158,7 +134,17 @@ func Sort() {
 		sortColumn[i] = words[i][sortColumnIndex]
 	}
 
-	quickSort(words, lines, sortColumn, 0, len(sortColumn)-1, stringComparator)
+	var comp func(string, string) bool
+
+	if args["b"].(bool) {
+		comp = stringNoSpacesComparator
+	} else if args["M"].(bool) {
+		comp = monthComparator
+	} else {
+		comp = stringComparator
+	}
+
+	quickSort(words, lines, sortColumn, 0, len(sortColumn)-1, comp)
 
 	firstAlphaInd := 0
 	if args["n"].(bool) {
@@ -173,17 +159,33 @@ func Sort() {
 		quickSort(words, lines, sortColumn, 0, firstAlphaInd-1, numericComparator)
 		lines = append(lines, lines[0:firstAlphaInd]...)
 		lines = lines[firstAlphaInd:]
-
 	}
 
-	for _, str := range lines {
-		fmt.Println(str)
+	if args["r"].(bool) {
+		for i := 0; i < len(lines)/2; i++ {
+			lines[i], lines[len(lines)-i-1] = lines[len(lines)-i-1], lines[i]
+		}
 	}
+	for i := range lines {
+		fmt.Println(lines[i])
+	}
+}
 
-	/*if args["r"].(bool) {
-		words = reverseWords(words)
-	}*/
+func monthComparator(s1, s2 string) bool {
+	t, err := time.Parse(strings.ToUpper(s1), "Jan")
+	nt, nerr := time.Parse(strings.ToUpper(s2), "Jan")
+	if err != nil && nerr != nil {
+		return stringComparator(s1, s2)
+	} else if err != nil {
+		return true
+	} else if nerr != nil {
+		return false
+	}
+	return t.Before(nt)
+}
 
+func stringNoSpacesComparator(s1, s2 string) bool {
+	return strings.TrimRight(s1, " ") < strings.TrimRight(s2, " ")
 }
 
 func stringComparator(s1, s2 string) bool {
@@ -201,7 +203,7 @@ func createSet(s []string) (res []string) {
 	for _, val := range s {
 		m[val] = struct{}{}
 	}
-	for key, _ := range m {
+	for key := range m {
 		res = append(res, key)
 	}
 	return res
