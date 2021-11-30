@@ -1,4 +1,4 @@
-package main
+package dev06
 
 import (
 	"bufio"
@@ -58,6 +58,7 @@ func parseCutCommandLineArgs() (commandLineArgs, error) {
 	return args, nil
 }
 
+//Cut implements cut utility
 func Cut() {
 
 	args, err := parseCutCommandLineArgs()
@@ -127,8 +128,4 @@ func quickSort(arr []int, low, high int) []int {
 		arr = quickSort(arr, p+1, high)    //рекурсивный вызов для правого подмассива
 	}
 	return arr
-}
-
-func main() {
-	Cut()
 }

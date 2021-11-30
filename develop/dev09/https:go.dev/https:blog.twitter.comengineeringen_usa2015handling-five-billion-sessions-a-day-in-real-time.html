@@ -1,0 +1,688 @@
+<!doctype html>
+<html class="theme--pink  " lang="en_us" prefix="og: http://ogp.me/ns#">
+
+  <head>
+    <meta charset="utf-8"/>
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Handling five billion sessions a day – in real time </title>
+
+<meta name="description"/>
+<link rel="canonical" href="https://blog.twitter.com/engineering/en_us/a/2015/handling-five-billion-sessions-a-day-in-real-time"/>
+
+
+
+<meta property="og:url" content="https://blog.twitter.com/engineering/en_us/a/2015/handling-five-billion-sessions-a-day-in-real-time"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="Handling five billion sessions a day – in real time "/>
+<meta property="og:description" content="Handling five billion sessions a day – in real time "/>
+
+
+
+
+<meta property="og:image" content="https://blog.twitter.com/content/dam/blog-twitter/engineering/en_us/main-template-assets/Eng_EXPLORE_Pink.png.twimg.768.png"/>
+
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="twitter:widgets:new-embed-design" content="on"/>
+<meta name="twitter:widgets:csp" content="on"/>
+
+
+<link rel="apple-touch-icon-precomposed" href="/etc/designs/blog-twitter/public/img/apple-touch-icon.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/etc/designs/blog-twitter/public/img/apple-touch-icon-72x72.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/etc/designs/blog-twitter/public/img/apple-touch-icon-114x114.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/etc/designs/blog-twitter/public/img/apple-touch-icon-120x120.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/etc/designs/blog-twitter/public/img/apple-touch-icon-144x144.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="153x153" href="/etc/designs/blog-twitter/public/img/apple-touch-icon-153x153.png"/>
+
+<link rel="shortcut icon" href="/etc/designs/blog-twitter/public/img/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/etc/designs/blog-twitter/public/img/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/etc/designs/blog-twitter/public/img/favicon-16x16.png"/>
+<link rel="mask-icon" href="/etc/designs/blog-twitter/public/img/safari-pinned-tab.svg" color="#2aa3ef"/>
+<meta name="msapplication-TileColor" content="#2d89ef"/>
+<meta name="theme-color" content="#2aa3ef"/>
+
+
+<script type="application/json" id="analytics-settings">{&quot;google&quot;:{&quot;accounts&quot;:[],&quot;options&quot;:{&quot;displayAdvertisingFeatures&quot;:false}},&quot;scribe&quot;:{&quot;scribeSectionWithImpression&quot;:false},&quot;trackingPixel&quot;:{},&quot;bing&quot;:{}}</script>
+
+    
+<script type="text/javascript" src="/etc/clientlibs/dtm/blog-twitter/c411b4930511/34c56d36e6ea/launch-a481a4cc705e.min.js.twhash.a.f.e257ebaaa23dcc8a1a01fccf7bd01fd0.js" async></script>
+
+
+
+
+
+
+<!-- <link rel="stylesheet" href="/etc/designs/blog-twitter/public/css/main.css" media="all" /> -->
+<link rel="stylesheet" href="/etc/designs/blog-twitter/public/css/main.css.twhash.a.f.f61029693c8c27a7469b10a12a60b980.css" media="screen" type="text/css"/>
+
+<link rel="stylesheet" href="/etc/designs/blog-twitter/public/css/print.css.twhash.a.f.35e55183669dbbc296574ccc045aa706.css" media="print" type="text/css"/>
+
+<!-- enable scribe -->
+
+    
+<script src="/etc/designs/common-twitter/global-vars.min.twhash.a.cl.d124ce9017ad534db9653f8308be25d0.js"></script>
+<script src="/etc/designs/common-twitter/clientlib-twtr-scribe.min.twhash.a.cl.194e09295d8f3c5dd0438f62b5b891a4.js"></script>
+
+
+
+
+  </head>
+  <body class="page page archive-page " data-analytics-page="blog" data-analytics-element="page">
+      <div class="login-container signed-out" data-geo-location="AAAAEIAiOOCHqSYzIdkMqq4oQS1LlncY48t4L80UhF473pEnTMYvnNLffwBlnotkrQ==">
+  
+  
+</div>
+
+<div class="nav sticky theme-bg-color--dark" data-hidden="true" data-current-level="0">
+  <div class="nav--wrapper">
+    <header class="nav__header">
+      
+      <div class="nav--header-left">
+        <div class="nav--header-title">
+          <a href="/engineering/en_us" class="logo-title">
+            <span class="logo">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><path d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z"/></svg>
+
+            </span>
+            <span class="title color--neutral-white">Engineering</span>
+          </a>
+          
+          <a class="nav-icon" href="#">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="20" viewBox="0 0 34 20"><path d="M17 12.758L5.121.879a2.998 2.998 0 0 0-4.242 0 2.998 2.998 0 0 0 0 4.242l14 14a2.998 2.998 0 0 0 4.242 0l14-14C33.707 4.535 34 3.768 34 3s-.293-1.535-.879-2.121a2.998 2.998 0 0 0-4.242 0L17 12.758z"/></svg>
+
+          </a>
+          <a class="nav-back nav__link" href="#" data-nav-back="true">
+            <span class="title type--bold-16  color--neutral-white">Back</span>
+          </a>
+        </div>
+      </div>
+      <ul class="nav--menu" data-level="1">
+        <li class="nav--mobile-item nav--menu__list-item" data-show-sub-level="false">
+          <a href="/engineering/en_us" class="nav__link  color--neutral-white--has-hover ">Engineering</a>
+        </li>
+        
+          
+          <li class="nav--menu__list-item " data-show-sub-level="false">
+            
+            <a href="/engineering/en_us/topics/insights" class="color--neutral-white nav__link  js-open-sub-menu  " data-go-to-sub-level="false">
+              <span class="nav--menu__list-item-text  color--neutral-white" data-go-to-sub-level="false">Insights</span>
+              
+            </a>
+            
+          </li>
+        
+          
+          <li class="nav--menu__list-item " data-show-sub-level="false">
+            
+            <a href="/engineering/en_us/topics/infrastructure" class="color--neutral-white nav__link  js-open-sub-menu  " data-go-to-sub-level="false">
+              <span class="nav--menu__list-item-text  color--neutral-white" data-go-to-sub-level="false">Infrastructure</span>
+              
+            </a>
+            
+          </li>
+        
+          
+          <li class="nav--menu__list-item " data-show-sub-level="false">
+            
+            <a href="/engineering/en_us/topics/open-source" class="color--neutral-white nav__link  js-open-sub-menu  " data-go-to-sub-level="false">
+              <span class="nav--menu__list-item-text  color--neutral-white" data-go-to-sub-level="false">Open source</span>
+              
+            </a>
+            
+          </li>
+        
+        
+      </ul>
+      <div class="region-selector-mobile">
+        <div class="nav__header-item--profile-mobile">
+          <div class="u04">
+  <a href="https://twitter.com/signup" class="u04__cta  is-hidden  atc-button  atc-button--white-outline">Sign Up</a>
+  <a href="https://twitter.com" class="u04__profile  is-hidden">
+    <img class="u04__profile-img" alt="Profile Image" src="https://pbs.twimg.com/profile_images/880136122604507136/xHrnqf1T_normal.jpg"/>
+  </a>
+</div>
+
+        </div>
+        
+
+      </div>
+      <div class="nav--header-right">
+        
+
+
+        <div class="nav__header-item--profile">
+          <div class="u04">
+  <a href="https://twitter.com/signup" class="u04__cta  is-hidden  atc-button  atc-button--white-outline">Sign Up</a>
+  <a href="https://twitter.com" class="u04__profile  is-hidden">
+    <img class="u04__profile-img" alt="Profile Image" src="https://pbs.twimg.com/profile_images/880136122604507136/xHrnqf1T_normal.jpg"/>
+  </a>
+</div>
+
+        </div>
+
+        <div class="search">
+          <a href="#" class="search-icon js-nav-search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="72" viewBox="0 0 56 72"><path d="M51.644 53.096l-7.409-7.409a4.606 4.606 0 0 0-3.915-1.295l-2.328-2.328a19.306 19.306 0 0 0 3.894-11.628 19.295 19.295 0 0 0-5.69-13.757 19.3 19.3 0 0 0-13.739-5.688 19.347 19.347 0 0 0-13.772 5.708c-7.58 7.583-7.581 19.917-.004 27.495a19.31 19.31 0 0 0 13.743 5.693 19.28 19.28 0 0 0 11.639-3.893l2.327 2.327c-.193 1.389.227 2.847 1.295 3.915l7.409 7.409A4.627 4.627 0 0 0 48.37 61c1.185 0 2.37-.452 3.274-1.357a4.627 4.627 0 0 0 0-6.547zM34.939 30.439c0 6.904-5.596 12.5-12.5 12.5s-12.5-5.596-12.5-12.5 5.596-12.5 12.5-12.5 12.5 5.596 12.5 12.5z"/><path d="M51.644 53.096l-7.409-7.409a4.606 4.606 0 0 0-3.915-1.295l-2.328-2.328a19.306 19.306 0 0 0 3.894-11.628 19.295 19.295 0 0 0-5.69-13.757 19.3 19.3 0 0 0-13.739-5.688 19.347 19.347 0 0 0-13.772 5.708c-7.58 7.583-7.581 19.917-.004 27.495a19.31 19.31 0 0 0 13.743 5.693 19.28 19.28 0 0 0 11.639-3.893l2.327 2.327c-.193 1.389.227 2.847 1.295 3.915l7.409 7.409A4.627 4.627 0 0 0 48.37 61c1.185 0 2.37-.452 3.274-1.357a4.627 4.627 0 0 0 0-6.547zM34.939 30.439c0 6.904-5.596 12.5-12.5 12.5s-12.5-5.596-12.5-12.5 5.596-12.5 12.5-12.5 12.5 5.596 12.5 12.5z"/></svg>
+
+          </a>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M24.242 20L39.121 5.121a2.998 2.998 0 0 0 0-4.242 2.998 2.998 0 0 0-4.242 0l-14.88 14.879L5.122.879a2.998 2.998 0 0 0-4.242 0 2.998 2.998 0 0 0 0 4.242L15.758 20 .879 34.879A2.998 2.998 0 0 0 3.001 40a2.99 2.99 0 0 0 2.121-.879L20 24.242l14.879 14.879a2.987 2.987 0 0 0 2.12.879 2.998 2.998 0 0 0 2.121-5.121L24.242 20z"/></svg>
+
+      </div>
+    </header>
+  </div>
+</div>
+<div class="nav__search-modal theme-bg-color--dark">
+  <div class="search-bar search-bar--js theme-color--extra-light theme-fill-color--extra-light theme-border-color--extra-light" data-search-path="https://blog.twitter.com/engineering/en_us/search.html">
+  <input placeholder="Type your search here" type="search" autocomplete="off" class="search-bar__input" name="q"/><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><path d="M48.644 42.096l-7.409-7.409a4.606 4.606 0 0 0-3.915-1.295l-2.328-2.328a19.306 19.306 0 0 0 3.894-11.628 19.295 19.295 0 0 0-5.69-13.757A19.3 19.3 0 0 0 19.457-.009 19.347 19.347 0 0 0 5.685 5.699c-7.58 7.583-7.581 19.917-.004 27.495a19.31 19.31 0 0 0 13.743 5.693 19.28 19.28 0 0 0 11.639-3.893l2.327 2.327c-.193 1.389.227 2.847 1.295 3.915l7.409 7.409A4.627 4.627 0 0 0 45.37 50c1.185 0 2.37-.452 3.274-1.357a4.627 4.627 0 0 0 0-6.547zM31.939 19.439c0 6.904-5.596 12.5-12.5 12.5s-12.5-5.596-12.5-12.5 5.596-12.5 12.5-12.5 12.5 5.596 12.5 12.5z"/><path d="M48.644 42.096l-7.409-7.409a4.606 4.606 0 0 0-3.915-1.295l-2.328-2.328a19.306 19.306 0 0 0 3.894-11.628 19.295 19.295 0 0 0-5.69-13.757A19.3 19.3 0 0 0 19.457-.009 19.347 19.347 0 0 0 5.685 5.699c-7.58 7.583-7.581 19.917-.004 27.495a19.31 19.31 0 0 0 13.743 5.693 19.28 19.28 0 0 0 11.639-3.893l2.327 2.327c-.193 1.389.227 2.847 1.295 3.915l7.409 7.409A4.627 4.627 0 0 0 45.37 50c1.185 0 2.37-.452 3.274-1.357a4.627 4.627 0 0 0 0-6.547zM31.939 19.439c0 6.904-5.596 12.5-12.5 12.5s-12.5-5.596-12.5-12.5 5.596-12.5 12.5-12.5 12.5 5.596 12.5 12.5z"/></svg>
+
+</div>
+
+</div>
+
+
+<div class="transparent-masthead"></div>
+
+      
+
+<div id="component-wrapper">
+
+
+
+
+    
+    
+    <div class="bl19-no-edit-wrap">
+
+  <div class="c15-column-container js-column-container">
+
+    <div class="container--mini container--mobile">
+      <div class="column column-3"></div>
+      <div class="column column-6">
+
+
+
+
+    
+    
+    <div class="bl02-blog-post-text-masthead">
+
+<div>
+
+  <div class="b02-blog-post-no-masthead">
+    <h4 class="b02-blog-post-no-masthead__topic type--bold-14 color--neutral-light-gray"></h4>
+    <h1 class="b02-blog-post-no-masthead__title type--bold-48 color--neutral-black">Handling five billion sessions a day – in real time </h1>
+
+    
+      <div class="b02-blog-post-no-masthead__info color--neutral-light-gray type--roman-14 ">By
+        
+  
+  
+  
+  
+  
+  <a class="type--roman-14 theme-color--dark  theme-color--dark--hover" href="/engineering/en_us/authors.edsolovey">‎@edsolovey‎</a>
+
+        
+        <div class="second-line">
+          <span class="b02-blog-post-no-masthead__date color--neutral-light-gray type--roman-14 ">Tuesday, 17 February 2015</span>
+
+          <div class="b02-blog-post-no-masthead__share--icons ">
+            <a href="#" class="sharing-popup-twitter" data-share-text="Handling five billion sessions a day – in real time " data-share-url="https://blog.twitter.com/engineering/en_us/a/2015/handling-five-billion-sessions-a-day-in-real-time">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><path d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z"/></svg>
+
+            </a>
+            <a href="#" class="sharing-popup-facebook" data-share-url="https://blog.twitter.com/engineering/en_us/a/2015/handling-five-billion-sessions-a-day-in-real-time">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.75,9H13.5V7a1,1,0,0,1,1-1h2V3H14a4,4,0,0,0-4,4V9H8v3h2v9h3.5V12H16Z"/></svg>
+            </a>
+            <a href="#" class="sharing-popup-linkedin" data-share-url="https://blog.twitter.com/engineering/en_us/a/2015/handling-five-billion-sessions-a-day-in-real-time">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect height="11" width="4" x="3" y="9"/><circle cx="5" cy="5" r="2"/><path d="M16.5,8.25A4.47251,4.47251,0,0,0,13,9.95343V9H9V20h4V13a2,2,0,0,1,4,0v7h4V12.75A4.5,4.5,0,0,0,16.5,8.25Z"/></svg>
+            </a>
+            <a href="#" class="post__share--copy-link">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" width="56" height="72" viewBox="0 0 56 72"><path d="M29.518 12.25l-8.705 8.704a13.624 13.624 0 0 0-2.881 4.26 13.617 13.617 0 0 0-1.128 5.377c0 5.48 3.076 8.778 4.01 9.77 2.346 2.494 7.014 3.983 7.416 3.674.637-.49 2.665-3.002.174-5.764-.452-.502-3.605-.852-5.154-4.667-.836-2.059-.753-4.129.076-6.055a7.8 7.8 0 0 1 1.647-2.434l8.705-8.704c3.057-3.057 8.032-3.057 11.089 0 3.057 3.057 3.057 8.032 0 11.089l-4.175 4.174a17.549 17.549 0 0 1 2.37 5.947l5.963-5.962c5.35-5.351 5.35-14.057 0-19.408C43.574 6.9 34.869 6.9 29.518 12.25z"/><path d="M26.357 59.768l9.01-9.01a13.624 13.624 0 0 0 2.881-4.26 13.617 13.617 0 0 0 1.128-5.377c0-5.48-3.076-8.778-4.01-9.77-2.346-2.494-7.014-3.983-7.416-3.674-.637.49-2.665 3.002-.174 5.764.452.502 3.605.852 5.154 4.667.836 2.059.753 4.129-.076 6.055a7.8 7.8 0 0 1-1.647 2.434l-9.01 9.01c-3.057 3.057-8.032 3.057-11.089 0-3.057-3.057-3.057-8.032 0-11.089l4.479-4.479a17.549 17.549 0 0 1-2.37-5.947L6.95 40.36c-5.35 5.351-5.35 14.057 0 19.408 5.351 5.35 14.057 5.35 19.407 0z"/></svg>
+
+              <div class="post__share--copy-link-popup  type--bold-14 bg-color--neutral-white">
+                <span class="post__share--copy-link-popup-content type--bold-14">Link copied successfully</span>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" viewBox="0 0 30 20"><path d="M0 0 L15 20 L30 0 Z" fill="none"/></svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+</div>
+
+
+    
+    
+    <div class="bl25-blog-migration-html"><div class="bl25">
+  
+  <p>Since we first <a href="http://www.crashlytics.com/blog/launching-answers-by-crashlytics/">released Answers</a> seven months ago, we’ve been thrilled by tremendous adoption from the mobile community. We now see about <em>five billion sessions per day</em>, and growing. Hundreds of millions of devices send millions of events <em>every second</em> to the Answers endpoint. During the time that it took you to read to here, the Answers back-end will have received and processed about 10,000,000 analytics events.</p> 
+<p>The challenge for us is to use this information to provide app developers with reliable, real-time and actionable insights into their mobile apps.</p> 
+<p>At a high level, we guide our architectural decisions on the principles of decoupled components, asynchronous communication and graceful service degradation in response to catastrophic failures. We make use of the Lambda Architecture to combine data integrity with real-time data updates.</p> 
+<p>In practice, we need to design a system that receives events, archives them, performs offline and real-time computations, and merges the results of those computations into coherent information. All of this needs to happen at the scale of millions events per second.</p> 
+<p>Let’s start with our first challenge: receiving and handling these events.</p> 
+<p><strong>Event reception</strong><br>When designing our device-server communication, our goals were: reducing impact on battery and network usage; ensuring data reliability; and getting the data over as close to real time as possible. To reduce impact on the device, we send analytics events in batches and compress them before sending. To ensure that valuable data always gets to our servers, devices retry failed data transfers after a randomized back-off and up to a disk size limit on the device. To get events over to the servers as soon as possible, there are several triggers that cause the device to attempt a transfer: a time trigger that fires every few minutes when the app is foregrounded, a number of events trigger and an app going into background trigger.</p> 
+<p>This communication protocol results in devices sending us hundreds of thousands of compressed payloads every second. Each of these payloads may contain tens of events. To handle this load reliably and in a way that permits for easy linear scaling, we wanted to make the service that accepts the events be dead simple.</p> 
+<p><a href="https://g.twimg.com/blog/blog/image/answers_architecture_screenshot1_0.png"><img src="https://cdn.cms-twdigitalassets.com/content/dam/blog-twitter/archive/handling_five_billionsessionsadayinrealtime95.thumb.1280.1280.png" width="555" height="241" alt="Handling five billion sessions a day – in real time "></a></p> 
+<p>This service is written in GOLANG, fronted by Amazon Elastic Load Balancer (ELB), and simply enqueues every payload that it receives into a durable <a href="http://kafka.apache.org">Kafka queue</a>.</p> 
+<p><strong>Archival</strong><br>Because Kafka writes the messages it receives to disk and supports keeping multiple copies of each message, it is a durable store. Thus, once the information is in it we know that we can tolerate downstream delays or failures by processing, or reprocessing, the messages later. However, Kafka is not the permanent source of truth for our historic data — at the incoming rate of information that we see, we’d need hundreds of boxes to store all of the data just for a few days. So we configure our Kafka cluster to retain information for a few hours (enough time for us to respond to any unexpected, major failures) and get the data to our permanent store, Amazon Simple Storage Service (Amazon S3), as soon as possible.</p> 
+<p>We extensively utilize <a href="https://storm.apache.org">Storm</a> for real-time data processing, and the first relevant topology is one that reads the information from Kafka and writes it to Amazon S3.</p> 
+<p><a href="https://g.twimg.com/blog/blog/image/answers_architecture_screenshot2_0.png"><img src="https://cdn.cms-twdigitalassets.com/content/dam/blog-twitter/archive/handling_five_billionsessionsadayinrealtime96.thumb.1280.1280.png" width="555" height="241" alt="Handling five billion sessions a day – in real time "></a></p> 
+<p><strong>Batch computation</strong><br>Once the data is in Amazon S3, we’ve set ourselves up for being able to compute anything that our data will allow us to via Amazon Elastic MapReduce (Amazon EMR). This includes batch jobs for all of the data that our customers see in their dashboards, as well as experimental jobs as we work on new features.</p> 
+<p><a href="https://g.twimg.com/blog/blog/image/answers_architecture_screenshot3_0.png"><img src="https://cdn.cms-twdigitalassets.com/content/dam/blog-twitter/archive/handling_five_billionsessionsadayinrealtime97.thumb.1280.1280.png" width="555" height="246" alt="Handling five billion sessions a day – in real time "></a></p> 
+<p>We write our MapReduce in <a href="http://www.cascading.org">Cascading</a> and run them via Amazon EMR. Amazon EMR reads the data that we’ve archived in Amazon S3 as input and writes the results back out to Amazon S3 once processing is complete. We detect the jobs’ completion via a scheduler topology running in Storm and pump the output from Amazon S3 into a <a href="http://cassandra.apache.org">Cassandra</a> cluster in order to make it available for sub-second API querying.</p> 
+<p><strong>Speed computation</strong><br>What we have described so far is a durable and fault-tolerant framework for performing analytic computations. There is one glaring problem however — it’s not real time. Some computations run hourly, while others require a full day’s of data as input. The computation times range from minutes to hours, as does the time it takes to get the output from Amazon S3 to a serving layer. Thus, at best, our data would always be a few hours behind, and wouldn’t meet our goals of being <strong>real time</strong> and <strong>actionable</strong>.</p> 
+<p>To address this, in parallel to archiving the data as it comes in, we perform stream computations on it.</p> 
+<p><a href="https://g.twimg.com/blog/blog/image/answers_architecture_screenshot4.png"><img src="https://cdn.cms-twdigitalassets.com/content/dam/blog-twitter/archive/handling_five_billionsessionsadayinrealtime98.thumb.1280.1280.png" width="555" height="231" alt="Handling five billion sessions a day – in real time "></a></p> 
+<p>An independent Storm topology consumes the same Kafka topic as our archival topology and performs the same computations that our MapReduce jobs do, but in real time. The outputs of these computations are written to a different independent Cassandra cluster for real-time querying.</p> 
+<p>To compensate for the fact that we have less time, and potentially fewer resources, in the speed layer than the batch, we use probabilistic algorithms like <a href="http://en.wikipedia.org/wiki/Bloom_filter">Bloom Filters</a> and <a href="http://en.wikipedia.org/wiki/HyperLogLog">HyperLogLog</a> (as well as a few home grown ones). These algorithms enable us to make order-of-magnitude gains in space and time complexity over their brute force alternatives, at the price of a negligible loss of accuracy.</p> 
+<p><strong>Fitting it together</strong><br>So now that we have two independently produced sets of data (batch and speed), how do we combine them to present a single coherent answer?</p> 
+<p><a href="https://g.twimg.com/blog/blog/image/answers_architecture_screenshot5.png"><img src="https://cdn.cms-twdigitalassets.com/content/dam/blog-twitter/archive/handling_five_billionsessionsadayinrealtime99.thumb.1280.1280.png" width="555" height="333" alt="Handling five billion sessions a day – in real time "></a></p> 
+<p>We combine them with logic in our API that utilizes each data set under specific conditions.</p> 
+<p>Because batch computations are repeatable and more fault-tolerant than speed, our API’s always favor batch produced data. So, for example, if our API receives a request for data for a thirty-day, time-series DAU graph, it will first request the full range from the batch-serving Cassandra cluster. If this is a historic query, all of the data will be satisfied there. However, in the more likely case that the query includes the current day, the query will be satisfied mostly by batch produced data, and just the most recent day or two will be satisfied by speed data.</p> 
+<p><strong>Handling of failure scenarios</strong><br>Let’s go over a few different failure scenarios and see how this architecture allows us to gracefully degrade instead of go down or lose data when faced with them.</p> 
+<p>We already discussed the on-device retry-after-back-off strategy. The retry ensures that data eventually gets to our servers in the presence of client-side network unavailability, or brief server outages on the back-end. A randomized back-off ensures that devices don’t overwhelm (DDos) our servers after a brief network outage in a single region or a brief period of unavailability of our back-end servers.</p> 
+<p>What happens if our speed (real-time) processing layer goes down? Our on-call engineers will get paged and address the problem. Since the input to the speed processing layer is a durable Kafka cluster, no data will have been lost and once the speed layer is back and functioning, it will catch up on the data that it should have processed during its downtime.</p> 
+<p>Since the speed layer is completely decoupled from the batch layer, batch layer processing will go-on unimpacted. Thus the only impact is delay in real-time updates to data points for the duration of the speed layer outage.</p> 
+<p>What happens if there are issues or severe delays in the batch layer? Our APIs will seamlessly query for more data from the speed layer. A time-series query that may have previously received one day of data from the speed layer will now query it for two or three days of data. Since the speed layer is completely decoupled from the batch layer, speed layer processing will go-on unimpacted. At the same time, our on-call engineers will get paged and address the batch layer issues. Once the batch layer is back up, it will catch up on delayed data processing, and our APIs will once again seamlessly utilize the batch produced data that is now available.</p> 
+<p>Our back-end architecture consists of four major components: event reception, event archival, speed computation, and batch computation. Durable queues between each of these components ensure that an outage in one of the components does not spill over to others and that we can later recover from the outage. Query logic in our APIs allows us to seamlessly gracefully degrade and then recover when one of the computations layers is delayed or down and then comes back up.</p> 
+<p>Our goal for Answers is to create a dashboard that makes understanding your user base dead simple so you can spend your time building amazing experiences, not digging through data. <a href="http://answers.io/?utm_source=twitter_eng_blog&amp;utm_medium=twitter_blog&amp;utm_campaign=answers_5B_sessions_2.17.2015&amp;utm_content=inline_cta">Learn more about Answers here</a> and get started today.</p> 
+<p>Big thanks to the Answers team for all their efforts in making this architecture a reality. Also to Nathan Marz for his <a href="http://manning.com/marz/">Big Data book</a>.</p> 
+<p><strong>Contributors</strong><br><a href="https://twitter.com/ajorgensen">Andrew Jorgensen</a>, <a href="https://twitter.com/bswift">Brian Swift</a>, <a href="https://twitter.com/brianhatfield">Brian Hatfield</a>,&nbsp;<a href="https://twitter.com/mikefurtak">Michael Furtak</a>, <a href="https://twitter.com/marknic">Mark Pirri</a>, <a href="https://twitter.com/CoryDolphin">Cory Dolphin</a>, <a href="https://twitter.com/rothbutter">Jamie Rothfeder</a>, <a href="https://twitter.com/jeffseibert">Jeff Seibert</a>, <a href="https://twitter.com/sirstarry">Justin Starry</a>, <a href="https://twitter.com/krob">Kevin Robinson</a>, <a href="https://twitter.com/Kris10rht">Kristen Johnson</a>, <a href="https://twitter.com/marcrichards">Marc Richards</a>, <a href="https://twitter.com/patrickwmcgee">Patrick McGee</a>, <a href="https://twitter.com/richparet">Rich Paret</a>, <a href="https://twitter.com/wayne">Wayne Chang</a>.</p>
+</div>
+</div>
+
+
+</div>
+      <div class="column column-3 last"></div>
+    </div>
+
+    
+
+    
+</div>
+</div>
+
+
+    
+    
+    <div class="c18-page-share">
+<div class="post__key-line"></div>
+<div class="container--mini container--mobile">
+  <div class="post">
+    <div class="post__share--title type--bold-14">Share:</div>
+    <div class="post__share--icons">
+      <a href="#" class="sharing-popup-twitter" data-share-text="Handling five billion sessions a day – in real time " data-share-url="https://blog.twitter.com/engineering/en_us/a/2015/handling-five-billion-sessions-a-day-in-real-time.html">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><path d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z"/></svg>
+
+      </a>
+      <a href="#" class="sharing-popup-facebook" data-share-url="https://blog.twitter.com/engineering/en_us/a/2015/handling-five-billion-sessions-a-day-in-real-time.html">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.75,9H13.5V7a1,1,0,0,1,1-1h2V3H14a4,4,0,0,0-4,4V9H8v3h2v9h3.5V12H16Z"/></svg>
+      </a>
+      <a href="#" class="sharing-popup-linkedin" data-share-url="https://blog.twitter.com/engineering/en_us/a/2015/handling-five-billion-sessions-a-day-in-real-time.html">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect height="11" width="4" x="3" y="9"/><circle cx="5" cy="5" r="2"/><path d="M16.5,8.25A4.47251,4.47251,0,0,0,13,9.95343V9H9V20h4V13a2,2,0,0,1,4,0v7h4V12.75A4.5,4.5,0,0,0,16.5,8.25Z"/></svg>
+      </a>
+      <a href="#" class="post__share--copy-link">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="56" height="72" viewBox="0 0 56 72"><path d="M29.518 12.25l-8.705 8.704a13.624 13.624 0 0 0-2.881 4.26 13.617 13.617 0 0 0-1.128 5.377c0 5.48 3.076 8.778 4.01 9.77 2.346 2.494 7.014 3.983 7.416 3.674.637-.49 2.665-3.002.174-5.764-.452-.502-3.605-.852-5.154-4.667-.836-2.059-.753-4.129.076-6.055a7.8 7.8 0 0 1 1.647-2.434l8.705-8.704c3.057-3.057 8.032-3.057 11.089 0 3.057 3.057 3.057 8.032 0 11.089l-4.175 4.174a17.549 17.549 0 0 1 2.37 5.947l5.963-5.962c5.35-5.351 5.35-14.057 0-19.408C43.574 6.9 34.869 6.9 29.518 12.25z"/><path d="M26.357 59.768l9.01-9.01a13.624 13.624 0 0 0 2.881-4.26 13.617 13.617 0 0 0 1.128-5.377c0-5.48-3.076-8.778-4.01-9.77-2.346-2.494-7.014-3.983-7.416-3.674-.637.49-2.665 3.002-.174 5.764.452.502 3.605.852 5.154 4.667.836 2.059.753 4.129-.076 6.055a7.8 7.8 0 0 1-1.647 2.434l-9.01 9.01c-3.057 3.057-8.032 3.057-11.089 0-3.057-3.057-3.057-8.032 0-11.089l4.479-4.479a17.549 17.549 0 0 1-2.37-5.947L6.95 40.36c-5.35 5.351-5.35 14.057 0 19.408 5.351 5.35 14.057 5.35 19.407 0z"/></svg>
+
+        <div class="post__share--copy-link-popup type--bold-14 bg-color--neutral-white">
+          <span class="post__share--copy-link-popup-content type--bold-14">Link copied successfully</span>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" viewBox="0 0 30 20"><path d="M0 0 L15 20 L30 0 Z" fill="none"/></svg>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+
+</div>
+
+
+<section class="bl32">
+  
+    <div class="bl32_hover-card-info js-hover-card-info" data-screenname="edsolovey" data-full-name="Ed Solovey" data-profile-image="https://pbs.twimg.com/profile_images/383715410/me_200x200.jpg"></div>
+  
+
+  <div class="bl32__item is-hidden">
+    <div class="bl32__arrow js-arrow-top"></div>
+    <div class="bl32__content">
+      <div class="js-profile-banner bl32__banner"></div>
+      <div class="bl32__profile-info">
+        <div class="bl32__profile-image">
+          <a href="" target="_blank" rel="noopener" class="js-profile-anchor">
+            <img class="bl32__media js-background-image"/>
+          </a>
+        </div>
+        <a href="" target="_blank" rel="noopener" class="js-profile-anchor-follow-intent">
+          <div class="js-follow-btn bl32__following type--bold-14">Follow</div>
+        </a>
+      </div>
+      <div class="bl32__user-info">
+        <p>
+          <a href="" target="_blank" rel="noopener" class="js-profile-anchor js-user-name bl32__user-name type--bold-16"></a>
+          <img class="js-verified bl32__user-verified" src="https://cdn.cms-twdigitalassets.com/etc/designs/blog-twitter/public/icons-svg/verified2.svg"/>
+        </p>
+        <a dir="ltr" href="" target="_blank" rel="noopener" class="js-profile-anchor js-user-handle bl32__user-handle type--roman-14"></a>
+      </div>
+      <div class="bl32__profile-description">
+        <span dir="auto" class="bl32__profile-description--text js-profile-description type--roman-14"></span>
+      </div>
+      <div class="bl32__counters">
+        <a href="" class="js-profile-anchor--tweets bl32__counters-group">
+          <span class="bl32__counters-group--text clearfix type--roman-14">Tweets</span>
+          <span class="bl32__counters-group--value js-tweets type--bold-16"></span>
+        </a>
+        <a href="" class="js-profile-anchor--following bl32__counters-group">
+          <span class="bl32__counters-group--text clearfix type--roman-14">Following</span>
+          <span class="bl32__counters-group--value js-following type--bold-16"></span>
+        </a>
+        <a href="" class="js-profile-anchor--followers bl32__counters-group">
+          <span class="bl32__counters-group--text clearfix type--roman-14">Followers</span>
+          <span class="bl32__counters-group--value js-followers type--bold-16"></span>
+        </a>
+      </div>
+    </div>
+    <div class="bl32__arrow js-arrow-bottom"></div>
+  </div>
+</section>
+
+
+      <div><footer class="footer theme-bg-color--dark">
+  <div class="footer__row container">
+    <div class="footer-col">
+      <a href="#" title="Twitter platform" target="_blank" class="footer-col__parent type--bold-14 theme-color--extra-light theme-color--extra-light--hover">
+          Twitter platform
+
+          <span class="icon-container js-accordion theme-fill-color--extra-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="20" viewBox="0 0 34 20"><path d="M17 12.758L5.121.879a2.998 2.998 0 0 0-4.242 0 2.998 2.998 0 0 0 0 4.242l14 14a2.998 2.998 0 0 0 4.242 0l14-14C33.707 4.535 34 3.768 34 3s-.293-1.535-.879-2.121a2.998 2.998 0 0 0-4.242 0L17 12.758z"/></svg>
+
+          </span>
+      </a>
+      <ul class="footer-col__list">
+        <li>
+          <a href="https://twitter.com/" title="Twitter.com" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Twitter.com</a></li>
+      
+        <li>
+          <a href="https://status.twitterstat.us/" title="Status" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Status</a></li>
+      
+        <li>
+          <a href="https://cards-dev.twitter.com/validator" title="Card validator" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Card validator</a></li>
+      
+        <li>
+          <a href="https://publish.twitter.com" title="Embed a Tweet" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Embed a Tweet</a></li>
+      
+        <li>
+          <a href="https://privacy.twitter.com/" title="Privacy Center" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Privacy Center</a></li>
+      
+        <li>
+          <a href="https://transparency.twitter.com/" title="Transparency Center" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Transparency Center</a></li>
+      </ul>
+    </div>
+  
+    <div class="footer-col">
+      <a href="#" title="Twitter, Inc." target="_blank" class="footer-col__parent type--bold-14 theme-color--extra-light theme-color--extra-light--hover">
+          Twitter, Inc.
+
+          <span class="icon-container js-accordion theme-fill-color--extra-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="20" viewBox="0 0 34 20"><path d="M17 12.758L5.121.879a2.998 2.998 0 0 0-4.242 0 2.998 2.998 0 0 0 0 4.242l14 14a2.998 2.998 0 0 0 4.242 0l14-14C33.707 4.535 34 3.768 34 3s-.293-1.535-.879-2.121a2.998 2.998 0 0 0-4.242 0L17 12.758z"/></svg>
+
+          </span>
+      </a>
+      <ul class="footer-col__list">
+        <li>
+          <a href="https://about.twitter.com/en/who-we-are/our-company.html" title="About the company" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">About the company</a></li>
+      
+        <li>
+          <a href="https://about.twitter.com/en/who-we-are/twitter-for-good.html" title="Twitter for Good" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Twitter for Good</a></li>
+      
+        <li>
+          <a href="https://blog.twitter.com/" title="Company news" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Company news</a></li>
+      
+        <li>
+          <a href="https://about.twitter.com/en/who-we-are/brand-toolkit.html" title="Brand toolkit" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Brand toolkit</a></li>
+      
+        <li>
+          <a href="https://careers.twitter.com/" title="Jobs and internships" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Jobs and internships</a></li>
+      
+        <li>
+          <a href="https://investor.twitterinc.com/" title="Investors" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Investors</a></li>
+      </ul>
+    </div>
+  
+    <div class="footer-col">
+      <a href="#" title="Help" target="_blank" class="footer-col__parent type--bold-14 theme-color--extra-light theme-color--extra-light--hover">
+          Help
+
+          <span class="icon-container js-accordion theme-fill-color--extra-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="20" viewBox="0 0 34 20"><path d="M17 12.758L5.121.879a2.998 2.998 0 0 0-4.242 0 2.998 2.998 0 0 0 0 4.242l14 14a2.998 2.998 0 0 0 4.242 0l14-14C33.707 4.535 34 3.768 34 3s-.293-1.535-.879-2.121a2.998 2.998 0 0 0-4.242 0L17 12.758z"/></svg>
+
+          </span>
+      </a>
+      <ul class="footer-col__list">
+        <li>
+          <a href="https://help.twitter.com/" title="Help Center" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Help Center</a></li>
+      
+        <li>
+          <a href="https://help.twitter.com/en/using-twitter" title="Using Twitter" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Using Twitter</a></li>
+      
+        <li>
+          <a href="https://media.twitter.com/" title="Twitter Media" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Twitter Media</a></li>
+      
+        <li>
+          <a href="https://business.twitter.com/en/help.html" title="Ads Help Center" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Ads Help Center</a></li>
+      
+        <li>
+          <a href="https://help.twitter.com/en/managing-your-account" title="Managing your account" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Managing your account</a></li>
+      
+        <li>
+          <a href="https://preferencecenter.twitter.com/" title="Email Preference Center" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Email Preference Center</a></li>
+      
+        <li>
+          <a href="https://help.twitter.com/en/rules-and-policies" title="Rules and policies" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Rules and policies</a></li>
+      
+        <li>
+          <a href="https://help.twitter.com/en/forms.html" title="Contact us" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Contact us</a></li>
+      </ul>
+    </div>
+  
+    <div class="footer-col">
+      <a href="#" title="Developer resources" target="_blank" class="footer-col__parent type--bold-14 theme-color--extra-light theme-color--extra-light--hover">
+          Developer resources
+
+          <span class="icon-container js-accordion theme-fill-color--extra-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="20" viewBox="0 0 34 20"><path d="M17 12.758L5.121.879a2.998 2.998 0 0 0-4.242 0 2.998 2.998 0 0 0 0 4.242l14 14a2.998 2.998 0 0 0 4.242 0l14-14C33.707 4.535 34 3.768 34 3s-.293-1.535-.879-2.121a2.998 2.998 0 0 0-4.242 0L17 12.758z"/></svg>
+
+          </span>
+      </a>
+      <ul class="footer-col__list">
+        <li>
+          <a href="https://developer.twitter.com/en" title="Developer home" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Developer home</a></li>
+      
+        <li>
+          <a href="https://developer.twitter.com/en/docs" title="Documentation" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Documentation</a></li>
+      
+        <li>
+          <a href="https://twittercommunity.com/" title="Forums" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Forums</a></li>
+      
+        <li>
+          <a href="https://developer.twitter.com/en/community" title="Communities" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Communities</a></li>
+      
+        <li>
+          <a href="https://blog.twitter.com/developer/" title="Developer blog" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Developer blog</a></li>
+      
+        <li>
+          <a href="https://blog.twitter.com/engineering/en_us.html" title="Engineering blog" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Engineering blog</a></li>
+      
+        <li>
+          <a href="https://developer.twitter.com/en/more/developer-terms" title="Developer terms" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Developer terms</a></li>
+      </ul>
+    </div>
+  
+    <div class="footer-col">
+      <a href="#" title="Business resources" target="_blank" class="footer-col__parent type--bold-14 theme-color--extra-light theme-color--extra-light--hover">
+          Business resources
+
+          <span class="icon-container js-accordion theme-fill-color--extra-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="20" viewBox="0 0 34 20"><path d="M17 12.758L5.121.879a2.998 2.998 0 0 0-4.242 0 2.998 2.998 0 0 0 0 4.242l14 14a2.998 2.998 0 0 0 4.242 0l14-14C33.707 4.535 34 3.768 34 3s-.293-1.535-.879-2.121a2.998 2.998 0 0 0-4.242 0L17 12.758z"/></svg>
+
+          </span>
+      </a>
+      <ul class="footer-col__list">
+        <li>
+          <a href="https://business.twitter.com/en/advertising.html" title="Advertise" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Advertise</a></li>
+      
+        <li>
+          <a href="https://business.twitter.com/" title="Twitter for business" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Twitter for business</a></li>
+      
+        <li>
+          <a href="https://business.twitter.com/en/resources.html" title="Resources and guides" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Resources and guides</a></li>
+      
+        <li>
+          <a href="https://marketing.twitter.com/" title="Twitter for marketers" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Twitter for marketers</a></li>
+      
+        <li>
+          <a href="https://marketing.twitter.com/en/insights" title="Marketing insights" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Marketing insights</a></li>
+      
+        <li>
+          <a href="https://marketing.twitter.com/en/success-stories" title="Brand inspiration" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Brand inspiration</a></li>
+      
+        <li>
+          <a href="https://www.twitterflightschool.com/sl/382652bc" title="Twitter Flight School" target="_blank" class="footer-col__link type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Twitter Flight School</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__row container">
+    <div class="footer-col">
+      <p class="footer-col__footnote type--roman-14 theme-color--extra-light">&lrm;&copy; 2021 Twitter, Inc.&lrm;</p>
+    </div>
+    
+      <div class="footer-col">
+        <a href="https://help.twitter.com/rules-and-policies/twitter-cookies" title="Cookies" target="_blank" class="footer-col__footnote type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Cookies</a>
+      </div>
+    
+      <div class="footer-col">
+        <a href="https://twitter.com/privacy" title="Privacy" target="_blank" class="footer-col__footnote type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Privacy</a>
+      </div>
+    
+      <div class="footer-col">
+        <a href="https://twitter.com/tos" title="Terms and conditions" target="_blank" class="footer-col__footnote type--roman-14 theme-color--extra-light theme-color--extra-light--hover">Terms and conditions</a>
+      </div>
+    
+  </div>
+</footer>
+</div>
+      
+<script type="text/javascript" src="/etc/clientlibs/dtm/blog-twitter/c411b4930511/34c56d36e6ea/launch-a481a4cc705e.min.js.twhash.a.f.e257ebaaa23dcc8a1a01fccf7bd01fd0.js" async></script>
+
+
+
+<script src="https://platform.twitter.com/oct.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+
+<script type="text/javascript" src="/etc/designs/blog-twitter/public/js/common.js.twhash.a.f.6faba5512d6318d6d297fa23835eddb8.js"></script>
+<script type="text/javascript" src="/etc/designs/blog-twitter/public/js/critical.js.twhash.a.f.54d31d80309879596f8a90663ad6bdb8.js"></script>
+<script type="text/javascript" src="/etc/designs/blog-twitter/public/js/app.js.twhash.a.f.1adf484f949fa48931cb2983074e1efc.js"></script>
+<script type="text/javascript" src="/etc/designs/blog-twitter/public/js/content.js.twhash.a.f.4eebeaf838a6d00124db71a9e7130e41.js"></script>
+<script type="text/javascript" src="/etc/designs/blog-twitter/public/js/universal.js.twhash.a.f.2b32f3aeb7386082e8874f151d39a725.js"></script>
+
+
+
+
+  <div id="u12" class="u12-data-protection-notice">
+
+    
+    <div class="u12-data-protection-notice__item  u12-data-protection-notice__item--a">
+      
+
+  
+
+  
+  <div class="js-eu-countries-list" data-eu-countries-list="[AT,BE,BG,CY,CZ,DK,EE,FI,FR,DE,EL,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE,UK,IS,NO,LI,CH]"></div>
+
+  <div class="u12a-eu-cookie-notice  js-eu-cookie-notice" id="u12a" data-cname="eu_cn">
+    <div class="u12a-eu-cookie-notice__item  u12-data-protection-notice__notice">
+      <div class="u12a-eu-cookie-notice__content">
+
+        <div class="u12a-eu-cookie-notice__copy">
+          <p class="mtc-font  twtr-font  js-cookie-copy">
+            By using Twitter’s services you agree to our <a href="https://help.twitter.com/en/rules-and-policies/twitter-cookies" target="_blank">Cookies Use</a>. We use cookies for purposes including analytics, personalisation, and ads.
+
+          </p>
+        </div>
+
+        <div class="u12a-eu-cookie-notice__choice">
+          <ul class="u12a-eu-cookie-notice__choice-list">
+            <li><button class="u12a-eu-cookie-notice__button  is-blue  u12a-eu-cookie-notice__button--accept  mtc-font  twtr-font  js-accept">OK</button></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+    </div>
+
+    
+    
+
+  </div>
+
+  
+  
+    
+<link rel="stylesheet" href="/etc/designs/common-twitter/clientlib-u12-data-protection-notice.min.twhash.a.cl.e5f41c96ebe26adc278fe501d69fdebf.css" type="text/css">
+<script src="/etc/designs/common-twitter/clientlib-promise-polyfill.min.twhash.a.cl.678c3c47bfcf62393184734a7204fcdf.js"></script>
+<script src="/etc/designs/common-twitter/clientlib-twtr-profile-adapter.min.twhash.a.cl.2f6a2e41ae41c33aba9f8a7dcf876eb6.js"></script>
+<script src="/etc/designs/common-twitter/clientlib-u12-data-protection-notice.min.twhash.a.cl.9c34f76a4ab517d890765dd40fd17dd6.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,1212 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-117261801-4"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-117261801-4');
+</script>
+
+    
+    
+    
+    
+    	<meta name="twitter:title" property="twitter:title" content="Twitch Blog | Go’s march to low-latency GC">
+	<meta name="description" property="description" content="We use Go at Twitch for many of our busiest systems. Its simplicity, safety, performance, and readability make it a good tool for the problems we encounter with serving live video and chat to our m...">
+	<meta name="og:site_name" property="og:site_name" content="Twitch Blog">
+	<meta name="og:description" property="og:description" content="We use Go at Twitch for many of our busiest systems. Its simplicity, safety, performance, and readability make it a good tool for the problems we encounter with serving live video and chat to our m...">
+	<meta name="og:image" property="og:image" content="https://blog.twitch.tv/assets/uploads/20984973b4e447c3d940ae2a43c444e7.jpeg">
+	<meta name="twitter:card" property="twitter:card" content="summary_large_image">
+<title x-data-i18n="effbe7b647ea611aed5870ba351053b7:meta:title">
+        Go’s march to low-latency GC | Twitch Blog
+      </title>
+
+
+    <link rel="shortcut icon" href="/assets/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="/assets/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/assets/favicons/favicon-16x16.png" sizes="16x16">
+
+    <link rel="stylesheet" href="/assets/twitch-company-theme.css?v=1.0.83">
+    <link rel="stylesheet" href="/assets/local.css?v=1.0.83">
+    <link rel="stylesheet" href="/assets/twitchcon-2020.css?v=1.0.83">
+  <meta http-equiv="content-language" content="en">
+<link rel="alternate" href="/de-de/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="de-de">
+<link rel="alternate" href="/es-mx/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="es-mx">
+<link rel="alternate" href="/fr-fr/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="fr-fr">
+<link rel="alternate" href="/it-it/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="it-it">
+<link rel="alternate" href="/ja-jp/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="ja-jp">
+<link rel="alternate" href="/ko-kr/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="ko-kr">
+<link rel="alternate" href="/nl-nl/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="nl-nl">
+<link rel="alternate" href="/pl-pl/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="pl-pl">
+<link rel="alternate" href="/pt-br/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="pt-br">
+<link rel="alternate" href="/ru-ru/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="ru-ru">
+<link rel="alternate" href="/sv-se/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="sv-se">
+<link rel="alternate" href="/th-th/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="th-th">
+<link rel="alternate" href="/tr-tr/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="tr-tr">
+<link rel="alternate" href="/zh-tw/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" hreflang="zh-tw">
+</head>
+
+  <body>
+    
+    <script type="text/javascript" src="/assets/js/lax.min.js"></script>
+
+
+
+
+
+
+
+
+
+<div class="c-language-picker padded-section t:w">
+	<p id="c-language-picker__label" class="c-language-picker__label" data-i18n="global:3a08e2e340ab29fd9263af48193cbf8e">
+		Language
+	</p>
+	
+	<ul class="c-language-picker__menu">
+		
+			<li class="c-language-picker__option" data-lang="de-de">Deutsch</li>
+		
+			<li class="c-language-picker__option" data-lang="en">English</li>
+		
+			<li class="c-language-picker__option" data-lang="es-mx">Español</li>
+		
+			<li class="c-language-picker__option" data-lang="fr-fr">Français</li>
+		
+			<li class="c-language-picker__option" data-lang="it-it">Italiano</li>
+		
+			<li class="c-language-picker__option" data-lang="ja-jp">日本語</li>
+		
+			<li class="c-language-picker__option" data-lang="ko-kr">한국어</li>
+		
+			<li class="c-language-picker__option" data-lang="pl-pl">Polski</li>
+		
+			<li class="c-language-picker__option" data-lang="pt-br">Português Brasileiro</li>
+		
+			<li class="c-language-picker__option" data-lang="ru-ru">Русский</li>
+		
+			<li class="c-language-picker__option" data-lang="th-th">ภาษาไทย</li>
+		
+			<li class="c-language-picker__option" data-lang="tr-tr">Türkçe</li>
+		
+			<li class="c-language-picker__option" data-lang="zh-tw">中文 繁體</li>
+		
+	</ul>
+</div>
+
+
+
+<div class="t:w padded-section">
+    <header class="c-header t:w">
+        <div class="c-header__inner">
+
+         <!--    
+            * ALGOLIA search_enabled <button id="close-search" class="c-header__inner__close-search">
+            </button> -->
+
+            <div class="c-header__inner__icon">
+                
+                    <a href="/en/" aria-label="Home">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1139.43 379.04" class="wordmark-logo grid-start-m-2 grid-span-m-4" alt="Twitch">
+  <defs>
+  </defs>
+  <g data-name="Layer 2">
+    <g data-name="Layer 1">
+      <path class="wordmark-logo__bg fill-purple" d="M1119.44 269.32h-80v-99.75h-20v99.75h-80V20h80v69.78h60l40 39.9zm-199.9-99.75h-80v20h80v79.8H799.6l-40-39.9v-99.79l40-39.9h119.94zm-179.91 0h-70v20h70v79.8H629.69l-40-39.9V20h80v69.78h70zM569.72 69.83h-80V20h80zm0 199.49h-80V89.78h80zm-100 0H229.89l-40-39.9V89.78h80v99.74h20V89.78h80v99.74h20V89.78h80zm-299.8-99.75H100v20h70v79.8H60l-40-39.9V20h80v69.78h70zm919.54-99.74h-50V0H929.75l-50.47 69.83h-89.67l-30 29.92V69.83h-70V0H469.77v69.83H160.42L110 0H0v239.4L139.93 379h139.93v-39.9l40 39.9h269.85v-39.9l40 39.9h129.91v-39.9l40 39.9h249.88l90-89.78V119.7z" fill="#9145ff"></path>
+      <path class="wordmark-logo__text fill-white" d="M939.53 269.32h79.96v-99.75h19.99v99.75h79.96V129.68l-39.98-39.9h-59.97V19.96h-79.96v249.36zM589.71 229.42l39.97 39.9h109.95v-79.8h-69.96v-19.95h69.96V89.78h-69.96V19.96h-79.96v209.46zM759.62 229.42l39.98 39.9h119.94v-79.8h-79.96v-19.95h79.96V89.78H799.6l-39.98 39.9v99.74zM489.76 19.96h79.96v49.87h-79.96zM169.92 89.78H99.95V19.96H19.99v209.46l39.98 39.9h109.95v-79.8H99.95v-19.95h69.97V89.78zM189.91 229.42l39.97 39.9h239.89V89.78h-79.96v99.74h-20V89.78h-79.95v99.74h-19.99V89.78h-79.96v139.64zM489.76 89.78h79.96v179.54h-79.96z" fill="#FFF"></path>
+    </g>
+  </g>
+</svg></a>
+                
+            </div>
+           
+            <button id="mobile-nav" class="c-header__inner__mobile-nav">
+            </button>
+
+            <nav id="nav-items" class="c-header__inner__nav" role="navigation">
+                <div class="c-header__inner__nav__icon c-header__inner__nav__icon--nav">
+                    <a href="/en/" aria-label="Home">
+                        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1139.43 379.04" class="wordmark-logo grid-start-m-2 grid-span-m-4" alt="Twitch">
+  <defs>
+  </defs>
+  <g data-name="Layer 2">
+    <g data-name="Layer 1">
+      <path class="wordmark-logo__bg fill-purple" d="M1119.44 269.32h-80v-99.75h-20v99.75h-80V20h80v69.78h60l40 39.9zm-199.9-99.75h-80v20h80v79.8H799.6l-40-39.9v-99.79l40-39.9h119.94zm-179.91 0h-70v20h70v79.8H629.69l-40-39.9V20h80v69.78h70zM569.72 69.83h-80V20h80zm0 199.49h-80V89.78h80zm-100 0H229.89l-40-39.9V89.78h80v99.74h20V89.78h80v99.74h20V89.78h80zm-299.8-99.75H100v20h70v79.8H60l-40-39.9V20h80v69.78h70zm919.54-99.74h-50V0H929.75l-50.47 69.83h-89.67l-30 29.92V69.83h-70V0H469.77v69.83H160.42L110 0H0v239.4L139.93 379h139.93v-39.9l40 39.9h269.85v-39.9l40 39.9h129.91v-39.9l40 39.9h249.88l90-89.78V119.7z" fill="#9145ff"></path>
+      <path class="wordmark-logo__text fill-white" d="M939.53 269.32h79.96v-99.75h19.99v99.75h79.96V129.68l-39.98-39.9h-59.97V19.96h-79.96v249.36zM589.71 229.42l39.97 39.9h109.95v-79.8h-69.96v-19.95h69.96V89.78h-69.96V19.96h-79.96v209.46zM759.62 229.42l39.98 39.9h119.94v-79.8h-79.96v-19.95h79.96V89.78H799.6l-39.98 39.9v99.74zM489.76 19.96h79.96v49.87h-79.96zM169.92 89.78H99.95V19.96H19.99v209.46l39.98 39.9h109.95v-79.8H99.95v-19.95h69.97V89.78zM189.91 229.42l39.97 39.9h239.89V89.78h-79.96v99.74h-20V89.78h-79.95v99.74h-19.99V89.78h-79.96v139.64zM489.76 89.78h79.96v179.54h-79.96z" fill="#FFF"></path>
+    </g>
+  </g>
+</svg>
+                    </a>
+                </div>
+                <ul class="c-header__inner__nav__links">
+                    
+                        <li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    " href="https://www.twitch.tv/p/" data-i18n="global:8f7f4c1ce7a4f933663d10543562b096">About</a>
+                        </li><li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    " href="https://www.twitch.tv/p/stream/" data-i18n="global:eae835e83c0494a376229f254f7d3392">Stream</a>
+                        </li><li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    " href="https://www.twitch.tv/p/watch/" data-i18n="global:f20658650d987d31063b593c05980397">Watch</a>
+                        </li><li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    " href="https://www.twitch.tv/p/company/" data-i18n="global:1c76cbfe21c6f44c1d1e59d54f3e4420">Company</a>
+                        </li><li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    
+        c-header__inner__nav__links__link--active
+    " href="https://blog.twitch.tv/" data-i18n="global:be8df1f28c0abc85a0ed0c6860e5d832">Blog</a>
+                </li></ul>
+
+                <div class="c-header__inner__nav__browse">
+                    
+
+
+
+
+
+<a class="c-link c-link--outbound" href="https://www.twitch.tv/" data-i18n="global:1da58962a7dd53edd9775f6f74ff14e5">
+	twitch.tv
+</a>
+                </div>
+                <div class="c-header__inner__nav__mobile-scrim -active"></div>
+            </nav>
+        </div>
+
+        <div id="mobile-nav-content" class="t:w padded-section c-header__inner__mobile-nav-content">
+            
+                <li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    " href="https://www.twitch.tv/p/" data-i18n="global:8f7f4c1ce7a4f933663d10543562b096">About</a></li>
+            
+                <li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    " href="https://www.twitch.tv/p/stream/" data-i18n="global:eae835e83c0494a376229f254f7d3392">Stream</a></li>
+            
+                <li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    " href="https://www.twitch.tv/p/watch/" data-i18n="global:f20658650d987d31063b593c05980397">Watch</a></li>
+            
+                <li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    " href="https://www.twitch.tv/p/company/" data-i18n="global:1c76cbfe21c6f44c1d1e59d54f3e4420">Company</a></li>
+            
+                <li>
+<a class="
+    c-header__inner__nav__links__link
+
+    
+    
+
+    
+        c-header__inner__nav__links__link--active
+    " href="https://blog.twitch.tv/" data-i18n="global:be8df1f28c0abc85a0ed0c6860e5d832">Blog</a></li>
+            
+            <li>
+
+            <a class="c-header__inner__nav__links__link" href="https://www.twitch.tv/" data-i18n="global:twitch.tv">twitch.tv</a></li>
+        </div>
+    
+        <!-- * ALGOLIA search_enabled -->
+        <!-- <div id="search-content" class="t:w padded-section c-header__search-content">
+            
+        </div> -->
+    </header>
+</div>
+
+<script type="text/javascript">
+    var menuEl = document.getElementById("mobile-nav");
+    
+    function toggleMenu() {
+        var menu = document.getElementById("mobile-nav");
+        var menuContent = document.getElementById("mobile-nav-content");
+        var body = document.getElementsByTagName("body")[0]; 
+        menu.classList.toggle("c-header__inner__mobile-nav--open");
+        menuContent.classList.toggle("c-header__inner__mobile-nav-content--open");
+        body.classList.toggle("no-scroll");
+    }
+
+    menuEl.addEventListener("click", toggleMenu);
+</script>
+
+
+
+<div class="post-wrapper padded-section t:w">
+  
+
+<style>
+    :lang(en) .c-locale-warning {
+        display: none;
+    }
+
+    
+</style>
+
+<div class="c-locale-warning">
+    <div class="c-locale-warning__images">
+        <img src="/assets/images/error.png" alt="Language not available">
+        <img src="/assets/images/error.png" alt="Language not available">
+        <img src="/assets/images/error.png" alt="Language not available">
+    </div>
+    <p data-i18n="global:unsupported-i18n-message">This post is not available in your language. Here are some other options:</p>
+
+    <ul>
+        
+        
+
+        
+        
+
+        <li>
+
+
+
+
+
+<a class="c-link c-link--outbound" href="/en/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/">
+	English
+</a></li>
+
+        
+
+        
+    </ul>
+</div>
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<div class="t:w c-post-header">
+
+  <span class="cms-editor-link" data-cms-editor-link="cloudcannon:#title" data-cms-editor-link-style="modal">
+    
+
+<div class="c-page-heading">
+	
+	<h1 class="c-page-heading__text
+	
+	
+	 c-page-heading__text--colored
+	
+	
+	 c-page-heading__text--small
+	
+	
+	
+	 c-page-heading__text--light-font
+	
+	
+	">Go’s march to low-latency GC</h1>
+	
+	
+</div>
+
+
+
+  </span>
+  <div class="c-post-header__details">
+    <div class="c-post-header__details__author cms-editor-link" data-cms-editor-link="cloudcannon:#authors" data-cms-editor-link-style="modal">
+      
+    Jul 5 2016
+
+    
+      - By Rhys Hiltner
+    
+  
+    </div>
+  </div>
+
+  <img class="c-post-header__cover-image cms-editor-link" data-cms-editor-link="cloudcannon:#cover_image" data-cms-editor-link-style="modal" src="/assets/uploads/20984973b4e447c3d940ae2a43c444e7.jpeg">
+</div>
+
+
+  <!-- Post Body -->
+  <div class="post-wrapper__content t:w" data-proofer-ignore="">
+    <p>We use <a href="https://golang.org/">Go</a> at <a href="https://www.twitch.tv/">Twitch</a> for many of our busiest systems. Its simplicity, safety, performance, and readability make it a good tool for the problems we encounter with serving live video and chat to our millions of users.</p>
+
+<p>But this isn’t another article about how great Go is for us — it’s about how our use of Go pushes the limits of the current runtime implementation in some dimensions, and how we respond to reaching those limits.</p>
+
+<p>It’s the story of how improvements to the Go runtime between Go 1.4 and Go 1.6 gave us a 20x improvement in garbage collection (GC) pause time, of how we’ve gotten another 10x improvement in Go 1.6’s pauses, and of how sharing our experience with the Go runtime team helped them give us an additional 10x speedup in Go 1.7 while obsoleting our manual tuning.</p>
+
+<h2 id="the-gc-latency-saga-begins">The GC latency saga begins</h2>
+
+<p>Our IRC-based chat system was first written in Go in late 2013, replacing the previous Python implementation. Using pre-release versions of Go 1.2, it was able to serve over 500,000 concurrent users from each physical host without special tuning. With a group of three goroutines (Go’s lightweight threads of execution) serving each connection, the program chugged along with 1,500,000 goroutines per process. Even with such a large goroutine count, the only major performance issue we encountered with Go circa 1.2 was the GC pause time, which would freeze our application for tens of seconds whenever it ran — not something we could accept for our interactive chat service.</p>
+
+<p>Not only was each GC pause very expensive, the collections ran several times a minute. We worked hard to reduce the number and size of memory allocations so the GC would run less frequently, declaring victory once the heap grew only around 50% every two minutes. Although there were fewer pauses, each one was just as devastating.</p>
+
+<p>Once Go 1.2 was released, GC pause time was down to “only” a few seconds. We split our traffic across a larger number of processes, which brought the pauses down to a more comfortable range.</p>
+
+<p>The work to reduce allocations continues to benefit our chat server even as the Go implementation evolves, but the change to split chat traffic across a larger number of processes is a workaround for a particular range of Go versions. Workarounds like that don’t stand the test of time, but are important for providing a good service to our users today. Sharing our experience with the workarounds can help to create lasting improvements to the Go runtime that benefit more than a single program.</p>
+
+<p>Starting with Go 1.5 in August of 2015, Go’s garbage collector is mostly-concurrent and incremental, meaning that it no longer requires the application to be entirely stopped while it does the bulk of its work. Aside from relatively short setup and termination phases, our program can continue to operate while garbage collection is underway. Upgrading to Go 1.5 immediately led to a 10x improvement in the length of GC pauses in our chat system, with pause time on a heavily-loaded test instance shrinking from 2 seconds to around 200ms.</p>
+
+<h2 id="go-15-a-new-era-of-gc">Go 1.5, a new era of GC</h2>
+
+<p>While the latency reduction we got with Go 1.5 was worth celebrating, the best part of the new GC was that it set the stage for further incremental improvements.</p>
+
+<p>Go 1.5’s garbage collector still has the same two major phases — a mark phase where the GC determines which memory allocations are still in use, and a sweep phase where the unused memory is prepared for reuse — but those have each been broken into two subphases. First, the application is paused while the previous sweep phase terminates. Then the concurrent mark phase finds in-use memory while the user code is running. Finally, the application is paused a second time for the mark phase to terminate. Afterwards, the unused memory is gradually swept while the application goes about its business.</p>
+
+<p>The runtime’s <em>gctrace</em> feature prints lines summarizing each GC cycle, including the duration of each phase. For our chat server it indicates that most of the remaining pause time is in the mark termination phase, so the analysis will focus there. And since the runtime team has requested bug reports describing apps that still see long GC pauses, we’d be remiss to keep our long pause times a secret!</p>
+
+<p>Of course, we’d need more detail on what exactly the GC was up to during those pauses. The Go core packages include a great <a href="https://blog.golang.org/profiling-go-programs">user-level CPU profiler</a>, but for this we’re going to use Linux’s <strong>perf</strong> tool. Using perf will allow a higher sample frequency and visibility into time spent in the kernel. Monitoring cycles spent in the kernel can help us debug slow syscalls and work done transparently for virtual memory management.</p>
+
+<p>The image below is part of a profile of our chat server running with go1.5.1. This is a <a href="http://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html">Flame Graph</a> made with <a href="https://github.com/brendangregg/FlameGraph">Brendan Gregg’s tools</a>, trimmed to only include samples that have the <em>runtime.gcMark</em> function on the stack, which for Go 1.5 approximates time spent in the mark termination phase.</p>
+
+<p>The flame graph shows stack depth as upwards growth, and represents CPU time as the width of each section. (The colors are meaningless, and the ordering on the x-axis is also insignificant — it’s just alphabetical.) At the very left of the chart we can see that <em>runtime.gcMark</em> is calling <em>runtime.parfordo</em> in nearly all of the sampled stacks. Moving upwards, we see that most time is spent in <em>runtime.markroot</em> making calls to <em>runtime.scang</em>, <em>runtime.scanobject</em>, and <em>runtime.shrinkstack</em>.</p>
+
+<p>The <em>runtime.scang</em> function is for re-scanning memory to aid in terminating the mark phase. The whole idea behind the mark termination phase is to finish scanning the app’s memory, so this is the right type of work for it to be doing here. We’ll have better luck finding performance improvements in the other functions.</p>
+
+<p>Next up is <em>runtime.scanobject</em>. That function does several things, but the reason it’s running during the chat server’s mark termination phase in Go 1.5 is to implement finalizers. “Why would the program use so many finalizers that they’d make a significant contribution to GC pause times?” you might wonder. The application in question is a chat server, handling hundreds of thousands of users. Go’s core “net” package attaches a finalizer to every TCP connection to help control file descriptor leaks — and since each user has their own TCP connection, even small contributions to mark termination add up.</p>
+
+<p>That seemed worth reporting to the Go runtime team. We emailed back and forth and the Go team was very helpful with suggestions on how to diagnose the performance problems and how to distill them into minimal test cases. For Go 1.6, the runtime team moved finalizer scanning into the concurrent mark phase, leading to smaller pauses for apps with a large number of TCP connections. Together with all of the other improvements in the release, pause times for our chat server with Go 1.6 are half of what they were with Go 1.5, down to around 100ms on a test instance. Progress!</p>
+
+<h2 id="stack-shrinking">Stack shrinking</h2>
+
+<p>Go’s approach to concurrency involves making it very cheap to have a large number of goroutines. While a program using 10,000 OS threads might perform poorly, that number of goroutines is nothing unusual. One difference is that a goroutine starts with a very small stack — only 2kB — which grows as needed, contrasted with the large fixed-size stacks that are common elsewhere. Go’s function call preamble makes sure there’s enough stack space for the next call, and if not will <em>move</em> the goroutine’s stack to a larger memory area — rewriting pointers as needed — before allowing the call to continue.</p>
+
+<p>Thus as a program runs, its goroutines’ stacks will grow to support the deepest calls they make. One of the responsibilities of the garbage collector is to reclaim stack memory that’s no longer required. The task of moving goroutine stacks onto more appropriately-sized memory ranges is done by <em>runtime.shrinkstack</em>, which in Go 1.5 and 1.6 is done during mark termination while the app is paused.</p>
+
+<p><img src="/assets/uploads/9f58e69261c40834e484441d274e559f.jpeg" alt=""></p>
+
+<p>The above flame graph — recorded with a pre-1.6 version of Go from October 2015 — shows <em>runtime.shrinkstack</em> in around 3/4ths of its samples. If that work could be done while the app is running, it could give a big speedup to our chat server and other programs like it.</p>
+
+<p>The Go runtime’s package docs explain how to disable stack shrinking. For our chat server, wasting some memory is a small price to pay for reduced GC pauses — and this is the decision we have when running Go 1.6. With stack shrinking disabled, the chat server’s pause times are cut in half again to somewhere between 30 and 70ms depending on which way the wind is blowing.</p>
+
+<p>While keeping the structure and operations of the chat service relatively constant, we’d endured the multi-second GC pauses of Go 1.2 through 1.4. Go 1.5 brought them down to around 200ms, and Go 1.6 cut it further to around 100ms. Now with pauses generally less than 70ms, we can claim an improvement of more than 30x.</p>
+
+<p>There’s probably still room for improvement; time for another profile!</p>
+
+<h2 id="page-faults">Page faults?!</h2>
+
+<p>The GC pause times had been fairly consistent until this point, but now they are spread out over a wide range of durations (from 30 to 70ms), uncorrelated with any other <em>gctrace</em> output. Here’s a flame graph of cycles spent during some of the longer mark termination pauses:</p>
+
+<p><img src="/assets/uploads/6ed0c97841b9c556a69066a2d5156917.jpeg" alt=""></p>
+
+<p>When the Go GC calls <em>runtime.gcRemoveStackBarriers</em> the system generates a page fault, leading to a call to the kernel’s <em>page_fault</em> function, leading to the wide tower in the chart just right of center. Page faults are the kernel’s way of mapping a page of virtual memory (often 4kB) to a piece of physical RAM. Processes are often allowed to allocate huge amounts of virtual memory, which will be converted to resident memory through page faults only as it’s accessed by the program.</p>
+
+<p>The <em>runtime.gcRemoveStackBarriers</em> function modifies stack memory, which should have been accessed recently by the program. In fact, its purpose is to remove stack barriers that were added at the beginning of the GC cycle just seconds earlier. The system has plenty of memory available — it didn’t assign the physical RAM to some other more active process — so why would this memory access lead to page faults?</p>
+
+<p>Some background on our computing hardware might be helpful. The servers we use to run the chat system are modern dual-socket machines. Each CPU socket has a few directly-attached memory banks. This configuration results in <em>NUMA</em>, Non-Uniform Memory Access. When a thread runs on a core in socket 0, it will have faster access to the physical memory attached to that socket and moderately slower access to other memory. The Linux kernel tries to reduce this latency by running threads near the memory they use, and by moving physical memory pages to be close to where the relevant threads run.</p>
+
+<p>With this in mind, we can take a closer look at the behavior of the kernel’s <em>page_fault</em> function. Looking deeper into the call stack (moving upwards on the flame graph) we can see the kernel calling <em>do_numa_page</em> and <em>migrate_misplaced_page</em>, indicating that the kernel is moving the program’s memory between physical memory banks.</p>
+
+<p>The Linux kernel has picked up on the nearly-meaningless memory access patterns of the GC’s mark termination phase and is migrating memory pages — at great expense — to match it. This behavior shows up ever so slightly in the go1.5.1 flame graph, but it’s much more pronounced now that our attention is focused on <em>runtime.gcRemoveStackBarriers</em>.</p>
+
+<p>This is where the benefit of profiling with <strong><em>perf</em></strong> is most apparent. The perf tool is able to show kernel stacks, while Go’s user-level profiler would have shown the Go function as mysteriously slow. Using perf is rather more complicated, requires root access for viewing kernel stacks, and for Go 1.5 and 1.6 requires a nonstandard build of the Go toolchain (via <em>GOEXPERIMENT=framepointer ./make.bash</em>, to be standard in Go 1.7). For problems like this one, it’s entirely worth it.</p>
+
+<h2 id="controlling-the-migrations">Controlling the migrations</h2>
+
+<p>If using two CPU sockets and two memory banks is too complex, let’s try using just one. The bluntest instrument available for this is the <em>taskset</em> command, which can restrict a program to run only on cores on a single socket. Since the program’s threads only access memory from one socket, the kernel will move its memory to reside in that socket’s memory banks.</p>
+
+<p><img src="/assets/uploads/9027539a74fbb5364a24ab5c5c9454c3.jpeg" alt=""></p>
+
+<p>After confining the program to a single NUMA node the app’s mark termination times went down to 10–15ms, a remarkable improvement from the 200ms seen with Go 1.5 or the 2-second pauses of Go 1.4. (The same benefit can be had without sacrificing half of the server by setting the memory policy of the process to <em>MPOL_BIND</em> via <em>set_mempolicy(2)</em> or <em>mbind(2)</em>.) The above profile was taken with a pre-1.6 version of Go from October 2015. It shows considerable time in <em>runtime.freeStackSpans</em> on the left, which has since been moved to a concurrent GC phase and so no longer contributes to pause duration. There’s not much left in the mark termination phase to remove!</p>
+
+<h2 id="go-17">Go 1.7</h2>
+
+<p>Up through Go 1.6, we managed the high cost of stack shrinking by disabling the feature for our program. That had a minimal impact on the chat server’s memory usage, but levied a much larger toll on operational complexity. Stack shrinking is very important for some programs, so instead of rolling the change out everywhere we only implemented it for a small set of applications. Go 1.7 now shrinks stacks concurrently while the application is running. We get the best of both worlds — low memory usage without any special tuning.</p>
+
+<p>Since the introduction of its concurrent GC in Go 1.5, the runtime has kept track of whether a goroutine has executed since its stack was last scanned. The mark termination phase would check each goroutine to see whether it had recently run, and would rescan the few that had. In Go 1.7, the runtime maintains a separate short list of such goroutines. This removes the need to look through the entire list of goroutines while user code is paused, and greatly reduces the number of memory accesses that can trigger the kernel’s NUMA-related memory migration code.</p>
+
+<p>Finally, the compilers for the amd64 architecture will maintain frame pointers by default, so standard debugging and _perf_ormance tools like perf can determine the current function call stack. Users who build their programs with binary distributions of Go will be able pick up more advanced tools as they need them without having to dig into how to rebuild their Go toolchain and rebuild/redeploy their programs. This bodes well for future performance improvements to the Go core packages and runtime, as engineers like you and I will be able to collect the information we need for high-quality bug reports.</p>
+
+<p>With pre-release Go 1.7 from June 2016, the GC pause times are better than ever with no manual tuning required. Typical pause times for our chat server are close to 1ms out of the box — a 10x improvement over the tuned Go 1.6 configuration!</p>
+
+<p>Sharing our experiences with the Go team allowed them to find permanent solutions to the problems we’d encountered. Profiling and tuning gave our application a 10x improvement in pause time with Go 1.5 and 1.6, but between Go 1.5 and Go 1.7 the runtime team was able to turn that into a 100x improvement in pause time for all apps like ours. Hats off to their tireless work on Go’s runtime performance.</p>
+
+<h2 id="whats-next">What’s next</h2>
+
+<p>All of this analysis has focused on our chat server’s bane — stop-the-world pause duration — but that’s only one dimension of GC performance. With the GC’s awkward pauses finally under control, the runtime team is poised to tackle throughput.</p>
+
+<p>Their recent proposal for a <a href="https://golang.org/s/gctoc">Transaction Oriented Collector</a> describes an approach to transparently provide inexpensive allocation and collection of memory that isn’t shared between goroutines. This can delay the need for a full GC run, and reduce the total number of CPU cycles that the program spends on garbage collection.</p>
+
+<p>And of course, Twitch is hiring! If this sort of stuff interests you, <a href="https://engineering.twitch.tv/">drop us a line</a>.</p>
+
+<h2 id="thank-you">Thank you</h2>
+
+<p>I’d like to thank Chris Carroll and John Rizzo for their help with safely testing new Go versions on their chat system, and Spencer Nelson and Mike Ossareh for editing this post with me. I’d also like to thank the Go runtime team for helping me to file good bug reports and for their constant improvements to Go’s garbage collector.</p>
+
+  </div>
+</div>
+
+
+
+
+<div class="c-post-footer t:b padded-section">
+	<div class="c-post-footer__wrapper">
+		
+
+<div class="c-page-heading">
+	
+	<h1 class="c-page-heading__text
+	
+	
+	 c-page-heading__text--colored
+	
+	
+	
+	 c-page-heading__text--large
+	
+	
+	
+	" data-i18n="global:12624c6e36afbc1ca936cf8f983b0d6b">In other news</h1>
+	
+	
+</div>
+
+
+
+		<div class="c-post-footer__wrapper__posts t:b">
+			
+				
+				
+				
+				
+				
+
+
+
+
+
+
+
+
+
+<div class="c-card-post cms-editor-link" data-cms-editor-link="cloudcannon:collections/">
+	<div class="c-card-post__inner">
+		<p class="c-card-post__inner__date c-card-post__inner__date--hidden">
+			Jul 7
+		</p>
+		<h3 class="c-card-post__inner__heading c-card-post__inner__heading--hidden">
+			<a href="/en/2016/07/07/make-a-video-win-an-all-access-purple-ticket-to-twitch-con-1d3704c91fb5/">Make a video, win an all-access Purple Ticket to TwitchCon!</a>
+		</h3>
+
+		<a href="/en/2016/07/07/make-a-video-win-an-all-access-purple-ticket-to-twitch-con-1d3704c91fb5/">
+      <div class="c-card-post__inner__image" style="position: relative;">
+        <img src="/assets/uploads/69352ad64cf55b72ad1a2273e498b884.png" alt="Make a video, win an all-access Purple Ticket to TwitchCon!" style="position: absolute; object-fit: cover; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;">
+      </div>
+		</a>
+		<p class="c-card-post__inner__date">Jul 7
+		</p>
+		<h3 class="c-card-post__inner__heading">
+			<a href="/en/2016/07/07/make-a-video-win-an-all-access-purple-ticket-to-twitch-con-1d3704c91fb5/">Make a video, win an all-access Purple Ticket to TwitchCon!</a>
+		</h3>
+		<p class="c-card-post__inner__description">
+			Do you love Twitch? Want to celebrate video games and broadcasting at the ultimate Twitch convention? You’re in luck, because we’re...
+		</p>
+		
+		
+
+
+
+
+
+<a class="c-link c-link--outbound c-link--inverse" href="/en/2016/07/07/make-a-video-win-an-all-access-purple-ticket-to-twitch-con-1d3704c91fb5/" data-i18n="global:43340e6cc4e88197d57f8d6d5ea50a46">
+	Read more
+</a>
+	</div>
+
+	
+</div>
+
+			
+
+			
+				
+				
+				
+				
+				
+
+
+
+
+
+
+
+
+
+<div class="c-card-post cms-editor-link" data-cms-editor-link="cloudcannon:collections/">
+	<div class="c-card-post__inner">
+		<p class="c-card-post__inner__date c-card-post__inner__date--hidden">
+			Jul 5
+		</p>
+		<h3 class="c-card-post__inner__heading c-card-post__inner__heading--hidden">
+			<a href="/en/2016/07/05/you-get-an-app-and-you-get-an-app-download-the-twitch-ps-vita-app-now-98299a5a0e7/">You get an app and you get an app! Download the Twitch PS Vita app now.</a>
+		</h3>
+
+		<a href="/en/2016/07/05/you-get-an-app-and-you-get-an-app-download-the-twitch-ps-vita-app-now-98299a5a0e7/">
+      <div class="c-card-post__inner__image" style="position: relative;">
+        <img src="/assets/uploads/c19f71cf1179795885b8663dc3f4d742.png" alt="You get an app and you get an app! Download the Twitch PS Vita app now." style="position: absolute; object-fit: cover; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;">
+      </div>
+		</a>
+		<p class="c-card-post__inner__date">Jul 5
+		</p>
+		<h3 class="c-card-post__inner__heading">
+			<a href="/en/2016/07/05/you-get-an-app-and-you-get-an-app-download-the-twitch-ps-vita-app-now-98299a5a0e7/">You get an app and you get an app! Download the Twitch PS Vita app now.</a>
+		</h3>
+		<p class="c-card-post__inner__description">
+			The circle is now complete. You can now watch Twitch across all of your PlayStation devices! No matter where you are,...
+		</p>
+		
+		
+
+
+
+
+
+<a class="c-link c-link--outbound c-link--inverse" href="/en/2016/07/05/you-get-an-app-and-you-get-an-app-download-the-twitch-ps-vita-app-now-98299a5a0e7/" data-i18n="global:43340e6cc4e88197d57f8d6d5ea50a46">
+	Read more
+</a>
+	</div>
+
+	
+</div>
+
+			
+		</div>
+		
+	</div>
+</div>
+
+
+
+
+  
+<footer class=" t:b c-footer padded-section">
+  <div class="c-footer__inner section-wrapper ">
+    <div class="c-footer__inner__grid" style="margin-bottom: 8rem;">
+      <div class="c-footer__inner__grid__glitch">
+        <a href="/en/" aria-label="Home">
+          <svg width="48" height="53" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" alt="">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M27.4994 15.3919L22.5006 20.1262H17.4994L13.1233 24.2708V20.1262H7.49939V2.36833H27.4994V15.3919ZM6.24909 0L0 5.91853V27.2289H7.49939V33.1475L13.7485 27.2289H18.7497L30 16.5737V0H6.24909ZM23.7509 6.69873H21.2502V13.8008H23.7509V6.69873ZM14.3766 6.6709H16.8773V13.7739H14.3766V6.6709Z" fill="#FFFFFF"></path>
+</svg>
+
+        </a>
+      </div>
+      <div class="c-footer__inner__grid__columns">
+        
+          <div class="c-footer__inner__grid__columns__column">
+            <h4 class="c-footer__inner__grid__columns__column__heading" data-i18n="global:14526abd8bda5af347775025cd5342cf">
+              Communities
+            </h4>
+            <ul class="c-footer__inner__grid__columns__column__group">
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/p/stream/" data-i18n="global:eae835e83c0494a376229f254f7d3392">
+	Stream
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/p/watch/" data-i18n="global:f20658650d987d31063b593c05980397">
+	Watch
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://dev.twitch.tv/" data-i18n="global:1bedc6fb14c15b2e99872ebdbc317bf2">
+	Develop
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://twitchadvertising.tv/" data-i18n="global:fb7cbcbed8682c044d4d31eb43979415">
+	Advertise
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link c-link--outbound" href="https://www.twitch.tv" data-i18n="global:1da58962a7dd53edd9775f6f74ff14e5">
+	twitch.tv
+</a>
+                  
+                </li>
+              
+            </ul>
+          </div>
+        
+          <div class="c-footer__inner__grid__columns__column">
+            <h4 class="c-footer__inner__grid__columns__column__heading" data-i18n="global:1c76cbfe21c6f44c1d1e59d54f3e4420">
+              Company
+            </h4>
+            <ul class="c-footer__inner__grid__columns__column__group">
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/jobs/" data-i18n="global:12ceff2290bb9039beaa8f36d5dec226">
+	Jobs
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://twitch.tv/store" data-i18n="global:521c3635a82c2ae13b2cb5b310199b15">
+	Merch
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://brand.twitch.tv/" data-i18n="global:1be6f9eb563f3bf85c78b4219bf09de9">
+	Brand
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitchcon.com" data-i18n="global:d0f44b3bf0e0f56de96eadb6b5874091">
+	TwitchCon
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://meetups.twitch.tv" data-i18n="global:8635c02b3853f213eda0af2a88dc58f6">
+	Meetups
+</a>
+                  
+                </li>
+              
+            </ul>
+          </div>
+        
+          <div class="c-footer__inner__grid__columns__column">
+            <h4 class="c-footer__inner__grid__columns__column__heading" data-i18n="global:ca4bbaf645008e7c79ca315aa2cbcabc">
+              Newsroom
+            </h4>
+            <ul class="c-footer__inner__grid__columns__column__group">
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/p/about/news/" data-i18n="global:dd1ba1872df91985ed1ca4cde2dfe669">
+	News
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/p/about/press-releases/" data-i18n="global:0610123bdd4ffc191a3ea05a847e1307">
+	Press
+</a>
+                  
+                </li>
+              
+            </ul>
+          </div>
+        
+          <div class="c-footer__inner__grid__columns__column">
+            <h4 class="c-footer__inner__grid__columns__column__heading" data-i18n="global:068f80c7519d0528fb08e82137a72131">
+              Products
+            </h4>
+            <ul class="c-footer__inner__grid__columns__column__group">
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/bits" data-i18n="global:f10034efe0880222e7495496264ee1be">
+	Bits
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/subs/" data-i18n="global:86895ab6bb48502419c161656de13d05">
+	Subs
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/turbo" data-i18n="global:6f53bfe04e78da893ba0c4f35ba6847e">
+	Turbo
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/prime" data-i18n="global:be7938e9a87618a98a7b6b47e12aa44b">
+	Prime
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/p/extensions/" data-i18n="global:5e2f5f3c24ae8c6ab3eca618826b0e23">
+	Extensions
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/p/giftcard/buy/?utm_source=footer" data-i18n="global:e6bc658d1d1b80a5b522ad370116a2c9">
+	Gift Card
+</a>
+                  
+                </li>
+              
+            </ul>
+          </div>
+        
+          <div class="c-footer__inner__grid__columns__column">
+            <h4 class="c-footer__inner__grid__columns__column__heading" data-i18n="global:ddcf50c29294d4414f3f7c1bbc892cb5">
+              Resources
+            </h4>
+            <ul class="c-footer__inner__grid__columns__column__group">
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/creatorcamp/" data-i18n="global:a7a716833542f2ad6d33d233aa8cac28">
+	Creator Camp
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/p/legal" data-i18n="global:a10a9bcd450087de1ce1f80b35f44883">
+	Legal
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://help.twitch.tv/" data-i18n="global:efdaf9f44ce968366fa78277263abc1d">
+	Help Center
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.twitch.tv/p/security/" data-i18n="global:2fae32629d4ef4fc6341f1751b405e45">
+	Security
+</a>
+                  
+                </li>
+              
+            </ul>
+          </div>
+        
+          <div class="c-footer__inner__grid__columns__column">
+            <h4 class="c-footer__inner__grid__columns__column__heading" data-i18n="global:49ab28040dfa07f53544970c6d147e1e">
+              Connect
+            </h4>
+            <ul class="c-footer__inner__grid__columns__column__group">
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://twitter.com/Twitch" data-i18n="global:2491bc9c7d8731e1ae33124093bc7026" target="_blank" rel="noopener noreferrer">
+	Twitter
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.facebook.com/Twitch" data-i18n="global:d85544fce402c7a2a96a48078edaf203" target="_blank" rel="noopener noreferrer">
+	Facebook
+</a>
+                  
+                </li>
+              
+                
+                <li class="c-footer__inner__grid__columns__column__group__link-wrapper">
+                  
+                    
+
+
+
+
+
+<a class="c-link" href="https://www.instagram.com/twitch" data-i18n="global:55f015a0c5605702f913536afe70cfb0" target="_blank" rel="noopener noreferrer">
+	Instagram
+</a>
+                  
+                </li>
+              
+            </ul>
+          </div>
+        
+  
+      </div>
+    </div>
+
+    <div style="display: flex; margin-bottom: 4rem; grid-column: 2 / -2; flex-flow: column; width: 100%;">
+      <div style="font-weight: bold; margin-bottom: 1rem;" data-i18n="global:3a08e2e340ab29fd9263af48193cbf8e">
+        Languages
+      </div>
+      <div class="c-footer__inner__bottom">
+        <span class="c-footer__inner__bottom__links" style="justify-content: space-between; display: flex; flex-grow: 1; flex-wrap: wrap;">
+            
+
+            
+
+            <a href="/de-de/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">Deutsch</a>
+            
+
+            
+
+            <a href="/en/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">English</a>
+            
+
+            
+
+            <a href="/es-mx/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">Español</a>
+            
+
+            
+
+            <a href="/fr-fr/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">Français</a>
+            
+
+            
+
+            <a href="/it-it/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">Italiano</a>
+            
+
+            
+
+            <a href="/ja-jp/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">日本語</a>
+            
+
+            
+
+            <a href="/ko-kr/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">한국어</a>
+            
+
+            
+
+            <a href="/pl-pl/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">Polski</a>
+            
+
+            
+
+            <a href="/pt-br/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">Português Brasileiro</a>
+            
+
+            
+
+            <a href="/ru-ru/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">Русский</a>
+            
+
+            
+
+            <a href="/th-th/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">ภาษาไทย</a>
+            
+
+            
+
+            <a href="/tr-tr/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">Türkçe</a>
+            
+
+            
+
+            <a href="/zh-tw/2016/07/05/gos-march-to-low-latency-gc-a6fa96f06eb7/" class="c-footer__inner__bottom__links__link" style="margin-right: 1rem;">中文 繁體</a>
+        </span>
+      </div>
+    </div>
+    
+    <div class="c-footer__inner__bottom">
+      <span class="c-footer__inner__bottom__links">
+        
+          <a href="https://www.twitch.tv/p/legal/terms-of-service/" class="c-footer__inner__bottom__links__link" data-i18n="global:3b6c2b4caaf4f14f8d7feeddc4ac3f4d">
+            Terms of Service
+          </a>
+        
+          <a href="https://www.twitch.tv/p/legal/privacy-policy/" class="c-footer__inner__bottom__links__link" data-i18n="global:fa2ead697d9998cbc65c81384e6533d5">
+            Privacy Policy
+          </a>
+        
+          <a href="https://www.twitch.tv/p/legal/ad-choices/" class="c-footer__inner__bottom__links__link" data-i18n="global:207c59d4d91d92a3c536d63dd57ead7b">
+            Ad Choices
+          </a>
+        
+          <a href="https://www.twitch.tv/p/legal/cookie-policy/" class="c-footer__inner__bottom__links__link" data-i18n="global:26b3bb7bcea37723dcea15254b14510f">
+            Cookie Policy
+          </a>
+        
+          <a href="https://www.twitch.tv/p/partners/" class="c-footer__inner__bottom__links__link" data-i18n="global:fd6df34ee4e7642c02ced6012028f6b8">
+            Partners
+          </a>
+        
+          <a href="https://affiliate.twitch.tv/" class="c-footer__inner__bottom__links__link" data-i18n="global:7b4c8a175c85916202bf5465446f1723">
+            Affiliates
+          </a>
+        
+      </span>
+      <span class="c-footer__inner__bottom__copyright">
+        © 2021 Twitch Interactive, Inc.
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+	window.onload = function() {
+		lax.setup() // init
+
+		const updateLax = () => {
+			lax.update(window.scrollY)
+			window.requestAnimationFrame(updateLax)
+		}
+		window.requestAnimationFrame(updateLax)
+	}
+</script>
+<script type="text/javascript" src="/assets/js/language-menu.js"></script>
+
+    <a aria-hidden="true" class="c-link c-link--outbound c-link--sacrificial">.</a>
+  
+</body></html>

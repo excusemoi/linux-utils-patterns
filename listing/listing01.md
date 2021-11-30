@@ -15,7 +15,5 @@ func main() {
 ```
 
 Ответ:
-```
-...
-
-```
+[77 78 79]
+newSlice = oldSlice[startWith:before]

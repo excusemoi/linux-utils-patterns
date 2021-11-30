@@ -1,0 +1,1227 @@
+<!doctype html>
+<html lang="en-US" class="no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript">
+		ajaxurl = 'https://cloudblogs.microsoft.com/opensource/wp-admin/admin-ajax.php';
+	</script>
+		<script>document.documentElement.classList.remove("no-js");document.documentElement.classList.add("js");</script>			<meta name="awa-pageType" content="Post">
+						<meta name="awa-market" content="en-us">
+						<meta name="awa-env" content="Production">
+						<meta name="awa‐asst" content="73156">
+						<meta name="awa-pgauth" content="Alessandro Segala">
+						<meta name="awa-publishedDate" content="20180221">
+			<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v17.4 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Ready, Set, Go lang: Brian Ketelsen explains Go’s fast growing popularity - Microsoft Open Source Blog</title>
+	<meta name="description" content="Developer Advocate Brian Ketelsen discusses Go&#039;s growth in popularity, its thriving community, and how enterprise developers are using Go in the cloud." />
+	<link rel="canonical" href="https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Ready, Set, Go lang: Brian Ketelsen explains Go’s fast growing popularity - Microsoft Open Source Blog" />
+	<meta property="og:description" content="Developer Advocate Brian Ketelsen discusses Go&#039;s growth in popularity, its thriving community, and how enterprise developers are using Go in the cloud." />
+	<meta property="og:url" content="https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/" />
+	<meta property="og:site_name" content="Microsoft Open Source Blog" />
+	<meta property="article:published_time" content="2018-02-21T19:51:53+00:00" />
+	<meta property="article:modified_time" content="2020-07-07T17:00:30+00:00" />
+	<meta property="og:image" content="https://cloudblogs.microsoft.com/uploads/prod/sites/37/2018/02/gophercon-banner.png" />
+	<meta property="og:image:width" content="1050" />
+	<meta property="og:image:height" content="280" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="Ready, Set, Go lang: Brian Ketelsen explains Go’s fast growing popularity" />
+	<meta name="twitter:description" content="Developer Advocate Brian Ketelsen discusses Go&#039;s rapid growth, its thriving community, and how enterprise developers are using Go in the cloud." />
+	<meta name="twitter:image" content="https://open.microsoft.com/wp-content/uploads/2018/02/golang-twitter.png" />
+	<meta name="twitter:creator" content="@ItalyPaleAle" />
+	<meta name="twitter:site" content="@OpenAtMicrosoft" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="7 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cloudblogs.microsoft.com/opensource/#organization","name":"Microsoft Open Source Blog","url":"https://cloudblogs.microsoft.com/opensource/","sameAs":["https://twitter.com/OpenAtMicrosoft"],"logo":{"@type":"ImageObject","@id":"https://cloudblogs.microsoft.com/opensource/#logo","inLanguage":"en-US","url":"https://cloudblogs.microsoft.com/uploads/prod/sites/37/2019/08/Microsoft-Logo.png","contentUrl":"https://cloudblogs.microsoft.com/uploads/prod/sites/37/2019/08/Microsoft-Logo.png","width":259,"height":194,"caption":"Microsoft Open Source Blog"},"image":{"@id":"https://cloudblogs.microsoft.com/opensource/#logo"}},{"@type":"WebSite","@id":"https://cloudblogs.microsoft.com/opensource/#website","url":"https://cloudblogs.microsoft.com/opensource/","name":"Microsoft Open Source Blog","description":"Open dialogue about openness at Microsoft \u2013 open source, standards, interoperability","publisher":{"@id":"https://cloudblogs.microsoft.com/opensource/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cloudblogs.microsoft.com/opensource/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#primaryimage","inLanguage":"en-US","url":"","contentUrl":""},{"@type":"WebPage","@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#webpage","url":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/","name":"Ready, Set, Go lang: Brian Ketelsen explains Go\u2019s fast growing popularity - Microsoft Open Source Blog","isPartOf":{"@id":"https://cloudblogs.microsoft.com/opensource/#website"},"primaryImageOfPage":{"@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#primaryimage"},"datePublished":"2018-02-21T19:51:53+00:00","dateModified":"2020-07-07T17:00:30+00:00","description":"Developer Advocate Brian Ketelsen discusses Go's growth in popularity, its thriving community, and how enterprise developers are using Go in the cloud.","breadcrumb":{"@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/"]}]},{"@type":"BreadcrumbList","@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cloudblogs.microsoft.com/opensource/"},{"@type":"ListItem","position":2,"name":"Ready, Set, Go lang: Brian Ketelsen explains Go\u2019s fast growing popularity"}]},{"@type":"Article","@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#article","isPartOf":{"@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#webpage"},"author":{"@id":"https://cloudblogs.microsoft.com/opensource/#/schema/person/f1a0e84363d2c2b6f92b89145927e263"},"headline":"Ready, Set, Go lang: Brian Ketelsen explains Go\u2019s fast growing popularity","datePublished":"2018-02-21T19:51:53+00:00","dateModified":"2020-07-07T17:00:30+00:00","mainEntityOfPage":{"@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#webpage"},"wordCount":1427,"commentCount":0,"publisher":{"@id":"https://cloudblogs.microsoft.com/opensource/#organization"},"image":{"@id":"https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#primaryimage"},"thumbnailUrl":"https://cloudblogs.microsoft.com/uploads/prod/sites/37/2018/02/gophercon-banner.webp","keywords":["Go","Microsoft Azure"],"articleSection":["Application Development","Argentina","Australia","Bahrain","Brazil","Canada","Chile","China","Cloud","Colombia","Costa Rica","Dominican Republic","English","France","Germany","India","Indonesia","Israel","Italy","Japan","Jordan","Korea","Lithuania","Malaysia","Mexico","Netherlands","New Zealand","Nicaragua","Norway","Pakistan","Peru","Poland","Russia","Serbia","Singapore","Switzerland","UAE","United Kingdom","United States"],"inLanguage":"en-US","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://cloudblogs.microsoft.com/opensource/2018/02/21/go-lang-brian-ketelsen-explains-fast-growth/#respond"]}]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//wcpstatic.microsoft.com' />
+<link rel='dns-prefetch' href='//js.monitor.azure.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<meta property="Search.Title" name="Search.Title" content="Ready, Set, Go lang: Brian Ketelsen explains Go’s fast growing popularity" />
+<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+<meta property="Search.Excerpt" name="Search.Excerpt" content="Since its creation in 2009, the Go programming language has seen a growing global fan base of developers looking for a lightweight, open source language well-suited for today&#8217;s microservices architectures. I had a chance to catch with one of our resident Gophers, Developer Advocate Brian Ketelsen, to learn more about Go and its thriving community," />
+<meta property="Search.Tags" name="Search.Tags" content="Go, Microsoft Azure" />
+<meta property="Search.Categories" name="Search.Categories" content="Application Development, Argentina, Australia, Bahrain, Brazil, Canada, Chile, China, Cloud, Colombia, Costa Rica, Dominican Republic, English, France, Germany, India, Indonesia, Israel, Italy, Japan, Jordan, Korea, Lithuania, Malaysia, Mexico, Netherlands, New Zealand, Nicaragua, Norway, Pakistan, Peru, Poland, Russia, Serbia, Singapore, Switzerland, UAE, United Kingdom, United States" />
+<meta property="Search.PublishedDate" name="Search.PublishedDate" content="February 21, 2018" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/cloudblogs.microsoft.com\/opensource\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.2"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<meta property="ms.author" name="ms.author" content="Alessandro Segala" />
+<meta property="ms.pagetype" name="ms.pagetype" content="Community news" />
+<meta property="ms.solution" name="ms.solution" content="Community/partners, Microsoft" />
+<meta property="ms.prod" name="ms.prod" content="Application Development, Programming Languages" />
+		<link rel="icon" href="https://cloudblogs.microsoft.com/opensource/wp-content/themes/enterprisemobility/dist/images/favicon-ms.png">
+	<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='elasticpress-related-posts-block-css'  href='https://cloudblogs.microsoft.com/opensource/wp-content/plugins/elasticpress/dist/css/related-posts-block-styles.min.css?ver=3.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sage/css-css'  href='https://cloudblogs.microsoft.com/opensource/wp-content/themes/cloudperspectives/dist/styles/main.css?ver=43a66636' type='text/css' media='all' />
+<link rel='stylesheet' id='sage/childcss-css'  href='https://cloudblogs.microsoft.com/opensource/wp-content/themes/enterprisemobility/dist/styles/main.css?ver=43a66636' type='text/css' media='all' />
+<style id='sage/childcss-inline-css' type='text/css'>
+
+			.home .image-crop:before {
+				padding-top: 31.25% !important; /* override theme styles */
+			}
+		
+</style>
+<script type='text/javascript' src='https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js' id='wcp-consent-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://js.monitor.azure.com/scripts/c/ms.analytics-web-3.min.js' id='oneds-tracking-js'></script>
+<link rel="https://api.w.org/" href="https://cloudblogs.microsoft.com/opensource/wp-json/" /><link rel="alternate" type="application/json" href="https://cloudblogs.microsoft.com/opensource/wp-json/wp/v2/posts/73156" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://cloudblogs.microsoft.com/opensource/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://cloudblogs.microsoft.com/opensource/wp-includes/wlwmanifest.xml" /> 
+
+<link rel='shortlink' href='https://cloudblogs.microsoft.com/opensource/?p=73156' />
+<link rel="alternate" type="application/json+oembed" href="https://cloudblogs.microsoft.com/opensource/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcloudblogs.microsoft.com%2Fopensource%2F2018%2F02%2F21%2Fgo-lang-brian-ketelsen-explains-fast-growth%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://cloudblogs.microsoft.com/opensource/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcloudblogs.microsoft.com%2Fopensource%2F2018%2F02%2F21%2Fgo-lang-brian-ketelsen-explains-fast-growth%2F&#038;format=xml" />
+<link rel="stylesheet" href="https://www.microsoft.com/onerfstatics/marketingsites-eus-prod/west-european/shell/_scrf/css/themes=default.device=uplevel_web_pc/79-4cdd0a/33-ae3d41/a5-4bf7a2/13-8e1ceb/81-32f0c0/5c-b7b685/2d-58d884/ef-a24652?ver=2.0&amp;_cf=20210618" type="text/css" media="all" /><link rel='stylesheet' href='https://statics-marketingsites-eus-ms-com.akamaized.net/statics/override.css' type='text/css' /><meta name="format-detection" content="telephone=no">
+	<!-- Facebook Pixel Code -->
+	<script>
+		function facebookTracking() {
+			!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+				n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+				n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+				t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+				document,'script','https://connect.facebook.net/en_US/fbevents.js');
+			fbq('init', '10154859804840582');
+						fbq('track', 'PageView');
+					}
+	</script>
+	<!-- End Facebook Pixel Code -->
+
+	<script src="https://www.microsoft.com/onerfstatics/marketingsites-eus-prod/shell/_scrf/js/themes=default/8e-e88b64/93-04b71e/dd-2cee44/49-a00ab0/92-02e55d/7c-dcea75/75-fca72d/ed-e77ee7/d5-bf34c0/a9-078595/7a-7ea8cc/2d-40bdad/31-53ba50/96-eb5423/e6-6b0cce/d1-98d78a/a0-23c4ba/a7-f7a340/48-6ed936/2e-ca165a/fc-169dd8/8e-60935c/87-fecbed/96-6ed6eb/c3-eb62e0/ad-ffd6bf/35-621acc/b0-07f293/1e-9d9d16/52-f0367f/1f-b57352/8d-b89eaf/e1-ed258e/20-0b10e2/6b-0f1117/fb-5e9831/44-5488b2?ver=2.0&_cf=20210618&iife=1"></script></head>
+<body id="top-of-the-page" class="post-template-default single single-post postid-73156 single-format-standard microsoft-uhf go-lang-brian-ketelsen-explains-fast-growth sidebar-primary opensource is_subsite">
+<div id="ms-cookie-banner"></div><svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<symbol id="icon-facebook" viewBox="0 0 32 32">
+<path fill="#1877f2" style="fill: var(--color1, #1877f2)" d="M32 16c0-8.838-7.163-16-16-16s-16 7.162-16 16c0 7.988 5.85 14.606 13.5 15.806v-11.181h-4.063v-4.625h4.063v-3.525c0-4.009 2.387-6.225 6.044-6.225 1.75 0 3.581 0.313 3.581 0.313v3.938h-2.019c-1.988 0-2.606 1.234-2.606 2.5v3h4.438l-0.709 4.625h-3.728v11.181c7.65-1.2 13.5-7.819 13.5-15.806z"></path>
+<path fill="#fff" style="fill: var(--color2, #fff)" d="M22.228 20.625l0.709-4.625h-4.438v-3c0-1.266 0.619-2.5 2.606-2.5h2.019v-3.938s-1.831-0.313-3.581-0.313c-3.656 0-6.044 2.216-6.044 6.225v3.525h-4.063v4.625h4.063v11.181c0.816 0.128 1.65 0.194 2.5 0.194s1.684-0.066 2.5-0.194v-11.181z"></path>
+</symbol>
+<symbol id="icon-linkedin" viewBox="0 0 32 32">
+<path fill="#fff" style="fill: var(--color2, #fff)" d="M1 4h27v26h-27z"></path>
+<path fill="#0a66c1" style="fill: var(--color3, #0a66c1)" d="M26.512 27.044h-4.6v-7.381c0-1.74-0.052-4.007-2.377-4.007-2.377 0-2.791 1.898-2.791 3.901v7.486h-4.6v-15.13h4.393v2.056h0.052c0.878-1.582 2.584-2.53 4.393-2.425 4.651 0 5.53 3.163 5.53 7.222zM6.925 9.858c-1.499 0-2.687-1.213-2.687-2.741s1.189-2.741 2.687-2.741 2.687 1.213 2.687 2.741-1.189 2.741-2.687 2.741zM9.251 27.044h-4.651v-15.13h4.6v15.13zM28.838 0h-26.564c-1.24 0-2.274 1.002-2.274 2.267v27.203c0 1.265 1.034 2.32 2.274 2.267h26.512c1.24 0 2.274-1.002 2.326-2.267v-27.203c0-1.265-1.034-2.267-2.274-2.267z"></path>
+</symbol>
+<symbol id="icon-twitter" viewBox="0 0 32 32">
+<path fill="#1da1f2" style="fill: var(--color4, #1da1f2)" d="M16 32c8.837 0 16-7.163 16-16s-7.163-16-16-16c-8.837 0-16 7.163-16 16s7.163 16 16 16z"></path>
+<path fill="#fff" style="fill: var(--color2, #fff)" d="M13.072 24.44c7.096 0 10.976-5.88 10.976-10.976 0-0.168 0-0.336-0.008-0.496 0.752-0.544 1.408-1.224 1.928-2-0.688 0.304-1.432 0.512-2.216 0.608 0.8-0.48 1.408-1.232 1.696-2.136-0.744 0.44-1.568 0.76-2.448 0.936-0.704-0.752-1.704-1.216-2.816-1.216-2.128 0-3.856 1.728-3.856 3.856 0 0.304 0.032 0.6 0.104 0.88-3.208-0.16-6.048-1.696-7.952-4.032-0.328 0.568-0.52 1.232-0.52 1.936 0 1.336 0.68 2.52 1.72 3.208-0.632-0.016-1.224-0.192-1.744-0.48v0.048c0 1.872 1.328 3.424 3.096 3.784-0.32 0.088-0.664 0.136-1.016 0.136-0.248 0-0.488-0.024-0.728-0.072 0.488 1.536 1.912 2.648 3.6 2.68-1.32 1.032-2.984 1.648-4.792 1.648-0.312 0-0.616-0.016-0.92-0.056 1.688 1.104 3.72 1.744 5.896 1.744z"></path>
+</symbol>
+<symbol id="icon-youtube" viewBox="0 0 32 32">
+<path fill="#f00" style="fill: var(--color5, #f00)" d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"></path>
+<path fill="#fff" style="fill: var(--color2, #fff)" d="M25.579 11.204c-0.227-0.864-0.909-1.545-1.773-1.784-1.557-0.42-7.807-0.42-7.807-0.42s-6.25 0-7.818 0.42c-0.864 0.227-1.534 0.909-1.773 1.784-0.409 1.568-0.409 4.841-0.409 4.841s0 3.273 0.42 4.841c0.227 0.864 0.909 1.545 1.773 1.784 1.557 0.42 7.807 0.42 7.807 0.42s6.25 0 7.818-0.42c0.864-0.227 1.534-0.909 1.773-1.784 0.409-1.568 0.409-4.841 0.409-4.841s0-3.273-0.421-4.841zM13.954 19.023v-5.954l5.227 2.977z"></path>
+</symbol>
+</defs>
+</svg>
+<section aria-label="Skip Links">
+	<a class="screen-reader-shortcut x-hidden-focus" href="#main">Skip to content</a>
+</section>
+<div id="headerArea" class="uhf"  data-m='{"cN":"headerArea","cT":"Area_coreuiArea","id":"a1Body","sN":1,"aN":"Body"}'>
+                <div id="headerRegion"     data-region-key="headerregion" data-m='{"cN":"headerRegion","cT":"Region_coreui-region","id":"r1a1","sN":1,"aN":"a1"}' >
+
+    <div  id="headerUniversalHeader" data-m='{"cN":"headerUniversalHeader","cT":"Module_coreui-universalheader","id":"m1r1a1","sN":1,"aN":"r1a1"}'  data-module-id="Category|headerRegion|coreui-region|headerUniversalHeader|coreui-universalheader">
+        
+
+                        <div id="epb" class="x-hidden x-hidden-vp-mobile-st uhfc-universal-context context-uhf" data-m='{"cN":"epb_cont","cT":"Container","id":"c1m1r1a1","sN":1,"aN":"m1r1a1"}'>
+
+	<div class="c-uhfh-alert f-information epb-container theme-light" role="dialog" aria-label="Promotional Banner" data-m='{"cT":"Container","id":"c1c1m1r1a1","sN":1,"aN":"c1m1r1a1"}' data-pb="[{&quot;Browser&quot;:&quot;anaheim&quot;,&quot;ExtensionType&quot;:&quot;windows10only&quot;,&quot;ExtensionUrl&quot;:&quot;https://go.microsoft.com/fwlink/?linkid=2128969&amp;pc=W037&quot;,&quot;BackgroundColorDarkTheme&quot;:&quot;b-black&quot;,&quot;LogoUrlDarkTheme&quot;:&quot;https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4xvsU?ver=e636&quot;,&quot;ActionLinkBackgroundColorDarkTheme&quot;:&quot;btn-white&quot;,&quot;BackgroundColorLightTheme&quot;:&quot;b-white&quot;,&quot;LogoUrlLightTheme&quot;:&quot;https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4xvsU?ver=e636&quot;,&quot;ActionLinkBackgroundColorLightTheme&quot;:&quot;btn-light-blue&quot;,&quot;Title&quot;:&quot;Explore the world from your desktop—one photo at a time. Get the Bing Wallpaper app today.&quot;,&quot;Paragraph&quot;:&quot;Bring your desktop to life with daily backgrounds when you get Bing Wallpaper&quot;,&quot;ActionLinkText&quot;:&quot;Get it now&quot;,&quot;ActionLinkAriaLabel&quot;:&quot;Get it now&quot;,&quot;DismissText&quot;:&quot;No thanks&quot;,&quot;DismissAriaLabel&quot;:&quot;No thanks&quot;,&quot;CookieExpiration&quot;:&quot;30&quot;,&quot;CurrentTheme&quot;:&quot;theme-light&quot;},{&quot;Browser&quot;:&quot;edge&quot;,&quot;ExtensionType&quot;:&quot;windows10only&quot;,&quot;ExtensionUrl&quot;:&quot;https://aka.ms/MicrosoftEdgeDownload&quot;,&quot;BackgroundColorDarkTheme&quot;:&quot;b-black&quot;,&quot;LogoUrlDarkTheme&quot;:&quot;https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4xdax&quot;,&quot;ActionLinkBackgroundColorDarkTheme&quot;:&quot;btn-white&quot;,&quot;BackgroundColorLightTheme&quot;:&quot;b-white&quot;,&quot;LogoUrlLightTheme&quot;:&quot;https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4xdax&quot;,&quot;ActionLinkBackgroundColorLightTheme&quot;:&quot;btn-light-blue&quot;,&quot;Title&quot;:&quot;Try the browser recommended by Microsoft&quot;,&quot;Paragraph&quot;:&quot;Get speed, security and privacy with Microsoft Edge&quot;,&quot;ActionLinkText&quot;:&quot;Download now&quot;,&quot;ActionLinkAriaLabel&quot;:&quot;Download now&quot;,&quot;DismissText&quot;:&quot;No thanks&quot;,&quot;DismissAriaLabel&quot;:&quot;No thanks&quot;,&quot;CookieExpiration&quot;:&quot;30&quot;,&quot;CurrentTheme&quot;:&quot;theme-light&quot;},{&quot;Browser&quot;:&quot;non-anaheim&quot;,&quot;ExtensionType&quot;:&quot;windows10only&quot;,&quot;ExtensionUrl&quot;:&quot;https://microsoftedgewelcome.microsoft.com/launch?url=https%3A%2F%2Faka.ms%2FUHFOandO&quot;,&quot;BackgroundColorDarkTheme&quot;:&quot;b-black&quot;,&quot;LogoUrlDarkTheme&quot;:&quot;https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4xdax&quot;,&quot;ActionLinkBackgroundColorDarkTheme&quot;:&quot;btn-white&quot;,&quot;BackgroundColorLightTheme&quot;:&quot;b-white&quot;,&quot;LogoUrlLightTheme&quot;:&quot;https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4xdax&quot;,&quot;ActionLinkBackgroundColorLightTheme&quot;:&quot;btn-light-blue&quot;,&quot;Title&quot;:&quot;Try the browser recommended by Microsoft&quot;,&quot;Paragraph&quot;:&quot;Get speed, security and privacy with Microsoft Edge&quot;,&quot;ActionLinkText&quot;:&quot;Switch now&quot;,&quot;ActionLinkAriaLabel&quot;:&quot;Switch now&quot;,&quot;DismissText&quot;:&quot;No thanks&quot;,&quot;DismissAriaLabel&quot;:&quot;No thanks&quot;,&quot;CookieExpiration&quot;:&quot;30&quot;,&quot;CurrentTheme&quot;:&quot;theme-light&quot;},{&quot;Browser&quot;:&quot;firefox&quot;,&quot;ExtensionType&quot;:&quot;rewards&quot;,&quot;ExtensionUrl&quot;:&quot;https://browserdefaults.microsoft.com/extn/redirect/?xid=6&amp;br=mf&amp;channel=uhf&amp;pc=U564&quot;,&quot;BackgroundColorDarkTheme&quot;:&quot;b-blue&quot;,&quot;LogoUrlDarkTheme&quot;:&quot;https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mFZT?ver=7321&quot;,&quot;ActionLinkBackgroundColorDarkTheme&quot;:&quot;btn-white&quot;,&quot;BackgroundColorLightTheme&quot;:&quot;b-white&quot;,&quot;LogoUrlLightTheme&quot;:&quot;https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mDoE?ver=3feb&quot;,&quot;ActionLinkBackgroundColorLightTheme&quot;:&quot;btn-blue&quot;,&quot;Title&quot;:&quot;Maximize your points with the Microsoft Rewards extension&quot;,&quot;Paragraph&quot;:&quot;Quick access to your daily points and offers&quot;,&quot;ActionLinkText&quot;:&quot;Add it now&quot;,&quot;ActionLinkAriaLabel&quot;:&quot;Add it now&quot;,&quot;DismissText&quot;:&quot;No thanks&quot;,&quot;DismissAriaLabel&quot;:&quot;No thanks&quot;,&quot;CookieExpiration&quot;:&quot;30&quot;,&quot;CurrentTheme&quot;:&quot;theme-light&quot;}]" data-pb-g="true">
+		<div>
+			<div class="c-paragraph">
+				<img alt="" data-src="" src="" class="f-img-lzy" />
+				<span class="c-text-group pb-content">
+					<span class="epb-launch pb-content-heading"></span>
+					<span class="epb-text pb-content-text"></span>
+				</span>
+			</div>
+			<span class="c-group">
+				<button id="close-epb" class="c-action-trigger c-action-cancel glyph-cancel" data-m='{"cN":"PB-dismiss_nonnav","id":"nn1c1c1m1r1a1","sN":1,"aN":"c1c1m1r1a1"}'></button>
+				<a id="epbTryNow" href="" target="_blank" class="epb-launch c-action-trigger c-action-open" data-m='{"cN":"PB-launch_nav","id":"n2c1c1m1r1a1","sN":2,"aN":"c1c1m1r1a1"}'></a>
+			</span>
+		</div>
+	</div>
+
+
+
+
+
+                            
+                        </div>
+
+
+
+
+        <a id="uhfSkipToMain" class="m-skip-to-main" href="javascript:void(0)" data-href="" tabindex="0" data-m='{"cN":"Skip to content_nonnav","id":"nn2c1m1r1a1","sN":2,"aN":"c1m1r1a1"}'>Skip to main content</a>
+
+
+<header class="c-uhfh context-uhf no-js c-sgl-stck " itemscope="itemscope" data-header-footprint="/MSCloudBlogs/MSOpenSourceHeader, fromService: True"   data-magict="true"  itemtype="http://schema.org/Organization">
+    <div class="theme-light js-global-head f-closed  global-head-cont" data-m='{"cN":"Universal Header_cont","cT":"Container","id":"c3c1m1r1a1","sN":3,"aN":"c1m1r1a1"}'>
+        <div class="c-uhfh-gcontainer-st">
+            <button type="button" class="c-action-trigger c-glyph glyph-global-nav-button" aria-label="All Microsoft expand to see list of Microsoft products and services" initialState-label="All Microsoft expand to see list of Microsoft products and services" toggleState-label="Close All Microsoft list" aria-expanded="false" data-m='{"cN":"Mobile menu button_nonnav","id":"nn1c3c1m1r1a1","sN":1,"aN":"c3c1m1r1a1"}'></button>
+            <button type="button" class="c-action-trigger c-glyph glyph-arrow-htmllegacy c-close-search" aria-label="Close search" aria-expanded="false" data-m='{"cN":"Close Search_nonnav","id":"nn2c3c1m1r1a1","sN":2,"aN":"c3c1m1r1a1"}'></button>
+                    <a id="uhfLogo" class="c-logo c-sgl-stk-uhfLogo" itemprop="url" href="https://www.microsoft.com" aria-label="Microsoft" data-m='{"cN":"GlobalNav_Logo_cont","cT":"Container","id":"c3c3c1m1r1a1","sN":3,"aN":"c3c1m1r1a1"}'>
+                        <img alt="" itemprop="logo" class="c-image" src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31" role="presentation" aria-hidden="true" />
+                        <span itemprop="name" role="presentation" aria-hidden="true">Microsoft</span>
+                    </a>
+            <div class="f-mobile-title">
+                <button type="button" class="c-action-trigger c-glyph glyph-chevron-left" aria-label="See more menu options" data-m='{"cN":"Mobile back button_nonnav","id":"nn4c3c1m1r1a1","sN":4,"aN":"c3c1m1r1a1"}'></button>
+                <span data-global-title="Microsoft home" class="js-mobile-title"></span>
+                <button type="button" class="c-action-trigger c-glyph glyph-chevron-right" aria-label="See more menu options" data-m='{"cN":"Mobile forward button_nonnav","id":"nn5c3c1m1r1a1","sN":5,"aN":"c3c1m1r1a1"}'></button>
+            </div>
+
+
+
+                    <nav id="uhf-g-nav" aria-label="Contextual menu" class="c-uhfh-gnav" data-m='{"cN":"Category nav_cont","cT":"Container","id":"c6c3c1m1r1a1","sN":6,"aN":"c3c1m1r1a1"}'>
+            <ul class="js-paddle-items">
+                                        <li class="single-link js-nav-menu uhf-menu-item">
+                            <a id="shellmenu_0" class="c-uhf-nav-link" href="https://www.microsoft.com/en-us/microsoft-365/business/all-business" data-m='{"cN":"CatNav_Microsoft 365_nav","id":"n1c6c3c1m1r1a1","sN":1,"aN":"c6c3c1m1r1a1"}'>Microsoft 365</a>
+                        </li>
+                        <li class="single-link js-nav-menu uhf-menu-item">
+                            <a id="shellmenu_1" class="c-uhf-nav-link" href="https://azure.microsoft.com" data-m='{"cN":"CatNav_Azure_nav","id":"n2c6c3c1m1r1a1","sN":2,"aN":"c6c3c1m1r1a1"}'>Azure</a>
+                        </li>
+                        <li class="single-link js-nav-menu uhf-menu-item">
+                            <a id="shellmenu_2" class="c-uhf-nav-link" href="https://products.office.com/en-us/business/office" data-m='{"cN":"CatNav_Office 365_nav","id":"n3c6c3c1m1r1a1","sN":3,"aN":"c6c3c1m1r1a1"}'>Office 365</a>
+                        </li>
+                        <li class="single-link js-nav-menu uhf-menu-item">
+                            <a id="shellmenu_3" class="c-uhf-nav-link" href="https://dynamics.microsoft.com/en-us/" data-m='{"cN":"CatNav_Dynamics 365_nav","id":"n4c6c3c1m1r1a1","sN":4,"aN":"c6c3c1m1r1a1"}'>Dynamics 365</a>
+                        </li>
+                        <li class="single-link js-nav-menu uhf-menu-item">
+                            <a id="shellmenu_4" class="c-uhf-nav-link" href="https://powerplatform.microsoft.com/en-us" data-m='{"cN":"CatNav_Power Platform_nav","id":"n5c6c3c1m1r1a1","sN":5,"aN":"c6c3c1m1r1a1"}'>Power Platform</a>
+                        </li>
+                        <li class="single-link js-nav-menu uhf-menu-item">
+                            <a id="shellmenu_5" class="c-uhf-nav-link" href="https://www.microsoft.com/en-us/microsoft-365/windows" data-m='{"cN":"CatNav_Windows 10_nav","id":"n6c6c3c1m1r1a1","sN":6,"aN":"c6c3c1m1r1a1"}'>Windows 10</a>
+                        </li>
+
+
+                <li id="overflow-menu" class="overflow-menu x-hidden uhf-menu-item">
+                        <div class="c-uhf-menu js-nav-menu">
+        <button data-m='{"pid":"More","id":"nn7c6c3c1m1r1a1","sN":7,"aN":"c6c3c1m1r1a1"}' type="button" aria-label="More" aria-expanded="false">More</button>
+        <ul id="overflow-menu-list" aria-hidden="true" class="overflow-menu-list">
+        </ul>
+    </div>
+
+                </li>
+                            </ul>
+            
+        </nav>
+
+
+            <div class="c-uhfh-actions" data-m='{"cN":"Header actions_cont","cT":"Container","id":"c7c3c1m1r1a1","sN":7,"aN":"c3c1m1r1a1"}'>
+                <div class="wf-menu">        <nav id="uhf-c-nav" aria-label="All Microsoft menu" data-m='{"cN":"GlobalNav_cont","cT":"Container","id":"c1c7c3c1m1r1a1","sN":1,"aN":"c7c3c1m1r1a1"}'>
+            <ul class="js-paddle-items">
+                <li>
+                    <div class="c-uhf-menu js-nav-menu">
+                        <button type="button" class="c-button-logo all-ms-nav" aria-label="All Microsoft expand to see list of Microsoft products and services" aria-expanded="false" data-m='{"cN":"GlobalNav_More_nonnav","id":"nn1c1c7c3c1m1r1a1","sN":1,"aN":"c1c7c3c1m1r1a1"}'> <span>All Microsoft</span></button>
+                        <ul class="f-multi-column f-multi-column-6" aria-hidden="true" data-m='{"cN":"More_cont","cT":"Container","id":"c2c1c7c3c1m1r1a1","sN":2,"aN":"c1c7c3c1m1r1a1"}'>
+                                    <li class="c-w0-contr c-w0-contr-desktop-hidden">
+            <ul class="c-w0">
+        <li class="js-nav-menu single-link" data-m='{"cN":"Microsoft 365_cont","cT":"Container","id":"c1c2c1c7c3c1m1r1a1","sN":1,"aN":"c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_0-mo" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/microsoft-365/business/all-business" data-m='{"cN":"W0Nav_Microsoft 365_nav","id":"n1c1c2c1c7c3c1m1r1a1","sN":1,"aN":"c1c2c1c7c3c1m1r1a1"}'>Microsoft 365</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"Azure_cont","cT":"Container","id":"c2c2c1c7c3c1m1r1a1","sN":2,"aN":"c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_1-mo" class="js-subm-uhf-nav-link" href="https://azure.microsoft.com" data-m='{"cN":"W0Nav_Azure_nav","id":"n1c2c2c1c7c3c1m1r1a1","sN":1,"aN":"c2c2c1c7c3c1m1r1a1"}'>Azure</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"Office 365_cont","cT":"Container","id":"c3c2c1c7c3c1m1r1a1","sN":3,"aN":"c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_2-mo" class="js-subm-uhf-nav-link" href="https://products.office.com/en-us/business/office" data-m='{"cN":"W0Nav_Office 365_nav","id":"n1c3c2c1c7c3c1m1r1a1","sN":1,"aN":"c3c2c1c7c3c1m1r1a1"}'>Office 365</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"Dynamics 365_cont","cT":"Container","id":"c4c2c1c7c3c1m1r1a1","sN":4,"aN":"c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_3-mo" class="js-subm-uhf-nav-link" href="https://dynamics.microsoft.com/en-us/" data-m='{"cN":"W0Nav_Dynamics 365_nav","id":"n1c4c2c1c7c3c1m1r1a1","sN":1,"aN":"c4c2c1c7c3c1m1r1a1"}'>Dynamics 365</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"Power Platform_cont","cT":"Container","id":"c5c2c1c7c3c1m1r1a1","sN":5,"aN":"c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_4-mo" class="js-subm-uhf-nav-link" href="https://powerplatform.microsoft.com/en-us" data-m='{"cN":"W0Nav_Power Platform_nav","id":"n1c5c2c1c7c3c1m1r1a1","sN":1,"aN":"c5c2c1c7c3c1m1r1a1"}'>Power Platform</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"Windows 10_cont","cT":"Container","id":"c6c2c1c7c3c1m1r1a1","sN":6,"aN":"c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_5-mo" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/microsoft-365/windows" data-m='{"cN":"W0Nav_Windows 10_nav","id":"n1c6c2c1c7c3c1m1r1a1","sN":1,"aN":"c6c2c1c7c3c1m1r1a1"}'>Windows 10</a>
+            
+        </li>
+            </ul>
+        </li>
+
+<li class="f-sub-menu js-nav-menu nested-menu" data-m='{"cT":"Container","id":"c7c2c1c7c3c1m1r1a1","sN":7,"aN":"c2c1c7c3c1m1r1a1"}'>
+
+    <span id="uhf-navspn-shellmenu_7-span" style="display:none"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn1c7c2c1c7c3c1m1r1a1","sN":1,"aN":"c7c2c1c7c3c1m1r1a1"}'>Products &amp; Services</span>
+    <button id="uhf-navbtn-shellmenu_7-button" type="button"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn2c7c2c1c7c3c1m1r1a1","sN":2,"aN":"c7c2c1c7c3c1m1r1a1"}'>Products &amp; Services</button>
+    <ul aria-hidden="true" aria-labelledby="uhf-navspn-shellmenu_7-span">
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_ProductsandServices_WindowsServer_cont","cT":"Container","id":"c3c7c2c1c7c3c1m1r1a1","sN":3,"aN":"c7c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_8" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/cloud-platform/windows-server" data-m='{"cN":"GlobalNav_More_ProductsandServices_WindowsServer_nav","id":"n1c3c7c2c1c7c3c1m1r1a1","sN":1,"aN":"c3c7c2c1c7c3c1m1r1a1"}'>Windows Server</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_ProductsandServices_EnterpriseMobilityandSecurity_cont","cT":"Container","id":"c4c7c2c1c7c3c1m1r1a1","sN":4,"aN":"c7c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_9" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/cloud-platform/enterprise-mobility-security" data-m='{"cN":"GlobalNav_More_ProductsandServices_EnterpriseMobilityandSecurity_nav","id":"n1c4c7c2c1c7c3c1m1r1a1","sN":1,"aN":"c4c7c2c1c7c3c1m1r1a1"}'>Enterprise Mobility + Security</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_ProductsandServices_PowerBI_cont","cT":"Container","id":"c5c7c2c1c7c3c1m1r1a1","sN":5,"aN":"c7c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_10" class="js-subm-uhf-nav-link" href="https://powerbi.microsoft.com/en-us/" data-m='{"cN":"GlobalNav_More_ProductsandServices_PowerBI_nav","id":"n1c5c7c2c1c7c3c1m1r1a1","sN":1,"aN":"c5c7c2c1c7c3c1m1r1a1"}'>Power BI</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_ProductsandServices_Teams_cont","cT":"Container","id":"c6c7c2c1c7c3c1m1r1a1","sN":6,"aN":"c7c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_11" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/microsoft-teams/group-chat-software" data-m='{"cN":"GlobalNav_More_ProductsandServices_Teams_nav","id":"n1c6c7c2c1c7c3c1m1r1a1","sN":1,"aN":"c6c7c2c1c7c3c1m1r1a1"}'>Teams</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"DeveloperAndIT_VisualStudio_cont","cT":"Container","id":"c7c7c2c1c7c3c1m1r1a1","sN":7,"aN":"c7c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_12" class="js-subm-uhf-nav-link" href="https://visualstudio.microsoft.com/" data-m='{"cN":"GlobalNav_DeveloperAndIT_VisualStudio_nav","id":"n1c7c7c2c1c7c3c1m1r1a1","sN":1,"aN":"c7c7c2c1c7c3c1m1r1a1"}'>Visual Studio</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_MicrosoftAdvertising_cont","cT":"Container","id":"c8c7c2c1c7c3c1m1r1a1","sN":8,"aN":"c7c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_13" class="js-subm-uhf-nav-link" href="https://go.microsoft.com/fwlink/?linkid=2026462" data-m='{"cN":"GlobalNav_More_MicrosoftAdvertising_nav","id":"n1c8c7c2c1c7c3c1m1r1a1","sN":1,"aN":"c8c7c2c1c7c3c1m1r1a1"}'>Microsoft Advertising</a>
+            
+        </li>
+    </ul>
+    
+</li>
+<li class="f-sub-menu js-nav-menu nested-menu" data-m='{"cT":"Container","id":"c8c2c1c7c3c1m1r1a1","sN":8,"aN":"c2c1c7c3c1m1r1a1"}'>
+
+    <span id="uhf-navspn-shellmenu_14-span" style="display:none"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn1c8c2c1c7c3c1m1r1a1","sN":1,"aN":"c8c2c1c7c3c1m1r1a1"}'>Emerging Technologies</span>
+    <button id="uhf-navbtn-shellmenu_14-button" type="button"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn2c8c2c1c7c3c1m1r1a1","sN":2,"aN":"c8c2c1c7c3c1m1r1a1"}'>Emerging Technologies</button>
+    <ul aria-hidden="true" aria-labelledby="uhf-navspn-shellmenu_14-span">
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_EmergingTechnologies_AI_cont","cT":"Container","id":"c3c8c2c1c7c3c1m1r1a1","sN":3,"aN":"c8c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_15" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/ai/" data-m='{"cN":"GlobalNav_More_EmergingTechnologies_AI_nav","id":"n1c3c8c2c1c7c3c1m1r1a1","sN":1,"aN":"c3c8c2c1c7c3c1m1r1a1"}'>AI</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_EmergingTechnologies_InternetofThings_cont","cT":"Container","id":"c4c8c2c1c7c3c1m1r1a1","sN":4,"aN":"c8c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_16" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/internet-of-things/" data-m='{"cN":"GlobalNav_More_EmergingTechnologies_InternetofThings_nav","id":"n1c4c8c2c1c7c3c1m1r1a1","sN":1,"aN":"c4c8c2c1c7c3c1m1r1a1"}'>Internet of Things</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_EmergingTechnologies_AzureCognitiveServices_cont","cT":"Container","id":"c5c8c2c1c7c3c1m1r1a1","sN":5,"aN":"c8c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_17" class="js-subm-uhf-nav-link" href="https://azure.microsoft.com/services/cognitive-services/" data-m='{"cN":"GlobalNav_More_EmergingTechnologies_AzureCognitiveServices_nav","id":"n1c5c8c2c1c7c3c1m1r1a1","sN":1,"aN":"c5c8c2c1c7c3c1m1r1a1"}'>Azure Cognitive Services</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_EmergingTechnologies_Quantum_cont","cT":"Container","id":"c6c8c2c1c7c3c1m1r1a1","sN":6,"aN":"c8c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_18" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/quantum/" data-m='{"cN":"GlobalNav_More_EmergingTechnologies_Quantum_nav","id":"n1c6c8c2c1c7c3c1m1r1a1","sN":1,"aN":"c6c8c2c1c7c3c1m1r1a1"}'>Quantum</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_PCsAndDevices_MicrosoftHololens_cont","cT":"Container","id":"c7c8c2c1c7c3c1m1r1a1","sN":7,"aN":"c8c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_19" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/hololens" data-m='{"cN":"GlobalNav_More_PCsAndDevices_MicrosoftHololens_nav","id":"n1c7c8c2c1c7c3c1m1r1a1","sN":1,"aN":"c7c8c2c1c7c3c1m1r1a1"}'>Microsoft HoloLens</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_PCsAndDevices_VMAndMixedReality_cont","cT":"Container","id":"c8c8c2c1c7c3c1m1r1a1","sN":8,"aN":"c8c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_20" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/mixed-reality" data-m='{"cN":"GlobalNav_More_PCsAndDevices_VMAndMixedReality_nav","id":"n1c8c8c2c1c7c3c1m1r1a1","sN":1,"aN":"c8c8c2c1c7c3c1m1r1a1"}'>Mixed Reality</a>
+            
+        </li>
+    </ul>
+    
+</li>
+<li class="f-sub-menu js-nav-menu nested-menu" data-m='{"cT":"Container","id":"c9c2c1c7c3c1m1r1a1","sN":9,"aN":"c2c1c7c3c1m1r1a1"}'>
+
+    <span id="uhf-navspn-shellmenu_21-span" style="display:none"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn1c9c2c1c7c3c1m1r1a1","sN":1,"aN":"c9c2c1c7c3c1m1r1a1"}'>Developer &amp; IT</span>
+    <button id="uhf-navbtn-shellmenu_21-button" type="button"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn2c9c2c1c7c3c1m1r1a1","sN":2,"aN":"c9c2c1c7c3c1m1r1a1"}'>Developer &amp; IT</button>
+    <ul aria-hidden="true" aria-labelledby="uhf-navspn-shellmenu_21-span">
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_DeveloperAndIT_Docs.microsoft.com_cont","cT":"Container","id":"c3c9c2c1c7c3c1m1r1a1","sN":3,"aN":"c9c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_22" class="js-subm-uhf-nav-link" href="https://docs.microsoft.com/en-us/" data-m='{"cN":"GlobalNav_More_DeveloperAndIT_Docs.microsoft.com_nav","id":"n1c3c9c2c1c7c3c1m1r1a1","sN":1,"aN":"c3c9c2c1c7c3c1m1r1a1"}'>Docs</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_DeveloperAndIT_DeveloperCenter_cont","cT":"Container","id":"c4c9c2c1c7c3c1m1r1a1","sN":4,"aN":"c9c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_23" class="js-subm-uhf-nav-link" href="https://developer.microsoft.com/" data-m='{"cN":"GlobalNav_More_DeveloperAndIT_DeveloperCenter_nav","id":"n1c4c9c2c1c7c3c1m1r1a1","sN":1,"aN":"c4c9c2c1c7c3c1m1r1a1"}'>Developer Center</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_DeveloperAndIT_WindowsDevCenter_cont","cT":"Container","id":"c5c9c2c1c7c3c1m1r1a1","sN":5,"aN":"c9c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_24" class="js-subm-uhf-nav-link" href="https://developer.microsoft.com/en-us/windows" data-m='{"cN":"GlobalNav_More_DeveloperAndIT_WindowsDevCenter_nav","id":"n1c5c9c2c1c7c3c1m1r1a1","sN":1,"aN":"c5c9c2c1c7c3c1m1r1a1"}'>Windows Dev Center</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_DeveloperAndIT_Windows_IT_Pro_Center_cont","cT":"Container","id":"c6c9c2c1c7c3c1m1r1a1","sN":6,"aN":"c9c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_25" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/itpro/windows" data-m='{"cN":"GlobalNav_More_DeveloperAndIT_Windows_IT_Pro_Center_nav","id":"n1c6c9c2c1c7c3c1m1r1a1","sN":1,"aN":"c6c9c2c1c7c3c1m1r1a1"}'>Windows IT Pro Center</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_DeveloperAndIT_FastTrack_cont","cT":"Container","id":"c7c9c2c1c7c3c1m1r1a1","sN":7,"aN":"c9c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_26" class="js-subm-uhf-nav-link" href="https://fasttrack.microsoft.com/office" data-m='{"cN":"GlobalNav_More_DeveloperAndIT_FastTrack_nav","id":"n1c7c9c2c1c7c3c1m1r1a1","sN":1,"aN":"c7c9c2c1c7c3c1m1r1a1"}'>FastTrack</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_DeveloperAndIT_Power Platform_cont","cT":"Container","id":"c8c9c2c1c7c3c1m1r1a1","sN":8,"aN":"c9c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_27" class="js-subm-uhf-nav-link" href="https://powerplatform.microsoft.com/en-us" data-m='{"cN":"GlobalNav_More_DeveloperAndIT_Power Platform_nav","id":"n1c8c9c2c1c7c3c1m1r1a1","sN":1,"aN":"c8c9c2c1c7c3c1m1r1a1"}'>Power Platform</a>
+            
+        </li>
+    </ul>
+    
+</li>
+<li class="f-sub-menu js-nav-menu nested-menu" data-m='{"cT":"Container","id":"c10c2c1c7c3c1m1r1a1","sN":10,"aN":"c2c1c7c3c1m1r1a1"}'>
+
+    <span id="uhf-navspn-shellmenu_28-span" style="display:none"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn1c10c2c1c7c3c1m1r1a1","sN":1,"aN":"c10c2c1c7c3c1m1r1a1"}'>Partner</span>
+    <button id="uhf-navbtn-shellmenu_28-button" type="button"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn2c10c2c1c7c3c1m1r1a1","sN":2,"aN":"c10c2c1c7c3c1m1r1a1"}'>Partner</button>
+    <ul aria-hidden="true" aria-labelledby="uhf-navspn-shellmenu_28-span">
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Partner_PartnerNetwork_cont","cT":"Container","id":"c3c10c2c1c7c3c1m1r1a1","sN":3,"aN":"c10c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_29" class="js-subm-uhf-nav-link" href="https://partner.microsoft.com/" data-m='{"cN":"GlobalNav_More_Partner_PartnerNetwork_nav","id":"n1c3c10c2c1c7c3c1m1r1a1","sN":1,"aN":"c3c10c2c1c7c3c1m1r1a1"}'>Partner Network</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Partner_SolutionProviders_cont","cT":"Container","id":"c4c10c2c1c7c3c1m1r1a1","sN":4,"aN":"c10c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_30" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/solution-providers" data-m='{"cN":"GlobalNav_More_Partner_SolutionProviders_nav","id":"n1c4c10c2c1c7c3c1m1r1a1","sN":1,"aN":"c4c10c2c1c7c3c1m1r1a1"}'>Solution Providers</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Partner_PartnerCenter_cont","cT":"Container","id":"c5c10c2c1c7c3c1m1r1a1","sN":5,"aN":"c10c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_31" class="js-subm-uhf-nav-link" href="https://partnercenter.microsoft.com/partner/home" data-m='{"cN":"GlobalNav_More_Partner_PartnerCenter_nav","id":"n1c5c10c2c1c7c3c1m1r1a1","sN":1,"aN":"c5c10c2c1c7c3c1m1r1a1"}'>Partner Center</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Partner_CloudHosting_cont","cT":"Container","id":"c6c10c2c1c7c3c1m1r1a1","sN":6,"aN":"c10c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_32" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/cloudandhosting" data-m='{"cN":"GlobalNav_More_Partner_CloudHosting_nav","id":"n1c6c10c2c1c7c3c1m1r1a1","sN":1,"aN":"c6c10c2c1c7c3c1m1r1a1"}'>Cloud Hosting</a>
+            
+        </li>
+    </ul>
+    
+</li>
+<li class="f-sub-menu js-nav-menu nested-menu" data-m='{"cT":"Container","id":"c11c2c1c7c3c1m1r1a1","sN":11,"aN":"c2c1c7c3c1m1r1a1"}'>
+
+    <span id="uhf-navspn-shellmenu_33-span" style="display:none"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn1c11c2c1c7c3c1m1r1a1","sN":1,"aN":"c11c2c1c7c3c1m1r1a1"}'>Industries</span>
+    <button id="uhf-navbtn-shellmenu_33-button" type="button"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn2c11c2c1c7c3c1m1r1a1","sN":2,"aN":"c11c2c1c7c3c1m1r1a1"}'>Industries</button>
+    <ul aria-hidden="true" aria-labelledby="uhf-navspn-shellmenu_33-span">
+        <li class="js-nav-menu single-link" data-m='{"cN":"Products_ForStudentsAndEducators_Education_cont","cT":"Container","id":"c3c11c2c1c7c3c1m1r1a1","sN":3,"aN":"c11c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_34" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/education?icid=CNavMSCOML0_Studentsandeducation" data-m='{"cN":"GlobalNav_Products_ForStudentsAndEducators_Education_nav","id":"n1c3c11c2c1c7c3c1m1r1a1","sN":1,"aN":"c3c11c2c1c7c3c1m1r1a1"}'>Education</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"Footer_Enterprise_FinanciaServices_cont","cT":"Container","id":"c4c11c2c1c7c3c1m1r1a1","sN":4,"aN":"c11c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_35" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/industry/financial-services/microsoft-cloud-for-financial-services" data-m='{"cN":"GlobalNav_Footer_Enterprise_FinanciaServices_nav","id":"n1c4c11c2c1c7c3c1m1r1a1","sN":1,"aN":"c4c11c2c1c7c3c1m1r1a1"}'>Financial services</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Industries_Government_cont","cT":"Container","id":"c5c11c2c1c7c3c1m1r1a1","sN":5,"aN":"c11c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_36" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/enterprise/government" data-m='{"cN":"GlobalNav_More_Industries_Government_nav","id":"n1c5c11c2c1c7c3c1m1r1a1","sN":1,"aN":"c5c11c2c1c7c3c1m1r1a1"}'>Government</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Industries_Health_cont","cT":"Container","id":"c6c11c2c1c7c3c1m1r1a1","sN":6,"aN":"c11c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_37" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/enterprise/health" data-m='{"cN":"GlobalNav_More_Industries_Health_nav","id":"n1c6c11c2c1c7c3c1m1r1a1","sN":1,"aN":"c6c11c2c1c7c3c1m1r1a1"}'>Health</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"Footer_Enterprise_Health_cont","cT":"Container","id":"c7c11c2c1c7c3c1m1r1a1","sN":7,"aN":"c11c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_38" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/enterprise/manufacturing" data-m='{"cN":"GlobalNav_Footer_Enterprise_Health_nav","id":"n1c7c11c2c1c7c3c1m1r1a1","sN":1,"aN":"c7c11c2c1c7c3c1m1r1a1"}'>Manufacturing &amp; resources</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Industries_Retail_cont","cT":"Container","id":"c8c11c2c1c7c3c1m1r1a1","sN":8,"aN":"c11c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_39" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/en-us/enterprise/retail-consumer-goods" data-m='{"cN":"GlobalNav_More_Industries_Retail_nav","id":"n1c8c11c2c1c7c3c1m1r1a1","sN":1,"aN":"c8c11c2c1c7c3c1m1r1a1"}'>Retail</a>
+            
+        </li>
+    </ul>
+    
+</li>
+<li class="f-sub-menu js-nav-menu nested-menu" data-m='{"cT":"Container","id":"c12c2c1c7c3c1m1r1a1","sN":12,"aN":"c2c1c7c3c1m1r1a1"}'>
+
+    <span id="uhf-navspn-shellmenu_40-span" style="display:none"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn1c12c2c1c7c3c1m1r1a1","sN":1,"aN":"c12c2c1c7c3c1m1r1a1"}'>Other</span>
+    <button id="uhf-navbtn-shellmenu_40-button" type="button"   f-multi-parent="true" aria-expanded="false" data-m='{"id":"nn2c12c2c1c7c3c1m1r1a1","sN":2,"aN":"c12c2c1c7c3c1m1r1a1"}'>Other</button>
+    <ul aria-hidden="true" aria-labelledby="uhf-navspn-shellmenu_40-span">
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Other_Security_cont","cT":"Container","id":"c3c12c2c1c7c3c1m1r1a1","sN":3,"aN":"c12c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_41" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/security/" data-m='{"cN":"GlobalNav_More_Other_Security_nav","id":"n1c3c12c2c1c7c3c1m1r1a1","sN":1,"aN":"c3c12c2c1c7c3c1m1r1a1"}'>Security</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Other_Licensing_cont","cT":"Container","id":"c4c12c2c1c7c3c1m1r1a1","sN":4,"aN":"c12c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_42" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/licensing/" data-m='{"cN":"GlobalNav_More_Other_Licensing_nav","id":"n1c4c12c2c1c7c3c1m1r1a1","sN":1,"aN":"c4c12c2c1c7c3c1m1r1a1"}'>Licensing</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Other_AppSource_cont","cT":"Container","id":"c5c12c2c1c7c3c1m1r1a1","sN":5,"aN":"c12c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_43" class="js-subm-uhf-nav-link" href="https://appsource.microsoft.com/" data-m='{"cN":"GlobalNav_More_Other_AppSource_nav","id":"n1c5c12c2c1c7c3c1m1r1a1","sN":1,"aN":"c5c12c2c1c7c3c1m1r1a1"}'>AppSource</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Other_AzureMarketplace_cont","cT":"Container","id":"c6c12c2c1c7c3c1m1r1a1","sN":6,"aN":"c12c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_44" class="js-subm-uhf-nav-link" href="https://azuremarketplace.microsoft.com/marketplace/" data-m='{"cN":"GlobalNav_More_Other_AzureMarketplace_nav","id":"n1c6c12c2c1c7c3c1m1r1a1","sN":1,"aN":"c6c12c2c1c7c3c1m1r1a1"}'>Azure Marketplace</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_Other_Events_cont","cT":"Container","id":"c7c12c2c1c7c3c1m1r1a1","sN":7,"aN":"c12c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_45" class="js-subm-uhf-nav-link" href="https://events.microsoft.com/" data-m='{"cN":"GlobalNav_More_Other_Events_nav","id":"n1c7c12c2c1c7c3c1m1r1a1","sN":1,"aN":"c7c12c2c1c7c3c1m1r1a1"}'>Events</a>
+            
+        </li>
+        <li class="js-nav-menu single-link" data-m='{"cN":"More_EmergingTechnologies_Research_cont","cT":"Container","id":"c8c12c2c1c7c3c1m1r1a1","sN":8,"aN":"c12c2c1c7c3c1m1r1a1"}'>
+            <a id="shellmenu_46" class="js-subm-uhf-nav-link" href="https://www.microsoft.com/research/" data-m='{"cN":"GlobalNav_More_EmergingTechnologies_Research_nav","id":"n1c8c12c2c1c7c3c1m1r1a1","sN":1,"aN":"c8c12c2c1c7c3c1m1r1a1"}'>Research</a>
+            
+        </li>
+    </ul>
+    
+</li>
+                                                            <li class="f-multi-column-info">
+                                    <a data-m='{"id":"n13c2c1c7c3c1m1r1a1","sN":13,"aN":"c2c1c7c3c1m1r1a1"}' href="https://www.microsoft.com/en-us/sitemap.aspx" aria-label="" class="c-glyph">View Sitemap</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+</div>
+                            <form class="c-search" autocomplete="off" id="searchForm" name="searchForm" role="search" action="/opensource/?s=" method="GET" data-seAutoSuggest='' data-seautosuggestapi="https://www.microsoft.com/services/api/v3/suggest" data-m='{"cN":"GlobalNav_Search_cont","cT":"Container","id":"c3c1c7c3c1m1r1a1","sN":3,"aN":"c1c7c3c1m1r1a1"}' aria-expanded="false">
+                                <input  id="cli_shellHeaderSearchInput" aria-label="Search Expanded" aria-controls="universal-header-search-auto-suggest-transparent" aria-owns="universal-header-search-auto-suggest-ul" type="search" name="s" role="text" placeholder="Search Open Source blog" data-m='{"cN":"SearchBox_nav","id":"n1c3c1c7c3c1m1r1a1","sN":1,"aN":"c3c1c7c3c1m1r1a1"}' data-toggle="tooltip" data-placement="right" title="Search Open Source blog" />
+                                    <button id="search" aria-label="Search Open Source blog" class="c-glyph" data-m='{"cN":"Search_nav","id":"n2c3c1c7c3c1m1r1a1","sN":2,"aN":"c3c1c7c3c1m1r1a1"}' data-bi-dnt="true" data-bi-mto="true" aria-expanded="false">
+                                        <span role="presentation">Search</span>
+                                        <span role="tooltip" class="c-uhf-tooltip c-uhf-search-tooltip">Search Open Source blog</span>
+                                    </button>
+                                <div class="m-auto-suggest" id="universal-header-search-auto-suggest-transparent" role="group">
+                                    <ul class="c-menu" id="universal-header-search-auto-suggest-ul" aria-label="Search Suggestions" aria-hidden="true" data-bi-dnt="true" data-bi-mto="true" data-js-auto-suggest-position="default" role="listbox" data-tel="jsll" data-m='{"cN":"search suggestions_cont","cT":"Container","id":"c3c3c1c7c3c1m1r1a1","sN":3,"aN":"c3c1c7c3c1m1r1a1"}'></ul>
+                                </div>
+                                
+                            </form>
+                        <button data-m='{"cN":"cancel-search","pid":"Cancel Search","id":"nn4c1c7c3c1m1r1a1","sN":4,"aN":"c1c7c3c1m1r1a1"}' id="cancel-search" class="cancel-search" aria-label="Cancel Search">
+                            <span>Cancel</span>
+                        </button>
+                
+            </div>
+        </div>
+        
+        
+    </div>
+    
+</header>
+
+
+
+
+    </div>
+        </div>
+
+    </div><section class="container-wrapper blog-title-bar" aria-labelledby="blog-title">
+	<div class="container">
+					<span id="blog-title" class="blog-title">
+				<a href="https://cloudblogs.microsoft.com/opensource/">
+					Microsoft Open Source Blog				</a>
+			</span>
+		
+			</div>
+</section>
+
+<div class="wrap container" role="document">
+	<div class="content row">
+
+					<main class="main" id="main">
+					<article class="post-73156 post type-post status-publish format-standard has-post-thumbnail category-app-development category-argentina category-australia category-bahrain category-brazil category-canada category-chile category-china category-cloud category-colombia category-costa-rica category-dominican-republic category-english category-france category-germany category-india category-indonesia category-israel category-italy category-japan category-jordan category-korea category-lithuania category-malaysia category-mexico category-netherlands category-new-zealand category-nicaragua category-norway category-pakistan category-peru category-poland category-russia category-serbia category-singapore category-switzerland category-uae category-united-kingdom category-united-states tag-go tag-azure product-application-development product-programming-languages content-type-community-news scenario-community-partners scenario-microsoft review-flag-1-1593580432-963 review-flag-new-1593580248-669 review-flag-sprin-1593580746-499 review-flag-summe-1593580727-123">
+		<div class="page-header clearfix">
+						<div class="page-header-left">
+				<div class="title-wrapper">
+					<h1 class="entry-title">Ready, Set, Go lang: Brian Ketelsen explains Go’s fast growing popularity</h1>
+				</div>
+				<time class="updated" datetime="2018-02-21T19:51:53+00:00">February 21, 2018</time>
+				<!-- Your share button code -->
+<div class="social-share">
+	<div class="social-links-share list-float">
+		<div class="social-share dropdown overflow-disable">
+			<button
+				class="dc-forum-list-share x-hidden-focus"
+				type="button"
+				id="social-dropdown-menu"
+				data-toggle="dropdown"
+				aria-haspopup="true"
+				aria-expanded="false"
+				aria-label="Open share menu for this post."
+				aria-controls="social-dropdown-items"
+				data-bi-cn="share post"
+				data-bi-ct="button"
+			>
+				Share			</button>
+			<ul class="dropdown-menu list-unstyled" aria-labelledby="social-dropdown-menu" id="social-dropdown-items">
+				<li>
+					<!--  Twitter -->
+					<a
+						href="https://twitter.com/intent/tweet/?text=Ready%2C%20Set%2C%20Go%20lang%3A%20Brian%20Ketelsen%20explains%20Go%E2%80%99s%20fast%20growing%20popularity&#038;url=https%3A%2F%2Fcloudblogs.microsoft.com%2Fopensource%2F2018%2F02%2F21%2Fgo-lang-brian-ketelsen-explains-fast-growth%2F"
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="Share on Twitter"
+						data-bi-cn="share on Twitter"
+					>
+						Twitter					</a>
+				</li>
+				<li>
+					<!-- LinkedIn -->
+					<a
+						href="https://www.linkedin.com/shareArticle?mini=true&#038;url=https%3A%2F%2Fcloudblogs.microsoft.com%2Fopensource%2F2018%2F02%2F21%2Fgo-lang-brian-ketelsen-explains-fast-growth%2F&#038;title=Ready%2C%20Set%2C%20Go%20lang%3A%20Brian%20Ketelsen%20explains%20Go%E2%80%99s%20fast%20growing%20popularity&#038;source=https%3A%2F%2Fcloudblogs.microsoft.com%2Fopensource%2F2018%2F02%2F21%2Fgo-lang-brian-ketelsen-explains-fast-growth%2F"
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="Share on LinkedIn"
+						data-bi-cn="share on LinkedIn"
+					>
+						LinkedIn					</a>
+				</li>
+				<li>
+					<!-- Facebook -->
+					<a
+						href="https://facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcloudblogs.microsoft.com%2Fopensource%2F2018%2F02%2F21%2Fgo-lang-brian-ketelsen-explains-fast-growth%2F"
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="Share on Facebook"
+						data-bi-cn="share on Facebook"
+					>
+						Facebook					</a>
+				</li>
+				<li>
+					<!-- E-Mail -->
+					<a
+						href="mailto:?subject=Ready%2C%20Set%2C%20Go%20lang%3A%20Brian%20Ketelsen%20explains%20Go%E2%80%99s%20fast%20growing%20popularity&#038;body=https%3A%2F%2Fcloudblogs.microsoft.com%2Fopensource%2F2018%2F02%2F21%2Fgo-lang-brian-ketelsen-explains-fast-growth%2F"
+						target="_self"
+						rel="noopener noreferrer"
+						aria-label="Share via Email"
+						data-bi-cn="share via email"
+					>
+						Email					</a>
+				</li>
+				<li>
+					<a href="javascript:;" onclick="window.print()" data-bi-cn="print post">
+						Print					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+			</div>
+		</div>
+		<hr class="divider-secondary" />
+		<div class="post-meta">
+			<div class="row">
+				<div class="col-xs-12">
+										<div class="author-details">
+							<div class="col avatar-col">
+					<div class="avatar-container">
+						<img alt='Alessandro Segala avatar' src='https://secure.gravatar.com/avatar/d1a25202c5430a6d231a1a3e32e7027a?s=150&#038;d=mm&#038;r=g' class='avatar avatar-150 photo' height='150' width='150' loading='lazy' />					</div>
+				</div>
+						<div class="avatar-col-right">
+				<p class="entry-author">
+					<a class="author url fn" href="https://cloudblogs.microsoft.com/opensource/author/alessandrosegala/" rel="author" aria-label="View all posts by: Alessandro Segala" data-bi-cn="Alessandro Segala" data-bi-an="byline">Alessandro Segala</a>				</p>
+																				</div>
+						<div class="border-left">
+				<ul class="social-links list-float dark">
+
+																	<li>
+							<a
+								href="https://twitter.com/ItalyPaleAle"
+								target="_blank"
+								rel="noopener noreferrer"
+								data-bi-cn="visit Alessandro Segala on Twitter"
+								data-bi-an="byline"
+							>
+								<span class="screen-reader-text">
+									Visit Alessandro Segala on Twitter								</span>
+								<svg class="social"><use xlink:href="#icon-twitter"></use></svg>
+							</a>
+						</li>
+					
+											<li>
+							<a
+								href="https://www.linkedin.com/in/alessandrosegala"
+								target="_blank"
+								rel="noopener noreferrer"
+								data-bi-cn="visit Alessandro Segala on LinkedIn"
+								data-bi-an="byline"
+							>
+								<span class="screen-reader-text">
+									Visit Alessandro Segala on LinkedIn								</span>
+								<svg class="social"><use xlink:href="#icon-linkedin"></use></svg>
+							</a>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+					</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 entry-categories">
+					<a class="post-category" href="/opensource/?product=application-development" aria-label="View all posts in Application Development">Application Development</a>, <a class="post-category" href="/opensource/?product=programming-languages" aria-label="View all posts in Programming Languages">Programming Languages</a>, <a class="post-category" href="/opensource/?content-type=community-news" aria-label="View all posts in Community news">Community news</a>, <a class="post-category" href="/opensource/?scenario=community-partners" aria-label="View all posts in Community/partners">Community/partners</a>, <a class="post-category" href="/opensource/?scenario=microsoft" aria-label="View all posts in Microsoft">Microsoft</a>				</div>
+			</div>
+		</div>
+		<div class="entry-content">
+			<p>Since its creation in 2009, the Go programming language has seen a growing global fan base of developers looking for a lightweight, open source language well-suited for today&#8217;s microservices architectures.</p>
+<p>I had a chance to catch with one of our resident <em>Gophers</em>, Developer Advocate <a href="https://twitter.com/bketelsen">Brian Ketelsen</a>, to learn more about Go and its thriving community, as well how he’s seeing enterprise developers use Go in the cloud.</p>
+<h4><strong>Q: How did you get involved in the Go space? </strong></h4>
+<p>A: I’ve been doing startups for a long time, and back in 2009, I saw Go when it launched, and I was at a fintech startup. I used Go as a way to introduce some concurrency to our platform – it solved that problem nicely and it almost immediately became my favorite tool for building applications.</p>
+<p>Fast forward through a couple more startups, I went off on my own and started teaching Go classes around the world. Last summer, I had the opportunity to talk to <a href="https://twitter.com/listonb">Bryan Liston</a> and discovered that the Cloud Developer Advocate group was really a wonderful home for me and it provided me the ability to maintain the relationships that I have in the Go community and also continue to teach and help foster a good community in Go.</p>
+<p>Separately, <a href="https://twitter.com/erikstmartin">Erik St. Martin</a>—who is also now a Developer Advocate at Microsoft—and I run GopherCon every year, which to this day has been in Denver every summer. We really enjoy bringing the community together and watching the amazing growth of the Go community. It’s a great language but—more importantly to me—it’s a really great community.</p>
+<h4><strong>Q: Tell us about Go and why it’s so popular lately.</strong></h4>
+<p>A: Go is a relatively new language that is born out of the roots of UNIX from the people who created C, but didn’t create C++. It’s envisioned as a language that’s easy to use but has very low-level features. One of the things that I think attracts people to Go—especially for the cloud—is the fact that it’s really fast and it compiles down to a static binary that doesn’t have any dependencies. So, you can build a production binary on your Mac and ship it up to a Linux server and just run it without any crazy installs or any worrying about dependency conflicts.</p>
+<h4><strong>Q: Who is using Go today? </strong></h4>
+<p>A: Go is very popular in startups, but I think more surprisingly is the adoption in really big enterprises—large corporations like the New York Times and several big banks are using Go, as well as companies like Apple and Microsoft and Google. The adoption of Go is wide-spread—across the globe—from China and the major tech hubs you’d expect to companies in the middle of the rust belt.</p>
+<h4><strong>Q: How have you seen Go grow in recent years?</strong></h4>
+<p>A: Exponentially would probably be the best way to describe that. Our first conference was in 2014. We started off thinking we were going to sell 300 tickets, but we ended up more than doubling that to 750. At last year’s conference, we sold out at 1,500 and we’ve upped the ticket count for 2018 to 1,800 and I suspect we’ll sell out again. Go’s adoption throughout the world has just been amazing. In <a href="https://insights.stackoverflow.com/survey/2017#technology">2017 developer surveys</a>, we’re seeing Go in the top 20 of all programming languages &#8212; cracking the top 10 in terms of growth and developer “love.”</p>
+<h4><strong>Q: What are some of the advantages of using Go compared to other popular languages, specifically in the cloud?</strong></h4>
+<p>A: Specifically, in the cloud, compiling down to a static binary is absolutely the number one advantage. When you look at a cloud-based infrastructure, often you’re using something like a Docker container to deploy your workloads. With a static binary that you build in Go, you could have a Docker file that’s 10, 11, 12 megabytes instead of bringing in the entire Node.js ecosystem, or Python, or Java, where you’ve got these hundreds of megabyte-sized Docker files. So, shipping that tiny binary is amazing.</p>
+<p>And the performance of Go means that you’re not really losing anything when you’re coming from another language. In fact, compared to Python or Ruby, you’re gaining quite a bit of speed. And in terms of Java’s performance, goes on par or a little bit faster, maybe a little bit slower, depending on the workload. But that tiny binary size makes it really awesome in the cloud. Pulling a 10mb Docker file, or shipping a 10mb binary, with significantly less resources and in significantly less time than it would be to pull that GB huge Docker file.</p>
+<h4><strong>Q: Are there scenarios where Go isn’t the best or preferred option?</strong></h4>
+<p>A: Most of the use cases for Go, where it doesn’t work as well, I would say center on the client side. I wouldn’t use Go today to build a desktop application. It can be done—but it’s not as easy. So, Go is definitely more centered on the server. And it’s great for building network services, it’s great for building web applications, APIs, microservices, anything that talks over the network – Go’s great for that.</p>
+<h4><strong>Q: Can you tell us a little bit more about the Go community and what their role has been in the trajectory of Go.</strong></h4>
+<p>A: Go came from the founders of C—a lot of people who are working at Google right now. Google continues to provide valued support and sponsorship, but it’s been really amazing to watch over the years as the community has grown far beyond the company. There’s people leading the community from every corner of the globe and it’s great to see something that has a life of its own spring out of a project like that.</p>
+<p>It would appear just by looking at GitHub that there are roughly 1,000 people across the globe that have contributed to the central Go project itself. Outside of just the Go project, there are an estimated 500,000 to 750,000 Go developers and we really don’t know the size of that because of the population of China that we just haven’t been able to measure well yet. Certainly, a lot of people across the world using Go.</p>
+<h4><strong>Q: What is Microsoft doing with Go? </strong></h4>
+<p>A: Microsoft is using Go internally to power pieces of the Azure infrastructure, like AKS [Azure Container Service]. For customers, Go is definitely a first-class citizen on Azure – you can use Go to make calls to the Azure SDK and provision services and infrastructure. You can also use Go to call into those services and consume things like Cosmos DB, other databases, message queues, any of the services that Microsoft provides. The Azure team has been investing in a great <a href="https://azure.microsoft.com/en-us/blog/build-go-apps-for-azure-with-the-go-sdk-now-generally-available/">experience for Go developers</a>.</p>
+<p>One of the advantages of using Go with Azure, I think, is the speed at which you can develop—the speed at which Go executes. It’s a really fast language. And that awesome ability to create a single static binary: you don’t have the craziness of worrying about dependencies when you build your applications with Go.</p>
+<h4><strong>Q: Where do you see Go headed in the future?</strong></h4>
+<p>A: I think Go will continue its trajectory of growth. I think, eventually, Go will be the first choice for people who are doing things on the server side. There are definitely projects for mobile development and desktop development in Go that is starting now. I’d love to see them mature more and make Go a little easier to use when there’s a user interface involved.</p>
+<p>I love the fact that companies like Microsoft are both adopting and supporting Go so nicely. One of the things that I absolutely adore is the <a href="https://github.com/microsoft/vscode-go">Visual Studio Code extension for Go</a>, written by Microsoft. I think Visual Studio Code is the easiest and best place to write Go code and that’s awesome, I really love the fact that Microsoft has thrown so much work behind this great language. It makes my life easier. I think it won’t be long before Go is the dominant platform for building server-side applications. If we’re not already there, we’re on a trajectory to do that shortly and I don’t see a downside in the long term for Go.</p>
+<h4><strong><em>Other questions for Brian? Let us know in the comments. Follow Brian </em></strong><a href="https://twitter.com/bketelsen"><strong><em>@bketelsen</em></strong></a><strong><em>. </em></strong></h4>
+		</div>
+		<div>
+			<div class="post-tags">
+			<h3>Tags</h3>
+		<a href="/opensource/tag/go/" title="View all posts in Go" data-bi-cn="Go" data-bi-ct="taxonomy">Go</a> <a href="/opensource/tag/azure/" title="View all posts in Microsoft Azure" data-bi-cn="Microsoft Azure" data-bi-ct="taxonomy">Microsoft Azure</a>		</div>
+		
+<nav class="row post-navigation">
+	<div class="col-xs-12">
+		<ul class="flexbox">
+				<li>
+							<a
+					class="btn btn-primary c-glyph f-call-to-action older-posts"
+					href="https://cloudblogs.microsoft.com/opensource/2018/02/17/open-source-weekly-february-16-azure-go-sdk/">
+					<span>Older post</span>
+				</a>
+					</li>
+				<li>
+							<a
+					class="btn btn-primary c-glyph f-call-to-action newer-posts"
+					href="https://cloudblogs.microsoft.com/opensource/2018/02/23/open-source-weekly-february-23-vs-code-anaconda-typscript/">
+					<span>Newer post</span>
+				</a>
+					</li>
+		</ul>
+	</div>
+</nav>
+	<section class="row related-posts">
+		<div class="col-xs-12">
+			<h2 class="section-header">Related blog posts</h2>
+		</div>
+				<div class="col-xs-12 col-sm-4">
+			<h3 class="entry-title c-heading">
+				<a href="https://cloudblogs.microsoft.com/opensource/2021/11/29/progress-on-making-ebpf-work-on-windows/" class="title-link"><span class="c-heading__link">Progress on making eBPF work on Windows</span>&nbsp;<span class="c-heading__icon c-glyph glyph-chevron-right" aria-hidden="true"></span></a>
+			</h3>
+			<span class="entry-excerpt">
+				eBPF is a well-known, but revolutionary, technology for providing programmability, extensibility, and agility. eBPF has...<span><a class="read-more" aria-label="Read more about Progress on making eBPF work on Windows" href="https://cloudblogs.microsoft.com/opensource/2021/11/29/progress-on-making-ebpf-work-on-windows/" data-bi-cn="Read more about Progress on making eBPF work on Windows">Read more</a></span>			</span>
+		</div>
+				<div class="col-xs-12 col-sm-4">
+			<h3 class="entry-title c-heading">
+				<a href="https://cloudblogs.microsoft.com/opensource/2021/09/28/announcing-azure-credits-for-open-source-projects/" class="title-link"><span class="c-heading__link">Announcing: Azure credits for open source projects</span>&nbsp;<span class="c-heading__icon c-glyph glyph-chevron-right" aria-hidden="true"></span></a>
+			</h3>
+			<span class="entry-excerpt">
+				Open source software is an integral part of development at Microsoft, aligned with our goal...<span><a class="read-more" aria-label="Read more about Announcing: Azure credits for open source projects" href="https://cloudblogs.microsoft.com/opensource/2021/09/28/announcing-azure-credits-for-open-source-projects/" data-bi-cn="Read more about Announcing: Azure credits for open source projects">Read more</a></span>			</span>
+		</div>
+				<div class="col-xs-12 col-sm-4">
+			<h3 class="entry-title c-heading">
+				<a href="https://cloudblogs.microsoft.com/opensource/2021/08/03/microsoft-expands-support-with-the-eclipse-foundation/" class="title-link"><span class="c-heading__link">Microsoft expands support with The Eclipse Foundation</span>&nbsp;<span class="c-heading__icon c-glyph glyph-chevron-right" aria-hidden="true"></span></a>
+			</h3>
+			<span class="entry-excerpt">
+				At Microsoft, our goal is to empower all developers to be successful building any application,...<span><a class="read-more" aria-label="Read more about Microsoft expands support with The Eclipse Foundation" href="https://cloudblogs.microsoft.com/opensource/2021/08/03/microsoft-expands-support-with-the-eclipse-foundation/" data-bi-cn="Read more about Microsoft expands support with The Eclipse Foundation">Read more</a></span>			</span>
+		</div>
+			</section>
+		<div class="divider-primary"></div>
+	<script type="text/javascript">
+	gpid = '73156';
+</script>
+</div>
+	</article>
+			</main><!-- /.main -->
+
+							<aside class="sidebar">
+					
+	<div class="widget nav_menu-3 widget_nav_menu"><h2 class="widget-title">Find out more</h2><div class="menu-find-out-more-container"><ul id="menu-find-out-more" class="menu"><li id="menu-item-84773" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-84773"><a href="https://opensource.microsoft.com/">Microsoft Open Source Programs Office</a></li>
+<li id="menu-item-74050" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-74050"><a href="https://opensource.microsoft.com/collaborate/">Microsoft on GitHub</a></li>
+<li id="menu-item-74062" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-74062"><a href="https://devblogs.microsoft.com/">Developer Blogs</a></li>
+<li id="menu-item-84776" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-84776"><a href="https://techcommunity.microsoft.com/">Tech Community</a></li>
+<li id="menu-item-74059" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-74059"><a href="https://docs.microsoft.com/en-us/">Microsoft Docs</a></li>
+<li id="menu-item-74053" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-74053"><a href="https://channel9.msdn.com/">Channel 9</a></li>
+</ul></div></div><div class="widget tag_cloud-3 widget_tag_cloud"><h2 class="widget-title">Tags</h2><div class="tagcloud"><a href="https://cloudblogs.microsoft.com/opensource/tag/net/" class="tag-cloud-link tag-link-83 tag-link-position-1" style="font-size: 9.7834394904459pt;" aria-label=".NET (7 items)">.NET</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/ansible/" class="tag-cloud-link tag-link-87 tag-link-position-2" style="font-size: 11.656050955414pt;" aria-label="Ansible (12 items)">Ansible</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/apache/" class="tag-cloud-link tag-link-89 tag-link-position-3" style="font-size: 10.675159235669pt;" aria-label="Apache (9 items)">Apache</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/apache-spark/" class="tag-cloud-link tag-link-90 tag-link-position-4" style="font-size: 8pt;" aria-label="Apache Spark (4 items)">Apache Spark</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/azure-container-service/" class="tag-cloud-link tag-link-98 tag-link-position-5" style="font-size: 8pt;" aria-label="Azure Container Service (4 items)">Azure Container Service</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/azure-kubernetes-service/" class="tag-cloud-link tag-link-308 tag-link-position-6" style="font-size: 11.656050955414pt;" aria-label="Azure Kubernetes Service (12 items)">Azure Kubernetes Service</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/azure-marketplace/" class="tag-cloud-link tag-link-100 tag-link-position-7" style="font-size: 12.012738853503pt;" aria-label="Azure Marketplace (13 items)">Azure Marketplace</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/bitnami/" class="tag-cloud-link tag-link-105 tag-link-position-8" style="font-size: 8.7133757961783pt;" aria-label="Bitnami (5 items)">Bitnami</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/chef/" class="tag-cloud-link tag-link-109 tag-link-position-9" style="font-size: 9.3375796178344pt;" aria-label="Chef (6 items)">Chef</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/cloudera/" class="tag-cloud-link tag-link-111 tag-link-position-10" style="font-size: 10.675159235669pt;" aria-label="Cloudera (9 items)">Cloudera</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/cloud-foundry/" class="tag-cloud-link tag-link-110 tag-link-position-11" style="font-size: 9.3375796178344pt;" aria-label="Cloud Foundry (6 items)">Cloud Foundry</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/dapr/" class="tag-cloud-link tag-link-723 tag-link-position-12" style="font-size: 8.7133757961783pt;" aria-label="Dapr (5 items)">Dapr</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/docker/" class="tag-cloud-link tag-link-128 tag-link-position-13" style="font-size: 14.063694267516pt;" aria-label="Docker (23 items)">Docker</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/eclipse/" class="tag-cloud-link tag-link-131 tag-link-position-14" style="font-size: 8pt;" aria-label="Eclipse (4 items)">Eclipse</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/github/" class="tag-cloud-link tag-link-136 tag-link-position-15" style="font-size: 13.885350318471pt;" aria-label="GitHub (22 items)">GitHub</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/go/" class="tag-cloud-link tag-link-137 active tag-link-position-16" style="font-size: 8.7133757961783pt;" aria-label="Go (5 items)">Go</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/hadoop/" class="tag-cloud-link tag-link-140 tag-link-position-17" style="font-size: 14.242038216561pt;" aria-label="Hadoop (24 items)">Hadoop</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/hashicorp/" class="tag-cloud-link tag-link-141 tag-link-position-18" style="font-size: 10.229299363057pt;" aria-label="HashiCorp (8 items)">HashiCorp</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/hdinsight/" class="tag-cloud-link tag-link-142 tag-link-position-19" style="font-size: 12.012738853503pt;" aria-label="HDInsight (13 items)">HDInsight</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/helm/" class="tag-cloud-link tag-link-143 tag-link-position-20" style="font-size: 10.229299363057pt;" aria-label="Helm (8 items)">Helm</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/hortonworks/" class="tag-cloud-link tag-link-145 tag-link-position-21" style="font-size: 10.229299363057pt;" aria-label="Hortonworks (8 items)">Hortonworks</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/java/" class="tag-cloud-link tag-link-152 tag-link-position-22" style="font-size: 14.063694267516pt;" aria-label="Java (23 items)">Java</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/javascript/" class="tag-cloud-link tag-link-154 tag-link-position-23" style="font-size: 11.031847133758pt;" aria-label="JavaScript (10 items)">JavaScript</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/jenkins/" class="tag-cloud-link tag-link-156 tag-link-position-24" style="font-size: 11.031847133758pt;" aria-label="Jenkins (10 items)">Jenkins</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/kubernetes/" class="tag-cloud-link tag-link-158 tag-link-position-25" style="font-size: 18.343949044586pt;" aria-label="Kubernetes (71 items)">Kubernetes</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/linux/" class="tag-cloud-link tag-link-160 tag-link-position-26" style="font-size: 17.987261146497pt;" aria-label="Linux (65 items)">Linux</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/mean/" class="tag-cloud-link tag-link-163 tag-link-position-27" style="font-size: 8.7133757961783pt;" aria-label="MEAN (5 items)">MEAN</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/azure/" class="tag-cloud-link tag-link-166 active tag-link-position-28" style="font-size: 22pt;" aria-label="Microsoft Azure (184 items)">Microsoft Azure</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/mongodb/" class="tag-cloud-link tag-link-169 tag-link-position-29" style="font-size: 9.3375796178344pt;" aria-label="MongoDB (6 items)">MongoDB</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/mysql/" class="tag-cloud-link tag-link-173 tag-link-position-30" style="font-size: 11.031847133758pt;" aria-label="MySQL (10 items)">MySQL</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/node-js/" class="tag-cloud-link tag-link-176 tag-link-position-31" style="font-size: 14.242038216561pt;" aria-label="Node.js (24 items)">Node.js</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/onnx/" class="tag-cloud-link tag-link-663 tag-link-position-32" style="font-size: 11.656050955414pt;" aria-label="ONNX (12 items)">ONNX</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/onnx-runtime/" class="tag-cloud-link tag-link-1824 tag-link-position-33" style="font-size: 8.7133757961783pt;" aria-label="ONNX Runtime (5 items)">ONNX Runtime</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/open-source-weekly/" class="tag-cloud-link tag-link-184 tag-link-position-34" style="font-size: 13.528662420382pt;" aria-label="Open Source Weekly (20 items)">Open Source Weekly</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/postgresql/" class="tag-cloud-link tag-link-197 tag-link-position-35" style="font-size: 10.229299363057pt;" aria-label="PostgreSQL (8 items)">PostgreSQL</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/python/" class="tag-cloud-link tag-link-201 tag-link-position-36" style="font-size: 12.28025477707pt;" aria-label="Python (14 items)">Python</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/pytorch/" class="tag-cloud-link tag-link-1665 tag-link-position-37" style="font-size: 9.7834394904459pt;" aria-label="PyTorch (7 items)">PyTorch</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/r/" class="tag-cloud-link tag-link-203 tag-link-position-38" style="font-size: 9.7834394904459pt;" aria-label="R (7 items)">R</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/red-hat/" class="tag-cloud-link tag-link-206 tag-link-position-39" style="font-size: 14.687898089172pt;" aria-label="Red Hat (27 items)">Red Hat</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/spark/" class="tag-cloud-link tag-link-212 tag-link-position-40" style="font-size: 11.031847133758pt;" aria-label="Spark (10 items)">Spark</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/spring/" class="tag-cloud-link tag-link-213 tag-link-position-41" style="font-size: 10.229299363057pt;" aria-label="Spring (8 items)">Spring</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/terraform/" class="tag-cloud-link tag-link-218 tag-link-position-42" style="font-size: 12.28025477707pt;" aria-label="Terraform (14 items)">Terraform</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/ubuntu/" class="tag-cloud-link tag-link-221 tag-link-position-43" style="font-size: 9.7834394904459pt;" aria-label="Ubuntu (7 items)">Ubuntu</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/visual-studio/" class="tag-cloud-link tag-link-223 tag-link-position-44" style="font-size: 13.171974522293pt;" aria-label="Visual Studio (18 items)">Visual Studio</a>
+<a href="https://cloudblogs.microsoft.com/opensource/tag/visual-studio-code/" class="tag-cloud-link tag-link-224 tag-link-position-45" style="font-size: 12.458598726115pt;" aria-label="Visual Studio Code (15 items)">Visual Studio Code</a></div>
+</div>				</aside><!-- /.sidebar -->
+					
+	</div><!-- /.content -->
+</div><!-- /.wrap -->
+
+<!-- RSS template -->
+<script type="text/template" id="js-rss-template">
+	<div class="btn-group" id="filters-rss">
+		<button
+			class="btn btn-vertical dropdown-toggle"
+			data-toggle="dropdown"
+			aria-haspopup="true"
+			aria-expanded="false"
+			type="button"
+			aria-label="RSS"
+		>
+			<i class="icon icon-round fa fa-rss" aria-hidden="true"></i>
+			<span class="sr-only">RSS</span>
+		</button>
+		<ul class="dropdown-menu" data-bi-an="header">
+			<li id="rss-filtered">
+				<a
+					href="https://cloudblogs.microsoft.com/opensource?feed=rss2"
+					data-bi-cn="get filtered rss"
+				>
+					Get filtered RSS				</a>
+			</li>
+			<li id="all-rss">
+				<a
+					href="https://cloudblogs.microsoft.com/opensource?feed=rss2"
+					data-bi-cn="get filtered rss"
+				>
+					Get all RSS				</a>
+			</li>
+		</ul>
+	</div>
+</script>
+
+<section class="social-footer" aria-labelledby="footer-heading">
+	<h2 class="visually-hidden" id="footer-heading">More from Microsoft</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-6 social-footer-left">
+					<div class="blog-social-links clearfix">
+		<h3 class="h4">Follow OpenAtMicrosoft</h3>
+		<ul class="social-links-follow list-float">
+																								<li>
+						<a href="https://twitter.com/OpenAtMicrosoft" title="Follow us on Twitter" aria-label="Follow us on Twitter" target="_blank" rel="noopener noreferrer">
+							<svg class="social"><use xlink:href="#icon-twitter"></use></svg>
+						</a>
+					</li>
+																							</ul>
+	</div>
+				</div>
+			<div class="col-xs-12 col-md-6 social-footer-right">
+
+			</div>
+					</div>
+	</div>
+</section>
+<div id="footerArea" class="uhf"  data-m='{"cN":"footerArea","cT":"Area_coreuiArea","id":"a2Body","sN":2,"aN":"Body"}'>
+                <div id="footerRegion"     data-region-key="footerregion" data-m='{"cN":"footerRegion","cT":"Region_coreui-region","id":"r1a2","sN":1,"aN":"a2"}' >
+
+    <div  id="footerUniversalFooter" data-m='{"cN":"footerUniversalFooter","cT":"Module_coreui-universalfooter","id":"m1r1a2","sN":1,"aN":"r1a2"}'  data-module-id="Category|footerRegion|coreui-region|footerUniversalFooter|coreui-universalfooter">
+        
+
+
+
+<footer id="uhf-footer" class="c-uhff context-uhf"  data-uhf-mscc-rq="false" data-footer-footprint="/MSCloudBlogs/MSEnterpriseMobilityandSecurityFooter, fromService: True" data-m='{"cN":"Uhf footer_cont","cT":"Container","id":"c1m1r1a2","sN":1,"aN":"m1r1a2"}'>
+        <nav class="c-uhff-nav" aria-label="Footer Resource links" data-m='{"cN":"Footer nav_cont","cT":"Container","id":"c1c1m1r1a2","sN":1,"aN":"c1m1r1a2"}'>
+            
+                <div class="c-uhff-nav-row">
+                    <div class="c-uhff-nav-group" data-m='{"cN":"footerNavColumn1_cont","cT":"Container","id":"c1c1c1m1r1a2","sN":1,"aN":"c1c1m1r1a2"}'>
+                        <div class="c-heading-4" role="heading" aria-level="4">What&#39;s new</div>
+                        <ul class="c-list f-bare">
+                            <li>
+                                <a aria-label="Surface Pro 8 What&#39;s new" class="c-uhff-link" href="https://www.microsoft.com/en-us/d/surface-pro-8/8QWCRTQ8V8XG" data-m='{"cN":"Footer_WhatsNew_NewSurfacePro8_nav","id":"n1c1c1c1m1r1a2","sN":1,"aN":"c1c1c1m1r1a2"}'>Surface Pro 8</a>
+                            </li>
+                            <li>
+                                <a aria-label="Surface Laptop Studio What&#39;s new" class="c-uhff-link" href="https://www.microsoft.com/en-us/d/surface-laptop-studio/8SRDF62SWKPF" data-m='{"cN":"Footer_WhatsNew_SurfaceLaptopStudio_nav","id":"n2c1c1c1m1r1a2","sN":2,"aN":"c1c1c1m1r1a2"}'>Surface Laptop Studio</a>
+                            </li>
+                            <li>
+                                <a aria-label="Surface Pro X What&#39;s new" class="c-uhff-link" href="https://www.microsoft.com/en-us/d/surface-pro-x/8XTMB6C575MD" data-m='{"cN":"Whatsnew_SurfaceProX_nav","id":"n3c1c1c1m1r1a2","sN":3,"aN":"c1c1c1m1r1a2"}'>Surface Pro X</a>
+                            </li>
+                            <li>
+                                <a aria-label="Surface Go 3 What&#39;s new" class="c-uhff-link" href="https://www.microsoft.com/en-us/d/surface-go-3/904H27D0CBWN" data-m='{"cN":"Footer_WhatsNew_SurfaceGo3_nav","id":"n4c1c1c1m1r1a2","sN":4,"aN":"c1c1c1m1r1a2"}'>Surface Go 3</a>
+                            </li>
+                            <li>
+                                <a aria-label="Surface Duo 2 What&#39;s new" class="c-uhff-link" href="https://www.microsoft.com/en-us/d/surface-duo-2/9408KGXP4XJL" data-m='{"cN":"Footer_WhatsNew_SurfaceDuo2_nav","id":"n5c1c1c1m1r1a2","sN":5,"aN":"c1c1c1m1r1a2"}'>Surface Duo 2</a>
+                            </li>
+                            <li>
+                                <a aria-label="Surface Pro 7+ What&#39;s new" class="c-uhff-link" href="https://www.microsoft.com/es-us/d/surface-pro-7-plus/92WRLRCVZ4PR" data-m='{"cN":"Whatsnew_SurfacePro7_nav","id":"n6c1c1c1m1r1a2","sN":6,"aN":"c1c1c1m1r1a2"}'>Surface Pro 7+</a>
+                            </li>
+                            <li>
+                                <a aria-label="Windows 11 apps What&#39;s new" class="c-uhff-link" href="https://www.microsoft.com/windows/windows-11-apps" data-m='{"cN":"Footer_WhatsNew_Windows_11_apps_nav","id":"n7c1c1c1m1r1a2","sN":7,"aN":"c1c1c1m1r1a2"}'>Windows 11 apps</a>
+                            </li>
+                            <li>
+                                <a aria-label="HoloLens 2 What&#39;s new" class="c-uhff-link" href="https://www.microsoft.com/en-us/hololens" data-m='{"cN":"Footer_WhatsNew_Hololens2_nav","id":"n8c1c1c1m1r1a2","sN":8,"aN":"c1c1c1m1r1a2"}'>HoloLens 2</a>
+                            </li>
+
+                        </ul>
+                        
+                    </div>
+                    <div class="c-uhff-nav-group" data-m='{"cN":"footerNavColumn2_cont","cT":"Container","id":"c2c1c1m1r1a2","sN":2,"aN":"c1c1m1r1a2"}'>
+                        <div class="c-heading-4" role="heading" aria-level="4">Microsoft Store</div>
+                        <ul class="c-list f-bare">
+                            <li>
+                                <a aria-label="Account profile Microsoft Store" class="c-uhff-link" href="https://account.microsoft.com/" data-m='{"cN":"Footer_StoreandSupport_AccountProfile_nav","id":"n1c2c1c1m1r1a2","sN":1,"aN":"c2c1c1m1r1a2"}'>Account profile</a>
+                            </li>
+                            <li>
+                                <a aria-label="Download Center Microsoft Store" class="c-uhff-link" href="https://www.microsoft.com/en-us/download" data-m='{"cN":"Footer_StoreandSupport_DownloadCenter_nav","id":"n2c2c1c1m1r1a2","sN":2,"aN":"c2c1c1m1r1a2"}'>Download Center</a>
+                            </li>
+                            <li>
+                                <a aria-label="Microsoft Store support Microsoft Store" class="c-uhff-link" href="https://go.microsoft.com/fwlink/?linkid=2139749" data-m='{"cN":"Footer_StoreandSupport_SalesAndSupport_nav","id":"n3c2c1c1m1r1a2","sN":3,"aN":"c2c1c1m1r1a2"}'>Microsoft Store support</a>
+                            </li>
+                            <li>
+                                <a aria-label="Returns Microsoft Store" class="c-uhff-link" href="https://go.microsoft.com/fwlink/p/?LinkID=824764&amp;clcid=0x409" data-m='{"cN":"MicrosoftStore_ExtendedHolidayReturns_nav","id":"n4c2c1c1m1r1a2","sN":4,"aN":"c2c1c1m1r1a2"}'>Returns</a>
+                            </li>
+                            <li>
+                                <a aria-label="Order tracking Microsoft Store" class="c-uhff-link" href="https://account.microsoft.com/orders" data-m='{"cN":"Footer_StoreandSupport_OrderTracking_nav","id":"n5c2c1c1m1r1a2","sN":5,"aN":"c2c1c1m1r1a2"}'>Order tracking</a>
+                            </li>
+                            <li>
+                                <a aria-label="Virtual workshops and training Microsoft Store" class="c-uhff-link" href="https://www.microsoft.com/en-us/store/workshops-training-and-events?icid=vl_uf_932020" data-m='{"cN":"Footer_StoreandSupport_StoreLocations_nav","id":"n6c2c1c1m1r1a2","sN":6,"aN":"c2c1c1m1r1a2"}'>Virtual workshops and training</a>
+                            </li>
+                            <li>
+                                <a aria-label="Microsoft Store Promise Microsoft Store" class="c-uhff-link" href="https://www.microsoft.com/en-us/store/b/why-microsoft-store?icid=footer_why-msft-store_7102020" data-m='{"cN":"Footer_StoreandSupport_MicrosoftPromise_nav","id":"n7c2c1c1m1r1a2","sN":7,"aN":"c2c1c1m1r1a2"}'>Microsoft Store Promise</a>
+                            </li>
+                            <li>
+                                <a aria-label="Flexible Payments Microsoft Store" class="c-uhff-link" href="https://www.microsoft.com/en-us/store/b/payment-financing-options?icid=footer_financing_vcc" data-m='{"cN":"Footer_StoreandSupport_Financing_nav","id":"n8c2c1c1m1r1a2","sN":8,"aN":"c2c1c1m1r1a2"}'>Flexible Payments</a>
+                            </li>
+
+                        </ul>
+                        
+                    </div>
+                    <div class="c-uhff-nav-group" data-m='{"cN":"footerNavColumn3_cont","cT":"Container","id":"c3c1c1m1r1a2","sN":3,"aN":"c1c1m1r1a2"}'>
+                        <div class="c-heading-4" role="heading" aria-level="4">Education</div>
+                        <ul class="c-list f-bare">
+                            <li>
+                                <a aria-label="Microsoft in education Education" class="c-uhff-link" href="https://www.microsoft.com/en-us/education" data-m='{"cN":"Footer_Education_MicrosoftInEducation_nav","id":"n1c3c1c1m1r1a2","sN":1,"aN":"c3c1c1m1r1a2"}'>Microsoft in education</a>
+                            </li>
+                            <li>
+                                <a aria-label="Office for students Education" class="c-uhff-link" href="https://www.microsoft.com/en-us/education/products/office/default.aspx" data-m='{"cN":"Footer_Education_OfficeForStudents_nav","id":"n2c3c1c1m1r1a2","sN":2,"aN":"c3c1c1m1r1a2"}'>Office for students</a>
+                            </li>
+                            <li>
+                                <a aria-label="Office 365 for schools Education" class="c-uhff-link" href="https://www.microsoft.com/en-us/microsoft-365/academic/compare-office-365-education-plans" data-m='{"cN":"Footer_Education_Office365ForSchools_nav","id":"n3c3c1c1m1r1a2","sN":3,"aN":"c3c1c1m1r1a2"}'>Office 365 for schools</a>
+                            </li>
+                            <li>
+                                <a aria-label="Deals for students &amp; parents Education" class="c-uhff-link" href="https://www.microsoft.com/en-us/store/b/education?icid=CNavfooter_Studentsandeducation" data-m='{"cN":"Footer_Education_DealsForStudentsandParents_nav","id":"n4c3c1c1m1r1a2","sN":4,"aN":"c3c1c1m1r1a2"}'>Deals for students &amp; parents</a>
+                            </li>
+                            <li>
+                                <a aria-label="Microsoft Azure in education Education" class="c-uhff-link" href="https://azure.microsoft.com/en-us/community/education/" data-m='{"cN":"Footer_MicrosoftAzureInEducation_nav","id":"n5c3c1c1m1r1a2","sN":5,"aN":"c3c1c1m1r1a2"}'>Microsoft Azure in education</a>
+                            </li>
+
+                        </ul>
+                        
+                    </div>
+                </div>
+                <div class="c-uhff-nav-row">
+                    <div class="c-uhff-nav-group" data-m='{"cN":"footerNavColumn4_cont","cT":"Container","id":"c4c1c1m1r1a2","sN":4,"aN":"c1c1m1r1a2"}'>
+                        <div class="c-heading-4" role="heading" aria-level="4">Enterprise</div>
+                        <ul class="c-list f-bare">
+                            <li>
+                                <a aria-label="Azure Enterprise" class="c-uhff-link" href="https://azure.microsoft.com/" data-m='{"cN":"Footer_Enterprise_MicrosoftAzure_nav","id":"n1c4c1c1m1r1a2","sN":1,"aN":"c4c1c1m1r1a2"}'>Azure</a>
+                            </li>
+                            <li>
+                                <a aria-label="AppSource  Enterprise" class="c-uhff-link" href="https://go.microsoft.com/fwlink/?LinkID=808093" data-m='{"cN":"Footer_Enterprise_MicrosoftAppSource_nav","id":"n2c4c1c1m1r1a2","sN":2,"aN":"c4c1c1m1r1a2"}'>AppSource </a>
+                            </li>
+                            <li>
+                                <a aria-label="Automotive Enterprise" class="c-uhff-link" href="https://www.microsoft.com/en-us/industry/automotive" data-m='{"cN":"Footer_Enterprise_Automotive_nav","id":"n3c4c1c1m1r1a2","sN":3,"aN":"c4c1c1m1r1a2"}'>Automotive</a>
+                            </li>
+                            <li>
+                                <a aria-label="Government Enterprise" class="c-uhff-link" href="https://www.microsoft.com/en-us/industry/government" data-m='{"cN":"Footer_Enterprise_Government_nav","id":"n4c4c1c1m1r1a2","sN":4,"aN":"c4c1c1m1r1a2"}'>Government</a>
+                            </li>
+                            <li>
+                                <a aria-label="Healthcare Enterprise" class="c-uhff-link" href="https://www.microsoft.com/en-us/industry/health/microsoft-cloud-for-healthcare" data-m='{"cN":"Footer_Enterprise_Health_nav","id":"n5c4c1c1m1r1a2","sN":5,"aN":"c4c1c1m1r1a2"}'>Healthcare</a>
+                            </li>
+                            <li>
+                                <a aria-label="Manufacturing Enterprise" class="c-uhff-link" href="https://www.microsoft.com/en-us/industry/manufacturing/microsoft-cloud-for-manufacturing" data-m='{"cN":"Footer_Enterprise_Manufacturing_nav","id":"n6c4c1c1m1r1a2","sN":6,"aN":"c4c1c1m1r1a2"}'>Manufacturing</a>
+                            </li>
+                            <li>
+                                <a aria-label="Financial services Enterprise" class="c-uhff-link" href="https://www.microsoft.com/en-us/industry/financial-services/microsoft-cloud-for-financial-services" data-m='{"cN":"Footer_Enterprise_FinanciaServices_nav","id":"n7c4c1c1m1r1a2","sN":7,"aN":"c4c1c1m1r1a2"}'>Financial services</a>
+                            </li>
+                            <li>
+                                <a aria-label="Retail Enterprise" class="c-uhff-link" href="https://www.microsoft.com/en-us/industry/retail/microsoft-cloud-for-retail" data-m='{"cN":"Footer_Enterprise_Retail_nav","id":"n8c4c1c1m1r1a2","sN":8,"aN":"c4c1c1m1r1a2"}'>Retail</a>
+                            </li>
+
+                        </ul>
+                        
+                    </div>
+                    <div class="c-uhff-nav-group" data-m='{"cN":"footerNavColumn5_cont","cT":"Container","id":"c5c1c1m1r1a2","sN":5,"aN":"c1c1m1r1a2"}'>
+                        <div class="c-heading-4" role="heading" aria-level="4">Developer</div>
+                        <ul class="c-list f-bare">
+                            <li>
+                                <a aria-label="Microsoft Visual Studio Developer" class="c-uhff-link" href="https://visualstudio.microsoft.com/" data-m='{"cN":"Footer_Developer_MicrosoftVisualStudio_nav","id":"n1c5c1c1m1r1a2","sN":1,"aN":"c5c1c1m1r1a2"}'>Microsoft Visual Studio</a>
+                            </li>
+                            <li>
+                                <a aria-label="Windows Dev Center Developer" class="c-uhff-link" href="https://developer.microsoft.com/en-us/windows" data-m='{"cN":"Footer_Developer_WindowsDevCenter_nav","id":"n2c5c1c1m1r1a2","sN":2,"aN":"c5c1c1m1r1a2"}'>Windows Dev Center</a>
+                            </li>
+                            <li>
+                                <a aria-label="Developer Center Developer" class="c-uhff-link" href="https://developer.microsoft.com/" data-m='{"cN":"Footer_Developer_DeveloperCenter_nav","id":"n3c5c1c1m1r1a2","sN":3,"aN":"c5c1c1m1r1a2"}'>Developer Center</a>
+                            </li>
+                            <li>
+                                <a aria-label="Microsoft developer program Developer" class="c-uhff-link" href="https://developer.microsoft.com/en-us/store/register" data-m='{"cN":"Footer_Developer_MicrosoftDeveloperProgram_nav","id":"n4c5c1c1m1r1a2","sN":4,"aN":"c5c1c1m1r1a2"}'>Microsoft developer program</a>
+                            </li>
+                            <li>
+                                <a aria-label="Channel 9 Developer" class="c-uhff-link" href="https://channel9.msdn.com/" data-m='{"cN":"Footer_Developer_Channel9_nav","id":"n5c5c1c1m1r1a2","sN":5,"aN":"c5c1c1m1r1a2"}'>Channel 9</a>
+                            </li>
+                            <li>
+                                <a aria-label="Microsoft 365 Dev Center Developer" class="c-uhff-link" href="https://developer.microsoft.com/microsoft-365" data-m='{"cN":"Footer_Developer_Microsoft365DevCenter_nav","id":"n6c5c1c1m1r1a2","sN":6,"aN":"c5c1c1m1r1a2"}'>Microsoft 365 Dev Center</a>
+                            </li>
+                            <li>
+                                <a aria-label="Microsoft 365 Developer Program Developer" class="c-uhff-link" href="https://developer.microsoft.com/microsoft-365/dev-program" data-m='{"cN":"Footer_Developer_Microsoft365DeveloperProgram_nav","id":"n7c5c1c1m1r1a2","sN":7,"aN":"c5c1c1m1r1a2"}'>Microsoft 365 Developer Program</a>
+                            </li>
+                            <li>
+                                <a aria-label="Microsoft Garage Developer" class="c-uhff-link" href="https://www.microsoft.com/en-us/garage/" data-m='{"cN":"Microsoft Garage_nav","id":"n8c5c1c1m1r1a2","sN":8,"aN":"c5c1c1m1r1a2"}'>Microsoft Garage</a>
+                            </li>
+
+                        </ul>
+                        
+                    </div>
+                    <div class="c-uhff-nav-group" data-m='{"cN":"footerNavColumn6_cont","cT":"Container","id":"c6c1c1m1r1a2","sN":6,"aN":"c1c1m1r1a2"}'>
+                        <div class="c-heading-4" role="heading" aria-level="4">Company</div>
+                        <ul class="c-list f-bare">
+                            <li>
+                                <a aria-label="Careers Company" class="c-uhff-link" href="https://careers.microsoft.com/" data-m='{"cN":"Footer_Company_Careers_nav","id":"n1c6c1c1m1r1a2","sN":1,"aN":"c6c1c1m1r1a2"}'>Careers</a>
+                            </li>
+                            <li>
+                                <a aria-label="About Microsoft Company" class="c-uhff-link" href="https://www.microsoft.com/en-us/about" data-m='{"cN":"Footer_Company_AboutMicrosoft_nav","id":"n2c6c1c1m1r1a2","sN":2,"aN":"c6c1c1m1r1a2"}'>About Microsoft</a>
+                            </li>
+                            <li>
+                                <a aria-label="Company news Company" class="c-uhff-link" href="https://news.microsoft.com/" data-m='{"cN":"Footer_Company_CompanyNews_nav","id":"n3c6c1c1m1r1a2","sN":3,"aN":"c6c1c1m1r1a2"}'>Company news</a>
+                            </li>
+                            <li>
+                                <a aria-label="Privacy at Microsoft Company" class="c-uhff-link" href="https://privacy.microsoft.com/en-us" data-m='{"cN":"Footer_Company_PrivacyAtMicrosoft_nav","id":"n4c6c1c1m1r1a2","sN":4,"aN":"c6c1c1m1r1a2"}'>Privacy at Microsoft</a>
+                            </li>
+                            <li>
+                                <a aria-label="Investors Company" class="c-uhff-link" href="https://www.microsoft.com/investor/default.aspx" data-m='{"cN":"Footer_Company_Investors_nav","id":"n5c6c1c1m1r1a2","sN":5,"aN":"c6c1c1m1r1a2"}'>Investors</a>
+                            </li>
+                            <li>
+                                <a aria-label="Diversity and inclusion Company" class="c-uhff-link" href="https://www.microsoft.com/en-us/diversity/" data-m='{"cN":"Footer_Company_DiversityAndInclusion_nav","id":"n6c6c1c1m1r1a2","sN":6,"aN":"c6c1c1m1r1a2"}'>Diversity and inclusion</a>
+                            </li>
+                            <li>
+                                <a aria-label="Accessibility Company" class="c-uhff-link" href="https://www.microsoft.com/en-us/accessibility" data-m='{"cN":"Footer_Company_Accessibility_nav","id":"n7c6c1c1m1r1a2","sN":7,"aN":"c6c1c1m1r1a2"}'>Accessibility</a>
+                            </li>
+                            <li>
+                                <a aria-label="Security Company" class="c-uhff-link" href="https://www.microsoft.com/en-us/security" data-m='{"cN":"Footer_Company_Security_nav","id":"n8c6c1c1m1r1a2","sN":8,"aN":"c6c1c1m1r1a2"}'>Security</a>
+                            </li>
+
+                        </ul>
+                        
+                    </div>
+                </div>
+        </nav>
+    <div class="c-uhff-base">
+                <a id="locale-picker-link" aria-label="Content Language Selector. Currently set to English (United States)" class="c-uhff-link c-uhff-lang-selector c-glyph glyph-world" href="http://www.microsoft.com/en-us/locale.aspx" data-m='{"cN":"locale_picker(US)_nav","id":"n7c1c1m1r1a2","sN":7,"aN":"c1c1m1r1a2"}'>English (United States)</a>
+
+        <nav aria-label="Microsoft corporate links">
+            <ul class="c-list f-bare" data-m='{"cN":"Corp links_cont","cT":"Container","id":"c8c1c1m1r1a2","sN":8,"aN":"c1c1m1r1a2"}'>
+                                <li  id="c-uhff-footer_sitemap">
+                    <a class="c-uhff-link" href="https://www.microsoft.com/en-us/sitemap1.aspx" data-mscc-ic="false" data-m='{"cN":"Footer_Sitemap_nav","id":"n1c8c1c1m1r1a2","sN":1,"aN":"c8c1c1m1r1a2"}'>Sitemap</a>
+                </li>
+                <li  id="c-uhff-footer_contactus">
+                    <a class="c-uhff-link" href="https://support.microsoft.com/contactus" data-mscc-ic="false" data-m='{"cN":"Footer_ContactUs_nav","id":"n2c8c1c1m1r1a2","sN":2,"aN":"c8c1c1m1r1a2"}'>Contact Microsoft</a>
+                </li>
+                <li  id="c-uhff-footer_privacyandcookies">
+                    <a class="c-uhff-link" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-mscc-ic="false" data-m='{"cN":"Footer_PrivacyandCookies_nav","id":"n3c8c1c1m1r1a2","sN":3,"aN":"c8c1c1m1r1a2"}'>Privacy </a>
+                </li>
+                <li class=" x-hidden" id="c-uhff-footer_managecookies">
+                    <a class="c-uhff-link" href="#" data-mscc-ic="false" data-m='{"cN":"Footer_ManageCookies_nav","id":"n4c8c1c1m1r1a2","sN":4,"aN":"c8c1c1m1r1a2"}'>Manage cookies</a>
+                </li>
+                <li  id="c-uhff-footer_termsofuse">
+                    <a class="c-uhff-link" href="https://go.microsoft.com/fwlink/?LinkID=206977" data-mscc-ic="false" data-m='{"cN":"Footer_TermsOfUse_nav","id":"n5c8c1c1m1r1a2","sN":5,"aN":"c8c1c1m1r1a2"}'>Terms of use</a>
+                </li>
+                <li  id="c-uhff-footer_trademarks">
+                    <a class="c-uhff-link" href="https://www.microsoft.com/trademarks" data-mscc-ic="false" data-m='{"cN":"Footer_Trademarks_nav","id":"n6c8c1c1m1r1a2","sN":6,"aN":"c8c1c1m1r1a2"}'>Trademarks</a>
+                </li>
+                <li  id="c-uhff-footer_safetyandeco">
+                    <a class="c-uhff-link" href="https://www.microsoft.com/en-us/devices/safety-and-eco " data-mscc-ic="false" data-m='{"cN":"Footer_SafetyAndEco_nav","id":"n7c8c1c1m1r1a2","sN":7,"aN":"c8c1c1m1r1a2"}'>Safety &amp; eco</a>
+                </li>
+                <li  id="c-uhff-footer_aboutourads">
+                    <a class="c-uhff-link" href="https://choice.microsoft.com" data-mscc-ic="false" data-m='{"cN":"Footer_AboutourAds_nav","id":"n8c8c1c1m1r1a2","sN":8,"aN":"c8c1c1m1r1a2"}'>About our ads</a>
+                </li>
+
+                <li>&#169; Microsoft 2021</li>
+                
+            </ul>
+        </nav>
+    </div>
+    
+</footer>
+
+
+
+
+    </div>
+        </div>
+
+    </div>
+<section class="back-to-top">
+	<a href="#top-of-the-page" class="back-to-top" aria-label="Navigate back to the top of the page." title="Navigate back to the top of the page.">
+		<span class="ms-glyph ms-glyph-up" aria-hidden="true"></span>
+	</a>
+</section>
+
+	<script>
+		function onConsentChanged( categoryPreferences ) {
+			dropAnalyticsCookies();
+			dropAdvertisingCookies();
+			dropSocialMediaCookies();
+		}
+
+		function dropAnalyticsCookies(){
+			if ( siteConsent.getConsentFor( WcpConsent.consentCategories.Analytics ) ) {
+								console.log( 'analytics cookies dropped' );
+
+				if ( siteConsent.getConsentFor( WcpConsent.consentCategories.Advertising ) ) {
+										console.log( 'dual_ad_analytics cookies dropped' );
+
+					if ( siteConsent.getConsentFor( WcpConsent.consentCategories.SocialMedia ) ) {
+													if ( typeof facebookTracking === "function" ) {
+								facebookTracking(); 
+							}
+												console.log( 'all categories cookies dropped' );
+					}
+				}
+
+				if ( siteConsent.getConsentFor( WcpConsent.consentCategories.SocialMedia ) ) {
+										console.log( 'dual_analytics_social cookies dropped' );
+				}
+			}
+		}
+
+		function dropAdvertisingCookies(){
+			if ( siteConsent.getConsentFor( WcpConsent.consentCategories.Advertising ) ) {
+								console.log( 'advertising cookies dropped' );
+
+				if ( siteConsent.getConsentFor( WcpConsent.consentCategories.SocialMedia ) ) {
+										console.log( 'dual_ad_social cookies dropped' );
+				}
+			}
+		}
+
+		function dropSocialMediaCookies(){
+			if ( siteConsent.getConsentFor( WcpConsent.consentCategories.SocialMedia ) ) {
+								console.log( 'social cookies dropped' );
+			}
+		}
+
+		window.WcpConsent && WcpConsent.init( "en-US", "ms-cookie-banner", function (err, _siteConsent) {
+			if ( ! err ) {
+				siteConsent = _siteConsent;  //siteConsent is used to get the current consent
+
+				var consentRequiredElementExists = document.getElementById( "c-uhff-footer_managecookies" ) && siteConsent.isConsentRequired;
+
+				if ( consentRequiredElementExists ) {
+					document.getElementById( "c-uhff-footer_managecookies" ).classList.remove("x-hidden");
+					document.getElementById( "c-uhff-footer_managecookies" ).onclick = function() {
+						siteConsent.manageConsent();
+					};
+				}
+
+				dropAdvertisingCookies();
+				dropAnalyticsCookies();
+				dropSocialMediaCookies();
+
+			} else {
+				console.log( "Error initializing WcpConsent: " + err );
+			}
+		}, onConsentChanged );
+	</script>
+		<!-- JSLL tracking -->
+	<script>
+		// 1DS initialization
+		const analytics = new oneDS.ApplicationInsights();
+		var config = {
+			instrumentationKey: "b341ec446e65436485df678003ce82f7-1d36a7a4-ef54-4cf0-93eb-ba18b3241d36-7404",
+			propertyConfiguration: {
+				callback: {
+					userConsentDetails: siteConsent ? siteConsent.getConsent : null
+				},
+			},
+			webAnalyticsConfiguration:{
+				coreData: {"pageName":"Ready, Set, Go lang: Brian Ketelsen explains Go\u2019s fast growing popularity","pageType":"Post"},
+				urlCollectQuery: true,
+				urlCollectHash: true,
+				autoCapture: {
+					scroll: true,
+					pageView: true,
+					onLoad: true,
+					onUnload: true,
+					click: true,
+					scroll: true,
+					resize: true,
+					jsError: true
+				}
+			}
+		}; 
+		// Initialize OneDS SDK
+		analytics.initialize( config, [] );
+	</script>
+	<script type='text/javascript' id='mscep-main-js-extra'>
+/* <![CDATA[ */
+var mscepCBPlugin = {"i18n":{"page":"Link to page"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-content/plugins/microsoft-cloud-blogs/assets/js/microsoft-cloud-blogs-plugin.js?ver=1.4.9' id='mscep-main-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-content/plugins/microsoft-comments-pii//assets/js/frontend.js?ver=1.2.0' id='Microsoft_Comments_Pii_frontend-js'></script>
+<script type='text/javascript' id='mscp-load-more-js-extra'>
+/* <![CDATA[ */
+var ceLoadMore = {"ajaxUrl":"https:\/\/cloudblogs.microsoft.com\/opensource\/wp-admin\/admin-ajax.php","nonce":"40e48dac5b","queryVars":"{\"page\":0,\"year\":2018,\"monthnum\":2,\"day\":21,\"name\":\"go-lang-brian-ketelsen-explains-fast-growth\",\"error\":\"\",\"m\":\"\",\"p\":0,\"post_parent\":\"\",\"subpost\":\"\",\"subpost_id\":\"\",\"attachment\":\"\",\"attachment_id\":0,\"pagename\":\"\",\"page_id\":0,\"second\":\"\",\"minute\":\"\",\"hour\":\"\",\"w\":0,\"category_name\":\"\",\"tag\":\"\",\"cat\":\"\",\"tag_id\":\"\",\"author\":\"\",\"author_name\":\"\",\"feed\":\"\",\"tb\":\"\",\"paged\":0,\"meta_key\":\"\",\"meta_value\":\"\",\"preview\":\"\",\"s\":\"\",\"sentence\":\"\",\"title\":\"\",\"fields\":\"\",\"menu_order\":\"\",\"embed\":\"\",\"category__in\":[],\"category__not_in\":[],\"category__and\":[],\"post__in\":[],\"post__not_in\":[],\"post_name__in\":[],\"tag__in\":[],\"tag__not_in\":[],\"tag__and\":[],\"tag_slug__in\":[],\"tag_slug__and\":[],\"post_parent__in\":[],\"post_parent__not_in\":[],\"author__in\":[],\"author__not_in\":[],\"ignore_sticky_posts\":false,\"suppress_filters\":false,\"cache_results\":false,\"update_post_term_cache\":true,\"lazy_load_term_meta\":true,\"update_post_meta_cache\":true,\"post_type\":\"\",\"posts_per_page\":12,\"nopaging\":false,\"comments_per_page\":\"20\",\"no_found_rows\":false,\"order\":\"DESC\"}","currentPage":"1","maxPage":"0","similar":"","i18n":{"loadMore":"Load more","loading":"Loading\u2026"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-content/themes/cloudperspectives/dist/scripts/load-more.min.js?ver=43a66636' id='mscp-load-more-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-content/themes/enterprisemobility/dist/scripts/main.js?ver=43a66636' id='sage/childjs-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/dist/dom-ready.min.js?ver=71883072590656bf22c74c7b887df3dd' id='wp-dom-ready-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/dist/hooks.min.js?ver=a7edae857aab69d69fa10d5aef23a5de' id='wp-hooks-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/dist/i18n.min.js?ver=5f1269854226b4dd90450db411a12b79' id='wp-i18n-js'></script>
+<script type='text/javascript' id='wp-i18n-js-after'>
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type='text/javascript' id='wp-a11y-js-translations'>
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", { "locale_data": { "messages": { "": {} } } } );
+</script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/dist/a11y.min.js?ver=0ac8327cc1c40dcfdf29716affd7ac63' id='wp-a11y-js'></script>
+<script type='text/javascript' id='sage/js-js-extra'>
+/* <![CDATA[ */
+var msce = {"emebed_filter_regexes":"(https?:\/\/(www.)?youtube\\.com\/(?:v|embed)\/([^\/]+))|(http(s)?:\/\/channel9\\.msdn\\.com\/(.*))|(https?:\/\/www.microsoft.com\/(.+?)\/videoplayer\/embed\/(.+?)($|&))|(https?:\/\/www.linkedin.com\/posts\/(.*)?)|(https?:\/\/.+?\\.(mp3|ogg|flac|m4a|wav))|(https?:\/\/.+?\\.(mp4|m4v|webm|ogv|flv))|(https?:\/\/((m|www)\\.)?youtube\\.com\/watch.*)|(https?:\/\/((m|www)\\.)?youtube\\.com\/playlist.*)|(https?:\/\/youtu\\.be\/.*)|(https?:\/\/(.+\\.)?vimeo\\.com\/.*)|(https?:\/\/(www\\.)?dailymotion\\.com\/.*)|(https?:\/\/dai\\.ly\/.*)|(https?:\/\/(www\\.)?flickr\\.com\/.*)|(https?:\/\/flic\\.kr\/.*)|(https?:\/\/(.+\\.)?smugmug\\.com\/.*)|(https?:\/\/(www\\.)?scribd\\.com\/(doc|document)\/.*)|(https?:\/\/wordpress\\.tv\/.*)|(https?:\/\/(.+\\.)?polldaddy\\.com\/.*)|(https?:\/\/poll\\.fm\/.*)|(https?:\/\/(.+\\.)?survey\\.fm\/.*)|(https?:\/\/(www\\.)?twitter\\.com\/\\w{1,15}\/status(es)?\/.*)|(https?:\/\/(www\\.)?twitter\\.com\/\\w{1,15})|(https?:\/\/(www\\.)?twitter\\.com\/\\w{1,15}\/likes)|(https?:\/\/(www\\.)?twitter\\.com\/\\w{1,15}\/lists\/.*)|(https?:\/\/(www\\.)?twitter\\.com\/\\w{1,15}\/timelines\/.*)|(https?:\/\/(www\\.)?twitter\\.com\/i\/moments\/.*)|(https?:\/\/(www\\.)?soundcloud\\.com\/.*)|(https?:\/\/(.+?\\.)?slideshare\\.net\/.*)|(https?:\/\/(open|play)\\.spotify\\.com\/.*)|(https?:\/\/(.+\\.)?imgur\\.com\/.*)|(https?:\/\/(www\\.)?meetu(\\.ps|p\\.com)\/.*)|(https?:\/\/(www\\.)?issuu\\.com\/.+\/docs\/.+)|(https?:\/\/(www\\.)?mixcloud\\.com\/.*)|(https?:\/\/(www\\.|embed\\.)?ted\\.com\/talks\/.*)|(https?:\/\/(www\\.)?(animoto|video214)\\.com\/play\/.*)|(https?:\/\/(.+)\\.tumblr\\.com\/post\/.*)|(https?:\/\/(www\\.)?kickstarter\\.com\/projects\/.*)|(https?:\/\/kck\\.st\/.*)|(https?:\/\/cloudup\\.com\/.*)|(https?:\/\/(www\\.)?reverbnation\\.com\/.*)|(https?:\/\/videopress\\.com\/v\/.*)|(https?:\/\/(www\\.)?reddit\\.com\/r\/[^\/]+\/comments\/.*)|(https?:\/\/(www\\.)?speakerdeck\\.com\/.*)|(https?:\/\/(www\\.)?screencast\\.com\/.*)|(https?:\/\/([a-z0-9-]+\\.)?amazon\\.(com|com\\.mx|com\\.br|ca)\/.*)|(https?:\/\/([a-z0-9-]+\\.)?amazon\\.(co\\.uk|de|fr|it|es|in|nl|ru)\/.*)|(https?:\/\/([a-z0-9-]+\\.)?amazon\\.(co\\.jp|com\\.au)\/.*)|(https?:\/\/([a-z0-9-]+\\.)?amazon\\.cn\/.*)|(https?:\/\/(www\\.)?a\\.co\/.*)|(https?:\/\/(www\\.)?amzn\\.to\/.*)|(https?:\/\/(www\\.)?amzn\\.eu\/.*)|(https?:\/\/(www\\.)?amzn\\.in\/.*)|(https?:\/\/(www\\.)?amzn\\.asia\/.*)|(https?:\/\/(www\\.)?z\\.cn\/.*)|(https?:\/\/www\\.someecards\\.com\/.+-cards\/.+)|(https?:\/\/www\\.someecards\\.com\/usercards\/viewcard\/.+)|(https?:\/\/some\\.ly\\\/.+)|(https?:\/\/(www\\.)?tiktok\\.com\/.*\/video\/.*)","gifs":{"play":"Play animated gif","pause":"Pause animated gif"}};
+var msceLoadMore = {"postsPerPage":"12","l10n":{"errorMessage":"An error occurred, and we are unable to load more posts."}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-content/themes/cloudperspectives/dist/scripts/main.min.js?ver=43a66636' id='sage/js-js'></script>
+<script type='text/javascript' id='microsoft-uhf-js-extra'>
+/* <![CDATA[ */
+var microsoftUhfSettings = {"homePath":"\/opensource\/","loginUrl":"","logoutUrl":"","scripts":[],"inline":[]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-content/plugins/microsoft-uhf/assets/microsoft-uhf.js?ver=0.3.9' id='microsoft-uhf-js'></script>
+<script type='text/javascript' src='https://cloudblogs.microsoft.com/opensource/wp-includes/js/wp-embed.min.js?ver=5.8.2' id='wp-embed-js'></script>
+
+</body>
+</html>
+<!--
+	generated 196 seconds ago
+	generated in 0.215 seconds
+	served from batcache in 0.004 seconds
+	expires in 104 seconds
+-->

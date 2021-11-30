@@ -1,0 +1,719 @@
+<!doctype html>
+<html class="no-js aws-lng-en_US aws-with-target" lang="en-US" data-static-assets="https://a0.awsstatic.com" data-js-version="1.0.409" data-css-version="1.0.399">
+ <head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="preconnect" href="https://a0.awsstatic.com" crossorigin="anonymous"> 
+  <link rel="dns-prefetch" href="https://a0.awsstatic.com"> 
+  <link rel="dns-prefetch" href="https://d1.awsstatic.com"> 
+  <link rel="dns-prefetch" href="https://amazonwebservicesinc.tt.omtrdc.net"> 
+  <link rel="dns-prefetch" href="https://s0.awsstatic.com"> 
+  <title>AWS SDK for Go</title> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="description" content="The AWS SDK for Go simpliﬁes use of AWS services by providing a set of libraries and higher level abstractions that are consistent and familiar for Go developers."> 
+  <meta name="robots" content="index, follow"> 
+  <link rel="canonical" href="https://aws.amazon.com/sdk-for-go/"> 
+  <link rel="alternate" href="https://aws.amazon.com/de/sdk-for-go/" hreflang="de-de"> 
+  <link rel="alternate" href="https://aws.amazon.com/sdk-for-go/" hreflang="en-us"> 
+  <link rel="alternate" href="https://aws.amazon.com/es/sdk-for-go/" hreflang="es-es"> 
+  <link rel="alternate" href="https://aws.amazon.com/fr/sdk-for-go/" hreflang="fr-fr"> 
+  <link rel="alternate" href="https://aws.amazon.com/id/sdk-for-go/" hreflang="id-id"> 
+  <link rel="alternate" href="https://aws.amazon.com/it/sdk-for-go/" hreflang="it-it"> 
+  <link rel="alternate" href="https://aws.amazon.com/jp/sdk-for-go/" hreflang="ja-jp"> 
+  <link rel="alternate" href="https://aws.amazon.com/ko/sdk-for-go/" hreflang="ko-kr"> 
+  <link rel="alternate" href="https://aws.amazon.com/pt/sdk-for-go/" hreflang="pt-br"> 
+  <link rel="alternate" href="https://aws.amazon.com/ru/sdk-for-go/" hreflang="ru-ru"> 
+  <link rel="alternate" href="https://aws.amazon.com/th/sdk-for-go/" hreflang="th-th"> 
+  <link rel="alternate" href="https://aws.amazon.com/tr/sdk-for-go/" hreflang="tr-tr"> 
+  <link rel="alternate" href="https://aws.amazon.com/vi/sdk-for-go/" hreflang="vi-vn"> 
+  <link rel="alternate" href="https://aws.amazon.com/cn/sdk-for-go/" hreflang="zh-cn"> 
+  <link rel="alternate" href="https://aws.amazon.com/tw/sdk-for-go/" hreflang="zh-tw"> 
+  <script src="https://a0.awsstatic.com/libra/1.0.409/csp/csp-report.js" async="true"></script> 
+  <meta property="twitter:card" content="summary"> 
+  <meta property="twitter:title" content="AWS SDK for Go"> 
+  <meta property="twitter:description" content="The AWS SDK for Go simpliﬁes use of AWS services by providing a set of libraries and higher level abstractions that are consistent and familiar for Go developers."> 
+  <meta property="twitter:image" content="https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_179x109.png"> 
+  <meta property="twitter:site" content="@awscloud"> 
+  <meta property="fb:pages" content="153063591397681"> 
+  <meta name="baidu-site-verification" content="pjxJUyWxae"> 
+  <meta name="360-site-verification" content="cbe5c6f0249e273e71fffd6d6580ce09"> 
+  <meta name="shenma-site-verification" content="79b94bb338f010af876605819a332e19_1617844070"> 
+  <meta name="sogou_site_verification" content="Ow8cCy3Hgq"> 
+  <link rel="icon" type="image/ico" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico"> 
+  <link rel="shortcut icon" type="image/ico" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico"> 
+  <link rel="apple-touch-icon" sizes="57x57" href="https://a0.awsstatic.com/libra-css/images/site/touch-icon-iphone-114-smile.png"> 
+  <link rel="apple-touch-icon" sizes="72x72" href="https://a0.awsstatic.com/libra-css/images/site/touch-icon-ipad-144-smile.png"> 
+  <link rel="apple-touch-icon" sizes="114x114" href="https://a0.awsstatic.com/libra-css/images/site/touch-icon-iphone-114-smile.png"> 
+  <link rel="apple-touch-icon" sizes="144x144" href="https://a0.awsstatic.com/libra-css/images/site/touch-icon-ipad-144-smile.png"> 
+  <meta property="og:title" content="AWS SDK for Go"> 
+  <meta property="og:type" content="company"> 
+  <meta property="og:url" content="https://aws.amazon.com/sdk-for-go/"> 
+  <meta property="og:image" content="https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png"> 
+  <meta property="og:site_name" content="Amazon Web Services, Inc."> 
+  <meta name="google-site-verification" content="XHghG81ulgiW-3EylGcF48sG28tBW5EH0bNUhgo_DrU"> 
+  <meta name="msvalidate.01" content="6F92E52A288E266E30C2797ECB5FCCF3"> 
+  <link rel="stylesheet" href="https://a0.awsstatic.com/libra-css/css/1.0.399/style-awsm.css"> 
+  <script>
+  var AWS = {
+    PageSettings: {
+      supportedLanguages: ['ar','cn','de','en','es','fr','id','it','jp','ko','pt','ru','th','tr','tw','vi'],
+      defaultLanguage: 'en',
+      logDataSet: 'LIVE:PROD',
+      logInstance: 'PUB',
+      csdsEndpoint: 'https://aws.amazon.com/',
+      framework: 'v2',
+      g11nLibPath: 'https://a0.awsstatic.com/g11n-lib/2.0.93',
+      i18nStringPath: 'https://i18n-string.us-west-2.prod.pricing.aws.a2z.com',
+      libraCSSPath: 'https://a0.awsstatic.com/libra-css/css/1.0.399',
+      libraCSSImagePath: 'https://a0.awsstatic.com/libra-css/images',
+      isLoggingEnabled: true,
+      currentLanguage: 'en-US',
+      currentStage: 'Prod',
+      isMarketplace: false,
+      isRTL: false
+    }
+  };
+
+  var require = {
+    baseUrl: 'https://a0.awsstatic.com',
+    packages: [
+      { name: 'libra', location: 'libra/1.0.409' }
+    ],
+    paths: {
+      "directories": "https://a0.awsstatic.com/libra/1.0.409/directories",
+      "libra-cardsui": "https://a0.awsstatic.com/libra/1.0.409/libra-cardsui",
+      "librastandardlib": "https://a0.awsstatic.com/libra/1.0.409/librastandardlib",
+      "aws-blog": "https://a0.awsstatic.com/aws-blog/1.0.48/js",
+      "plc": "https://a0.awsstatic.com/plc/js/1.0.121/plc",
+      "scripts": "libra/1.0.409/v1-polyfills/scripts",
+      "libra-search": "https://a0.awsstatic.com/libra-search/1.0.13/js",
+      "pricing-calculator": "https://a0.awsstatic.com/pricing-calculator/js/1.0.2",
+      "pricing-savings-plan": "https://a0.awsstatic.com/pricing-savings-plan/js/1.0.6"
+    },
+    waitSeconds: 15
+  };
+</script> 
+  <script src="https://a0.awsstatic.com/libra/1.0.409/libra-head.js"></script> 
+  <script src="https://a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script> 
+  <link rel="stylesheet" href="https://a0.awsstatic.com/eb-csr/1.0.6/orchestrate.css"> 
+  <script type="module" async="true" src="https://a0.awsstatic.com/eb-csr/1.0.6/orchestrate.js"></script> 
+  <script>
+      AWS.TargetMediator = {
+        supportedLanguages: ['ar','cn','de','en','es','fr','id','it','jp','ko','pt','ru','th','tr','tw','vi'],offerOrigin: 'https://s0.awsstatic.com',pageLanguage: 'en'
+      };
+    </script> 
+  <script data-js-script="target-mediator" src="https://a0.awsstatic.com/target/1.0.117/aws-target-mediator.js" async="true"></script> 
+ </head> 
+ <body class="awsm"> 
+  <header id="aws-page-header" class="awsm m-page-header" role="banner"> 
+   <div id="m-nav" class="m-nav" role="navigation"> 
+    <div class="m-nav-header lb-clearfix" data-menu-url="https://s0.awsstatic.com/en_US/nav/v3/panel-content/desktop/index.html"> 
+     <div class="m-nav-logo"> 
+      <div class="lb-bg-logo aws-amazon_web_services_smile-header-desktop-en"> 
+       <a href="https://aws.amazon.com/?nc2=h_lg"><span>Click here to return to Amazon Web Services homepage</span></a> 
+      </div> 
+     </div> 
+     <div class="m-nav-secondary-links" style="min-width: 620px"> 
+      <a href="/contact-us/?nc2=h_header">Contact Us</a> 
+      <a class="lb-txt-none lb-tiny-iblock lb-txt-13 lb-txt lb-has-trigger-indicator" href="#" data-mbox-ignore="true" data-lb-popover-trigger="popover-support-selector"> Support&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+      <a id="m-nav-language-selector" class="lb-tiny-iblock lb-txt lb-has-trigger-indicator" href="#" data-lb-popover-trigger="popover-language-selector" data-language="en">English&nbsp;<i class="icon-caret-down lb-trigger-mount"></i></a> 
+      <a class="lb-tiny-iblock lb-txt lb-has-trigger-indicator" href="#" data-lb-popover-trigger="popover-my-account">My Account&nbsp;<i class="icon-caret-down lb-trigger-mount"></i></a> 
+      <div class="m-nav-cta-btn"> 
+       <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_header_nav_cta"> 
+        <div class="lb-data-attr-wrapper data-attr-wrapper" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="nav-buttons" data-da-so-version="sign-up-sign-in-all" data-da-so-url="nav"> 
+         <div class="data-attr-wrapper lb-tiny-iblock lb-none-pad lb-box" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="nav-buttons" data-da-so-version="prospect-sign-in" data-da-so-url="all"> 
+          <a class="lb-txt-none lb-tiny-iblock lb-txt-13 lb-txt" style="padding-top:8px; padding-right:13px;" href="https://console.aws.amazon.com/console/home?nc2=h_ct&amp;src=header-signin"> Sign In</a> 
+         </div> 
+         <div class="data-attr-wrapper lb-tiny-iblock lb-none-v-margin lb-btn" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="nav-buttons" data-da-so-version="prospect-signup" data-da-so-url="all"> 
+          <a class="lb-btn-p-primary" href="https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc2=h_ct&amp;src=header_signup" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}" role="button"> <span> Create an AWS Account</span> </a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="m-nav-primary-group"> 
+      <div class="m-nav-primary-links"> 
+       <i class="m-nav-angle-left-icon" aria-hidden="true"></i> 
+       <ul> 
+        <li><a href="https://reinvent.awsevents.com/?nc2=h_rei" data-panel="m-nav-panel-reinvent21">re:Invent</a></li> 
+        <li><a href="/products/?nc2=h_ql_prod" data-panel="m-nav-panel-products">Products</a></li> 
+        <li><a href="/solutions/?nc2=h_ql_sol" data-panel="m-nav-panel-solutions">Solutions</a></li> 
+        <li><a href="/pricing/?nc2=h_ql_pr" data-panel="m-nav-panel-pricing">Pricing</a></li> 
+        <li><a href="https://docs.aws.amazon.com/index.html?nc2=h_ql_doc" data-panel="m-nav-panel-documentation">Documentation</a></li> 
+        <li><a href="/getting-started/?nc2=h_ql_le" data-panel="m-nav-panel-learn">Learn</a></li> 
+        <li><a href="/partners/?nc2=h_ql_pn" data-panel="m-nav-panel-partner">Partner Network</a></li> 
+        <li><a href="https://aws.amazon.com/marketplace/?nc2=h_ql_mp" data-panel="m-nav-panel-marketplace">AWS Marketplace</a></li> 
+        <li><a href="/customer-enablement/?nc2=h_ql_ce" data-panel="m-nav-panel-customer">Customer Enablement</a></li> 
+        <li><a href="/events/?nc2=h_ql_ev" data-panel="m-nav-panel-events">Events</a></li> 
+        <li><a href="/contact-us/?nc2=h_ql_exm" data-panel="m-nav-panel-more">Explore More </a></li> 
+       </ul> 
+       <div class="m-nav-icon-group"> 
+        <i class="m-nav-angle-right-icon" aria-hidden="true"></i> 
+        <i class="m-nav-search-icon"></i> 
+       </div> 
+      </div> 
+      <div class="m-nav-search"> 
+       <form action="https://aws.amazon.com/search/" role="search"> 
+        <div class="m-typeahead" data-directory-id="typeahead-suggestions" data-lb-comp="typeahead"> 
+         <input class="m-nav-search-field" placeholder="Search" autocomplete="off" spellcheck="false" dir="auto" type="text" name="searchQuery"> 
+        </div> 
+       </form> 
+       <i class="m-nav-close-icon"></i> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="popover-language-selector" data-action="hover" data-position="top"> 
+     <div class="lb-grid lb-row lb-row-max-large lb-snap"> 
+      <div class="lb-col lb-tiny-24 lb-mid-12"> 
+       <ul class="lb-txt-none lb-ul lb-list-style-none lb-tiny-ul-block"> 
+        <li data-language="ar"><a href="https://aws.amazon.com/ar/?nc1=h_ls">عربي</a></li> 
+        <li data-language="id"><a href="https://aws.amazon.com/id/?nc1=h_ls">Bahasa Indonesia</a></li> 
+        <li data-language="de"><a href="https://aws.amazon.com/de/?nc1=h_ls">Deutsch</a></li> 
+        <li data-language="en"><a href="https://aws.amazon.com/?nc1=h_ls">English</a></li> 
+        <li data-language="es"><a href="https://aws.amazon.com/es/?nc1=h_ls">Español</a></li> 
+        <li data-language="fr"><a href="https://aws.amazon.com/fr/?nc1=h_ls">Français</a></li> 
+        <li data-language="it"><a href="https://aws.amazon.com/it/?nc1=h_ls">Italiano</a></li> 
+        <li data-language="pt"><a href="https://aws.amazon.com/pt/?nc1=h_ls">Português</a></li> 
+       </ul> 
+      </div> 
+      <div class="lb-col lb-tiny-24 lb-mid-12"> 
+       <ul class="lb-txt-none lb-ul lb-list-style-none lb-tiny-ul-block"> 
+        <li data-language="vi"><a href="https://aws.amazon.com/vi/?nc1=f_ls">Tiếng Việt</a></li> 
+        <li data-language="tr"><a href="https://aws.amazon.com/tr/?nc1=h_ls">Türkçe</a></li> 
+        <li data-language="ru"><a href="https://aws.amazon.com/ru/?nc1=h_ls">Ρусский</a></li> 
+        <li data-language="th"><a href="https://aws.amazon.com/th/?nc1=f_ls">ไทย</a></li> 
+        <li data-language="jp"><a href="https://aws.amazon.com/jp/?nc1=h_ls">日本語</a></li> 
+        <li data-language="ko"><a href="https://aws.amazon.com/ko/?nc1=h_ls">한국어</a></li> 
+        <li data-language="cn"><a href="https://aws.amazon.com/cn/?nc1=h_ls">中文 (简体)</a></li> 
+        <li data-language="tw"><a href="https://aws.amazon.com/tw/?nc1=h_ls">中文 (繁體)</a></li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="popover-my-account" data-action="hover" data-position="top"> 
+     <ul class="lb-txt-none lb-ul lb-list-style-none lb-tiny-ul-block"> 
+      <li><a href="https://console.aws.amazon.com/?nc2=h_m_mc">AWS Management Console</a></li> 
+      <li><a href="https://console.aws.amazon.com/billing/home#/account?nc2=h_m_ma">Account Settings</a></li> 
+      <li><a href="https://console.aws.amazon.com/billing/home?nc2=h_m_bc">Billing &amp; Cost Management</a></li> 
+      <li><a href="https://console.aws.amazon.com/iam/home?nc2=h_m_sc#security_credential">Security Credentials</a></li> 
+      <li><a href="https://phd.aws.amazon.com/?nc2=h_m_sc">AWS Personal Health Dashboard</a></li> 
+     </ul> 
+    </div> 
+    <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="popover-support-selector" data-action="hover" data-position="top"> 
+     <ul class="lb-txt-none lb-ul lb-list-style-none lb-tiny-ul-block"> 
+      <li><a href="https://console.aws.amazon.com/support/home/?nc2=h_ql_cu">Support Center</a></li> 
+      <li><a href="/premiumsupport/knowledge-center/?nc2=h_m_ma">Knowledge Center</a></li> 
+      <li><a href="/premiumsupport/?nc2=h_m_bc">AWS Support Overview</a></li> 
+     </ul> 
+    </div> 
+    <script class="tt-suggestion-tpl" type="text/x-handlebars-template">
+    <div>
+      <a href="{{primaryUrl}}">
+        <div class="tt-title">
+          {{cleanHTMLEntity title}}
+        </div>
+        {{#if desc}}
+          <div class="tt-desc">
+            {{cleanHTMLEntity desc}}
+          </div>
+        {{/if}}
+      </a>
+      <div class="tt-btn-group">
+        {{#if pricingUrl}}
+          <a href="{{pricingUrl}}">
+            <div class="tt-btn">Pricing</div>
+          </a>
+        {{/if}}
+        {{#if docsUrl}}
+          <a href="{{docsUrl}}">
+            <div class="tt-btn">Documentation</div>
+          </a>
+        {{/if}}
+        {{#if calculatorUrl}}
+          <a href="{{calculatorUrl}}">
+            <div class="tt-btn">Calculator</div>
+          </a>
+        {{/if}}
+      </div>
+    </div>
+  </script> 
+    <script class="tt-products-head-tpl" type="text/x-handlebars-template">
+    <div class="tt-header lb-txt-bold">
+      <p>Products</p>
+    </div>
+  </script> 
+    <script class="tt-keypages-head-tpl" type="text/x-handlebars-template">
+    <div class="tt-header lb-txt-bold">
+      <p>Related Pages</p>
+    </div>
+  </script> 
+    <script class="tt-tutorials-head-tpl" type="text/x-handlebars-template">
+    <div class="tt-header lb-txt-bold">
+      <p>Tutorials</p>
+    </div>
+  </script> 
+    <script class="tt-blogs-head-tpl" type="text/x-handlebars-template">
+    <div class="tt-header lb-txt-bold">
+      <p>Blogs</p>
+    </div>
+  </script> 
+    <script class="tt-see-all-tpl" type="text/x-handlebars-template">
+    <div class="tt-see-all">
+      <a href="https://aws.amazon.com/search/?searchQuery={{ query }}">See more results for "{{ query }}"&lrm;</a>
+    </div>
+  </script> 
+   </div> 
+   <div id="m-nav-mobile" class="m-nav-mobile"> 
+    <div id="m-nav-mobile-header" class="m-nav-mobile-header" data-menu-url="https://s0.awsstatic.com/en_US/nav/v3/panel-content/mobile/index.html"> 
+     <div class="lb-bg-logo aws-amazon_web_services_smile-header-mobile-en"> 
+      <a href="https://aws.amazon.com/?nc2=h_lg"><span>Click here to return to Amazon Web Services homepage</span></a> 
+     </div> 
+     <div class="m-nav-mobile-button-group"> 
+      <i class="m-nav-mobile-button icon-search"></i> 
+      <i class="m-nav-mobile-button icon-reorder"></i> 
+     </div> 
+    </div> 
+    <div id="m-nav-mobile-search" class="m-nav-mobile-search"> 
+     <form action="https://aws.amazon.com/search" role="search"> 
+      <div class="m-typeahead"> 
+       <input class="m-nav-search-field" placeholder="Search" autocomplete="off" spellcheck="false" dir="auto" type="text" name="searchQuery"> 
+      </div> 
+     </form> 
+    </div> 
+    <nav id="m-nav-trimdown" role="navigation"> 
+     <ul class="m-nav-mobile-menu-group"> 
+      <li> <a href="https://reinvent.awsevents.com/?nc2=h_mo">re:Invent</a> </li> 
+      <li> <a href="/products/?nc2=h_mo">Products</a> </li> 
+      <li> <a href="/solutions/?nc2=h_mo">Solutions</a> </li> 
+      <li> <a href="/pricing/?nc2=h_mo">Pricing</a> </li> 
+      <li> <a href="/what-is-aws/?nc2=h_mo">Introduction to AWS</a> </li> 
+      <li> <a href="/getting-started/?nc2=h_mo">Getting Started</a> </li> 
+      <li> <a href="/documentation/?nc2=h_mo">Documentation</a> </li> 
+      <li> <a href="/training/?nc2=h_mo">Training and Certification</a> </li> 
+      <li> <a href="/developer/?nc2=h_mo">Developer Center</a> </li> 
+      <li> <a href="/solutions/case-studies/?nc2=h_mo">Customer Success</a> </li> 
+      <li> <a href="/partners/?nc2=h_mo">Partner Network</a> </li> 
+      <li> <a href="https://aws.amazon.com/marketplace/?nc2=h_mo">AWS Marketplace</a> </li> 
+      <li> <a href="https://console.aws.amazon.com/support/home?nc2=h_ql_cu">Support</a> </li> 
+      <li> <a href="https://console.aws.amazon.com/console/home">Log into Console</a> </li> 
+      <li> <a href="/console/mobile/">Download the Mobile App</a> </li> 
+     </ul> 
+    </nav> 
+   </div> 
+   <div class="lb-sticky-subnav" data-lb-comp="sticky-subnav" data-lb-page-path="/sdk-for-go/"> 
+    <div class="lb-row lb-row-max-large lb-snap"> 
+     <div class="lb-tiny-24 lb-sticky-subnav-content"> 
+      <div class="lb-sticky-subnav-title"> 
+       <a class="lb-txt-none lb-txt" href="/developer/" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Developer Center</a> 
+      </div> 
+      <div class="lb-sticky-subnav-links"> 
+       <a class="lb-txt-none lb-txt-14 lb-txt lb-has-trigger-indicator" href="#" data-mbox-ignore="true" data-lb-popover-trigger="getting-started" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Getting Started&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+       <a class="lb-txt-none lb-txt-14 lb-txt lb-has-trigger-indicator" href="#" data-mbox-ignore="true" data-lb-popover-trigger="architecture" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Architecture&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+       <a class="lb-txt-none lb-txt-14 lb-txt" href="/developer/community/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Community</a> 
+       <a class="lb-txt-none lb-txt-14 lb-txt" href="/developer/learning/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Learning</a> 
+       <a class="lb-txt-none lb-txt-14 lb-txt lb-has-trigger-indicator" href="#" data-mbox-ignore="true" data-lb-popover-trigger="support" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Support&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+       <a class="lb-txt-none lb-txt-14 lb-txt lb-has-trigger-indicator" href="#" data-mbox-ignore="true" data-lb-popover-trigger="resources" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Resources&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="getting-started" data-action="hover" data-position="top"> 
+    <a class="lb-txt-none lb-txt" href="/getting-started/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Getting Started Guides</a> 
+    <a class="lb-txt-none lb-txt" href="/getting-started/hands-on/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> How-To Guides</a> 
+   </div> 
+   <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="architecture" data-action="hover" data-position="top"> 
+    <a class="lb-txt-none lb-txt" href="/builder-library/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Builders Library</a> 
+    <a class="lb-txt-none lb-txt" href="/architecture/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Architecture Center</a> 
+   </div> 
+   <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="support" data-action="hover" data-position="top"> 
+    <a class="lb-txt-none lb-txt" href="/premiumsupport/plans/developers/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Developer Support</a> 
+    <a class="lb-txt-none lb-txt" href="https://stackoverflow.com/questions/tagged/amazon-web-services?sort=newest" target="_blank" rel="noopener" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> AWS on StackOverflow</a> 
+   </div> 
+   <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="resources" data-action="hover" data-position="top"> 
+    <a class="lb-txt-none lb-txt" href="/tools/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Tools</a> 
+    <a class="lb-txt-none lb-txt" href="https://docs.aws.amazon.com/?intClick=dev-center-2021_main" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Documentation</a> 
+   </div> 
+  </header> 
+  <div id="aws-page-content" class="lb-page-content lb-page-with-sticky-subnav" style="padding-top:0px; padding-bottom:0px;" data-page-alert-target="true"> 
+   <main role="main"> 
+    <div class="lb-bg-right-bottom-cover-no-repeat lb-grid" style="margin-top:0px; background-image:url('//d1.awsstatic.com/SDK and Developer Language Images/Introduction-Image-Header.70221ea77b72344f31e5dcfa68773bb3df83e382.jpg'); margin-bottom:0px;"> 
+     <div class="lb-row lb-row-max-large lb-snap"> 
+      <div class="lb-col lb-tiny-24 lb-mid-24"> 
+       <div class="lb-breadcrumbs lb-breadcrumbs-dropTitle"> 
+        <ul> 
+         <li> <a href="/tools/"><span>Tool to Build on AWS</span></a> </li> 
+         <li> <a href="/sdk-for-go/"><span>AWS SDK for Go</span></a> </li> 
+        </ul> 
+        <h1>AWS SDK for Go</h1> 
+       </div> 
+       <div class="lb-txt-16 lb-none-v-margin lb-rtxt"> 
+        <p>Get started quickly using AWS with the AWS SDK for Go. The SDK makes it easy to integrate your Go application with the full suite of AWS services including Amazon S3, Amazon DynamoDB, Amazon SQS, and more.<br> </p> 
+       </div> 
+       <div class="lb-grid lb-row lb-row-max-large lb-snap"> 
+        <div class="lb-col lb-tiny-24 lb-mid-8"> 
+         <div class="lb-btn"> 
+          <a class="lb-btn-p-primary" href="https://aws.github.io/aws-sdk-go-v2/docs/getting-started/" target="_blank" rel="noopener" role="button"> <span> Get started</span> </a> 
+         </div> 
+        </div> 
+        <div class="lb-col lb-tiny-24 lb-mid-8"> 
+         <div class="lb-btn"> 
+          <a class="lb-btn-p" href="https://github.com/aws/aws-sdk-go-v2" target="_blank" rel="noopener" role="button"> <span> Download</span> </a> 
+         </div> 
+        </div> 
+        <div class="lb-col lb-tiny-24 lb-mid-8"> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-grid" style="background-color:#FAFAFA; margin-top:0px; margin-bottom:40px;"> 
+     <div class="lb-row lb-row-max-large lb-snap"> 
+      <div class="lb-col lb-tiny-24 lb-mid-24"> 
+       <h2 id="How_it_Works" class="lb-txt-bold lb-txt-none lb-mid-v-margin lb-h2 lb-title" style="margin-bottom:15px;"> How it Works</h2> 
+       <div class="lb-txt-16 lb-none-v-margin lb-rtxt" style="margin-bottom:40px;"> 
+        <p>The AWS SDK for Go simpliﬁes use of AWS services by providing a set of libraries that are consistent and familiar for Go developers. It supports higher level abstractions for simplified development, such as Amazon S3 Transfer Manager for seamless concurrent multi-part file uploads and Amazon DynamoDB AttributeValue and Expression utilities for easy integration of your application Go types. Visit <a href="https://aws.github.io/aws-sdk-go-v2/" target="_blank">GitHub</a> to see AWS-focused open source Go libraries.</p> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-none-v-margin lb-grid"> 
+     <div class="lb-row lb-row-max-large lb-snap"> 
+      <div class="lb-col lb-tiny-24 lb-mid-24"> 
+       <h2 id="Key_Features" class="lb-mid-v-margin lb-h2 lb-title" style="margin-bottom:15px;"> Key Features</h2> 
+       <div class="lb-xb-grid-wrap"> 
+        <div class="lb-xb-grid lb-row-max-large lb-xb-equal-height lb-snap lb-xb-justify-center lb-tiny-xb-1 lb-mid-xb-3"> 
+         <div class="lb-xbcol"> 
+          <div class="lb-border-p-feature lb-box"> 
+           <div class="lb-txt-bold lb-txt-18 lb-rtxt" style="margin-bottom:42px;"> 
+            <p>Familiar Go Experience<br> </p> 
+           </div> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>The SDK takes advantage of modern Go language features. You can use Go modules to model service dependencies required by your application, and control when they should update. You can also take advantage of error wrapping feature in Go.<br> </p> 
+           </div> 
+           <div class="lb-border-p lb-border-top lb-box" style="padding-bottom:0px; margin-top:38px;"> 
+            <a class="lb-txt-none lb-txt" href="https://aws.github.io/aws-sdk-go-v2/docs/handling-errors/" target="_blank" rel="noopener"> Learn more about error handling in the SDK»</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <div class="lb-border-p-feature lb-box"> 
+           <div class="lb-txt-bold lb-txt-18 lb-rtxt" style="margin-bottom:42px;"> 
+            <p>Extensibility<br> </p> 
+           </div> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>The SDK introduces a new middleware stack that can be used to extend or customize the request and response pipeline for each service operation. The SDK uses this same middleware stack to serialize and deserialize wire format messages for each service API operation by composing many middleware together.<br> </p> 
+           </div> 
+           <div class="lb-border-p lb-border-top lb-box" style="padding-bottom:0px; margin-top:38px;"> 
+            <a class="lb-txt-none lb-txt" href="https://aws.github.io/aws-sdk-go-v2/docs/middleware/" target="_blank" rel="noopener"> Learn more about writing your own custom middleware »</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <div class="lb-border-p-feature lb-box"> 
+           <div class="lb-txt-bold lb-txt-18 lb-rtxt" style="margin-bottom:42px;"> 
+            <p>Performance<br> </p> 
+           </div> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>The SDK removes costly runtime reflection from the serialization and deserialization of wire formatted messages. This provides a marked decrease in CPU and memory utilization by the SDK, freeing up more of these resources for your application.<br> </p> 
+           </div> 
+           <div class="lb-border-p lb-border-top lb-box" style="padding-bottom:0px; margin-top:63px;"> 
+            <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/developer/aws-sdk-for-go-version-2-general-availability/" target="_blank" rel="noopener"> Learn more about performance improvements »</a> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-none-v-margin lb-grid" style="background-color:#FAFAFA;"> 
+     <div class="lb-row lb-row-max-large lb-snap"> 
+      <div class="lb-col lb-tiny-24 lb-mid-24"> 
+       <h2 id="Guides_and_Examples" class="lb-mid-v-margin lb-h2 lb-title" style="margin-bottom:15px;"> Guides and Examples</h2> 
+       <div class="lb-xb-grid-wrap"> 
+        <div class="lb-xb-grid lb-row-max-large lb-xb-equal-height lb-snap lb-xb-justify-center lb-tiny-xb-1 lb-mid-xb-4"> 
+         <div class="lb-xbcol"> 
+          <div class="lb-border-p-feature lb-box"> 
+           <div class="lb-txt-bold lb-txt-18 lb-rtxt" style="margin-bottom:42px;"> 
+            <p>Developer Guide<br> </p> 
+           </div> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>The developer guide describes the features for the latest version of the AWS SDK for Go v2 and how to use them.<br> </p> 
+           </div> 
+           <div class="lb-border-p lb-border-top lb-box" style="padding-bottom:0px; margin-top:113px;"> 
+            <a class="lb-txt-none lb-txt" href="https://aws.github.io/aws-sdk-go-v2/docs/" target="_blank" rel="noopener"> View guide »</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <div class="lb-border-p-feature lb-box"> 
+           <div class="lb-txt-bold lb-txt-18 lb-rtxt" style="margin-bottom:42px;"> 
+            <p>API Reference Guide<br> </p> 
+           </div> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>The Go API reference guide describes the API operations for the latest version of the AWS SDK for Go. The reference guide also provides sample requests, responses, and errors for the supported web services protocols.<br> </p> 
+           </div> 
+           <div class="lb-border-p lb-border-top lb-box" style="padding-bottom:0px; margin-top:10px;"> 
+            <a class="lb-txt-none lb-txt" href="https://pkg.go.dev/github.com/aws/aws-sdk-go-v2" target="_blank" rel="noopener"> View guide»</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <div class="lb-border-p-feature lb-box"> 
+           <div class="lb-txt-bold lb-txt-18 lb-rtxt" style="margin-bottom:42px;"> 
+            <p>Migration Guide<br> </p> 
+           </div> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>The AWS SDK for Go v2 migration guide describes how to migrate from version 1 to version 2 of the SDK for Go.<br> </p> 
+           </div> 
+           <div class="lb-border-p lb-border-top lb-box" style="padding-bottom:0px; margin-top:116px;"> 
+            <a class="lb-txt-none lb-txt" href="https://aws.github.io/aws-sdk-go-v2/docs/migrating/" target="_blank" rel="noopener"> View guide »</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <div class="lb-border-p-feature lb-box"> 
+           <div class="lb-txt-bold lb-txt-18 lb-rtxt" style="margin-bottom:42px;"> 
+            <p>Code samples<br> </p> 
+           </div> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>The SDK for Go code samples contain real-world use cases for AWS services to help accelerate development of your applications.<br> </p> 
+           </div> 
+           <div class="lb-border-p lb-border-top lb-box" style="padding-bottom:0px; margin-top:92px;"> 
+            <a class="lb-txt-none lb-txt" href="https://github.com/awsdocs/aws-doc-sdk-examples/tree/master/gov2" target="_blank" rel="noopener"> View code samples&nbsp;<i class="icon-external-link"></i></a> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-none-v-margin lb-grid"> 
+     <div class="lb-row lb-row-max-large lb-snap"> 
+      <div class="lb-col lb-tiny-24 lb-mid-24"> 
+       <h2 id="Additional_Resources" class="lb-mid-v-margin lb-h2 lb-title" style="margin-bottom:15px;"> Additional Resources</h2> 
+       <div class="lb-xb-grid-wrap" style="margin-top:0px; margin-bottom:0px;"> 
+        <div class="lb-xb-grid lb-row-max-large lb-xb-equal-height lb-snap lb-tiny-xb-1 lb-small-xb-2 lb-mid-xb-3"> 
+         <div class="lb-xbcol"> 
+          <div class="lb-box" style="margin-top:0px; margin-bottom:0px;"> 
+           <a class="lb-txt-bold lb-txt-none lb-txt-18 lb-txt" href="/blogs/developer/category/programing-language/go/" target="_blank" rel="noopener"> AWS Developer Blog</a> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>Read the AWS Developer blog to get the latest news and announcements on Go.<br> </p> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <div class="lb-box" style="margin-top:0px; margin-bottom:0px;"> 
+           <a class="lb-txt-bold lb-txt-none lb-txt-18 lb-txt" style="margin-top:0px; margin-bottom:0px;" href="https://github.com/aws/aws-sdk-go-v2" target="_blank" rel="noopener"> AWS GitHub Repo</a> 
+           <div class="lb-txt-16 lb-rtxt"> 
+            <p>Visit GitHub to view AWS SDK and high-level library repos.<br> </p> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="lb-xbcol"> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-none-v-margin lb-grid lb-row lb-row-max-large lb-snap" style="margin-bottom:0px;"> 
+     <div class="lb-col lb-tiny-24 lb-mid-24"> 
+      <div class="lb-none-pad lb-none-v-margin lb-grid lb-row lb-row-max-large lb-snap"> 
+       <div class="lb-col lb-tiny-24 lb-mid-12"> 
+        <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_2up_product-left"> 
+        </div> 
+       </div> 
+       <div class="lb-col lb-tiny-24 lb-mid-12"> 
+        <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_2up_product-right"> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_1up_product"> 
+      </div> 
+      <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_footer_general"> 
+      </div> 
+     </div> 
+    </div> 
+   </main> 
+  </div> 
+  <footer id="aws-page-footer" class="m-page-footer" role="contentinfo"> 
+   <div data-url="https://dc.ads.linkedin.com/collect/?pid=3038&amp;fmt=gif" data-lb-comp="tracking-pixel"></div> 
+   <div data-lb-comp="google-rlsa-pixel"></div> 
+   <div class="data-attr-wrapper lb-none-v-margin lb-xb-grid-wrap" style="background-color:#242F3E;" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="footer" data-da-so-version="a"> 
+    <div class="lb-xb-grid lb-row-max-large lb-snap lb-tiny-xb-1 lb-small-xb-3 lb-large-xb-5"> 
+     <div class="lb-xbcol"> 
+      <div class="data-attr-wrapper lb-small-hide lb-btn" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="footer_buttons" data-da-so-url="all" data-da-so-version="footer_signin-mobile-default"> 
+       <a class="lb-btn-p-primary" href="https://console.aws.amazon.com/console/home?nc1=f_ct&amp;src=footer-signin-mobile" role="button"> <span> Sign In to the Console</span> </a> 
+      </div> 
+      <h3 id="Learn_About_AWS" class="lb-txt-none lb-txt-p-chromium lb-tiny-v-margin lb-h3 lb-title"> Learn About AWS</h3> 
+      <ul class="lb-txt-p-chromium lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-block" style="margin-bottom:0px;"> 
+       <li><a href="/what-is-aws/?nc1=f_cc" target="_blank" rel="noopener">What Is AWS?</a></li> 
+       <li><a href="/what-is-cloud-computing/?nc1=f_cc" target="_blank" rel="noopener">What Is Cloud Computing?</a></li> 
+       <li><a href="/diversity-inclusion/?nc1=f_cc" target="_blank" rel="noopener">AWS Inclusion, Diversity &amp; Equity</a></li> 
+       <li><a href="/devops/what-is-devops/?nc1=f_cc" target="_blank" rel="noopener">What Is DevOps?</a></li> 
+       <li><a href="/containers/?nc1=f_cc" target="_blank" rel="noopener">What Is a Container?</a></li> 
+       <li><a href="/big-data/datalakes-and-analytics/what-is-a-data-lake/?nc1=f_cc" target="_blank" rel="noopener">What Is a Data Lake?</a></li> 
+       <li><a href="/security/?nc1=f_cc" target="_blank" rel="noopener">AWS Cloud Security</a></li> 
+       <li><a href="/new/?nc1=f_cc" target="_blank" rel="noopener">What's New</a></li> 
+       <li><a href="/blogs/?nc1=f_cc" target="_blank" rel="noopener">Blogs</a></li> 
+       <li><a href="https://press.aboutamazon.com/press-releases/aws" target="_blank" rel="noopener" title="Press Releases">Press Releases</a></li> 
+      </ul> 
+     </div> 
+     <div class="lb-xbcol"> 
+      <h3 id="Resources_for_AWS" class="lb-txt-none lb-txt-p-chromium lb-tiny-v-margin lb-h3 lb-title"> Resources for AWS</h3> 
+      <ul class="lb-txt-p-chromium lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-block" style="margin-bottom:0px;"> 
+       <li><a href="/getting-started/?nc1=f_cc" target="_blank" rel="noopener">Getting Started</a></li> 
+       <li><a href="/training/?nc1=f_cc" target="_blank" rel="noopener">Training and Certification</a></li> 
+       <li><a href="/solutions/?nc1=f_cc" target="_blank" rel="noopener">AWS Solutions Portfolio</a></li> 
+       <li><a href="/architecture/?nc1=f_cc" target="_blank" rel="noopener">Architecture Center</a></li> 
+       <li><a href="/faqs/?nc1=f_dr" target="_blank" rel="noopener">Product and Technical FAQs</a></li> 
+       <li><a href="/resources/analyst-reports/?nc1=f_cc" target="_blank" rel="noopener">Analyst Reports</a></li> 
+       <li><a href="/partners/?nc1=f_dr" target="_blank" rel="noopener">AWS Partner Network</a></li> 
+      </ul> 
+     </div> 
+     <div class="lb-xbcol"> 
+      <h3 id="Developers_on_AWS" class="lb-txt-none lb-txt-p-chromium lb-tiny-v-margin lb-h3 lb-title"> Developers on AWS</h3> 
+      <ul class="lb-txt-p-chromium lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-block" style="margin-bottom:0px;"> 
+       <li><a href="/developer/?nc1=f_dr" target="_blank" rel="noopener">Developer Center</a></li> 
+       <li><a href="/developer/tools/?nc1=f_dr" target="_blank" rel="noopener">SDKs &amp; Tools</a></li> 
+       <li><a href="/developer/language/net/?nc1=f_dr" target="_blank" rel="noopener">.NET on AWS</a></li> 
+       <li><a href="/developer/language/python/?nc1=f_dr" target="_blank" rel="noopener">Python on AWS</a></li> 
+       <li><a href="/developer/language/java/?nc1=f_dr" target="_blank" rel="noopener">Java on AWS</a></li> 
+       <li><a href="/developer/language/php/?nc1=f_cc" target="_blank" rel="noopener">PHP on AWS</a></li> 
+       <li><a href="/developer/language/javascript/?nc1=f_dr" target="_blank" rel="noopener">JavaScript on AWS</a></li> 
+      </ul> 
+     </div> 
+     <div class="lb-xbcol"> 
+      <h3 id="Help" class="lb-txt-none lb-txt-p-chromium lb-tiny-v-margin lb-h3 lb-title"> Help</h3> 
+      <ul class="lb-txt-p-chromium lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-block" style="margin-bottom:0px;"> 
+       <li><a href="/contact-us/?nc1=f_m" target="_blank" rel="noopener">Contact Us</a></li> 
+       <li><a href="https://www.amazon.jobs/aws" target="_blank" rel="noopener">AWS Careers</a></li> 
+       <li><a href="https://console.aws.amazon.com/support/home/?nc1=f_dr" target="_blank" rel="noopener">File a Support Ticket</a></li> 
+       <li><a href="/premiumsupport/knowledge-center/?nc1=f_dr" target="_blank" rel="noopener">Knowledge Center</a></li> 
+       <li><a href="/premiumsupport/?nc1=f_dr" target="_blank" rel="noopener">AWS Support Overview</a></li> 
+       <li><a href="/legal/?nc1=f_cc" target="_blank" rel="noopener">Legal</a></li> 
+      </ul> 
+      <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_footer-v3_addl-help"> 
+      </div> 
+     </div> 
+     <div class="lb-xbcol"> 
+      <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_footer-v3_cta"> 
+       <div class="data-attr-wrapper lb-tiny-hide lb-small-show lb-btn" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="footer_buttons" data-da-so-url="all" data-da-so-version="footer_signup-default"> 
+        <a class="lb-btn-p-primary" href="https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc1=f_ct&amp;src=default" role="button"> <span> Create an AWS Account</span> </a> 
+       </div> 
+      </div> 
+      <div class="lb-xb-grid-wrap" style="padding-left:0px; margin-top:20px;"> 
+       <div class="lb-xb-grid lb-row-max-large lb-xb-equal-height lb-snap lb-gutter-collapse lb-vgutter-collapse lb-tiny-xb-auto"> 
+        <div class="lb-xbcol"> 
+         <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-left:0px; padding-right:5px;" href="https://twitter.com/awscloud" target="_blank" rel="noopener" title="Twitter"> <i class="icon-twitter"></i></a> 
+        </div> 
+        <div class="lb-xbcol"> 
+         <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-none-v-margin lb-txt" style="padding-right:5px;" href="https://www.facebook.com/amazonwebservices" target="_blank" rel="noopener" title="Facebook"> <i class="icon-facebook"></i></a> 
+        </div> 
+        <div class="lb-xbcol"> 
+         <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-right:5px;" href="https://www.twitch.tv/aws" target="_blank" rel="noopener" title="Twitch"> <i class="icon-twitch"></i></a> 
+        </div> 
+        <div class="lb-xbcol"> 
+         <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-right:5px;" href="https://www.youtube.com/user/AmazonWebServices/Cloud/" target="_blank" rel="noopener" title="YouTube"> <i class="icon-youtube"></i></a> 
+        </div> 
+        <div class="lb-xbcol"> 
+         <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-right:5px;" href="/podcasts/" target="_blank" rel="noopener" title="Podcast"> <i class="icon-podcast"></i></a> 
+        </div> 
+        <div class="lb-xbcol"> 
+         <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-right:5px;" href="https://pages.awscloud.com/communication-preferences?trk=homepage" target="_blank" rel="noopener" title="Email"> <i class="icon-envelope-o"></i></a> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="lb-txt-normal lb-txt-white lb-txt-14 lb-rtxt" style="color:#eaeded; margin-top:0px;"> 
+       <div>
+         Amazon is an Equal Opportunity Employer: 
+        <i> Minority / Women / Disability / Veteran / Gender Identity / Sexual Orientation / Age.</i> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="lb-none-pad lb-none-v-margin lb-xb-grid-wrap" style="background-color:#242F3E;"> 
+    <div class="lb-xb-grid lb-row-max-large lb-snap lb-tiny-xb-1"> 
+     <div class="lb-xbcol"> 
+      <ul class="lb-txt-p-chromium lb-tiny-iblock lb-none-v-margin lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-iblock"> 
+       <li class="lb-txt-bold">Language</li> 
+       <li data-language="ar"><a href="https://aws.amazon.com/ar/?nc1=h_ls">عربي</a></li> 
+       <li data-language="id"><a href="https://aws.amazon.com/id/?nc1=h_ls">Bahasa Indonesia</a></li> 
+       <li data-language="de"><a href="https://aws.amazon.com/de/?nc1=h_ls">Deutsch</a></li> 
+       <li data-language="en"><a href="https://aws.amazon.com/?nc1=h_ls">English</a></li> 
+       <li data-language="es"><a href="https://aws.amazon.com/es/?nc1=h_ls">Español</a></li> 
+       <li data-language="fr"><a href="https://aws.amazon.com/fr/?nc1=h_ls">Français</a></li> 
+       <li data-language="it"><a href="https://aws.amazon.com/it/?nc1=h_ls">Italiano</a></li> 
+       <li data-language="pt"><a href="https://aws.amazon.com/pt/?nc1=h_ls">Português</a></li> 
+       <li data-language="vi"><a href="https://aws.amazon.com/vi/?nc1=f_ls">Tiếng Việt</a></li> 
+       <li data-language="tr"><a href="https://aws.amazon.com/tr/?nc1=h_ls">Türkçe</a></li> 
+       <li data-language="ru"><a href="https://aws.amazon.com/ru/?nc1=h_ls">Ρусский</a></li> 
+       <li data-language="th"><a href="https://aws.amazon.com/th/?nc1=f_ls">ไทย</a></li> 
+       <li data-language="jp"><a href="https://aws.amazon.com/jp/?nc1=h_ls">日本語</a></li> 
+       <li data-language="ko"><a href="https://aws.amazon.com/ko/?nc1=h_ls">한국어</a></li> 
+       <li data-language="cn"><a href="https://aws.amazon.com/cn/?nc1=h_ls">中文 (简体)</a></li> 
+       <li data-language="tw"><a href="https://aws.amazon.com/tw/?nc1=h_ls">中文 (繁體)</a></li> 
+      </ul> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="lb-none-pad lb-none-v-margin lb-xb-grid-wrap" style="background-color:#EAEDED; padding-top:5px;"> 
+    <div class="lb-xb-grid lb-row-max-large lb-snap lb-tiny-xb-1"> 
+     <div class="lb-xbcol"> 
+      <ul class="lb-txt-p-squid-ink lb-none-v-margin lb-ul lb-list-style-none lb-li-none-v-margin lb-tiny-ul-iblock"> 
+       <li><a href="https://aws.amazon.com/privacy/?nc1=f_pr">Privacy</a></li> 
+       <li>|</li> 
+       <li><a href="https://aws.amazon.com/terms/?nc1=f_pr">Site Terms</a></li> 
+       <li>|</li> 
+       <li data-cookie-consent-modal="1"><a href="#"> Cookie Preferences </a></li> 
+       <li>|</li> 
+       <li>© 2021, Amazon Web Services, Inc. or its affiliates. All rights reserved.</li> 
+      </ul> 
+     </div> 
+    </div> 
+   </div> 
+  </footer> 
+  <div id="aws-page-end"></div> 
+  <div id="lb-page-end"></div> 
+  <script src="https://a0.awsstatic.com/da/js/1.0.48/aws-da.js"></script> 
+  <!--[if lte IE 9]>
+  <script>
+    jQuery = $ = undefined;
+  </script>
+  <p class="deprecated-browser-support-message">
+    You are using an outdated browser. Please upgrade to a modern browser to improve your experience.<img src="https://fls-na.amazon.com/1/action-impressions/1/OE/aws-mktg/action/awsm_:comp_DeprecatedBrowser@v=1:u=c?dataset=LIVE:PROD&instance=PUB&client=dsk&marketplaceId=A12QK8IU0H0XW5&requestId=ABCDEFGHIJKLMNOPQRST&session=123-1234567-1234567"
+           alt="deprecated-browser pixel tag" />
+      </p>
+<![endif]--> 
+  <div class="lb-skt-overlay lb-modal lb-comp-content-container" data-lb-comp="modal" data-lb-modal-id="ie-deprecation-msg"> 
+   <div class="lb-modal-dialog"> 
+    <div class="lb-modal-content"> 
+     <div class="lb-modal-header"> 
+      <h4 class="lb-h4"> Ending Support for Internet Explorer</h4> 
+      <a class="lb-modal-close" role="button" href="#" title="Close"> <span class="lb-sr-only">Got it</span> </a> 
+     </div> 
+     <div class="lb-modal-body">
+       AWS support for Internet Explorer ends on 07/31/2022. Supported browsers are Chrome, Firefox, Edge, and Safari. 
+      <a href="https://aws.amazon.com/blogs/aws/heads-up-aws-support-for-internet-explorer-11-is-ending/" rel="noopener">Learn more</a> 
+     </div> 
+     <div class="lb-modal-footer"> 
+      <a class="lb-btn-p-primary lb-modal-close lb-modal-action" role="button">Got it</a> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <a data-lb-modal-trigger="ie-deprecation-msg" style="display: none;"></a> 
+  <script>
+  if (document.documentMode === 10) {
+    var msg = 'You are using an outdated browser. Please upgrade to a modern browser to improve your experience.';
+    $('html').addClass('unsupported-version');
+    $(document.body).append('<p class="deprecated-browser-support-message">' + msg + '<img src="https://fls-na.amazon.com/1/action-impressions/1/OE/aws-mktg/action/awsm_:comp_DeprecatedBrowser@v=1:u=c?dataset=LIVE:PROD&instance=PUB&client=dsk&marketplaceId=A12QK8IU0H0XW5&requestId=ABCDEFGHIJKLMNOPQRST&session=123-1234567-1234567" alt="deprecated-browser pixel tag" /></p>');
+    jQuery = $ = undefined;
+  }
+</script> 
+  <!-- cms_updated_at: 2021-11-19T16:28:21.444-0800 -->  
+ </body>
+</html>

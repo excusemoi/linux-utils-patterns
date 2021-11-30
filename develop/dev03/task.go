@@ -1,4 +1,4 @@
-package main
+package dev03
 
 import (
 	"errors"
@@ -40,10 +40,6 @@ import (
 */
 
 type commandLineArgs map[string]interface{}
-
-func main() {
-	Sort()
-}
 
 func getFileContent(fileName string) (string, error) {
 	fileContent, err := ioutil.ReadFile(fileName)

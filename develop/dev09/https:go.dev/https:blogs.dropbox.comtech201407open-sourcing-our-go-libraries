@@ -1,0 +1,691 @@
+<!doctype html>
+
+
+    
+    
+    
+
+    
+
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+
+    <html lang="en" xml:lang="en" data-cms-lang="en-us">
+    <head>
+        
+<meta charset="utf-8"/>
+
+<title>Open Sourcing Our Go Libraries - Dropbox</title>
+
+
+
+
+
+<meta name="data-tags" content="Go,Golang,Open Source,Infrastructure"/>
+<meta name="data-tagTaxonomy" content="Go; Golang; Infrastructure; Open Source;"/>
+<meta name="page-id" content="infrastructure-open-sourcing-our-go-libraries"/>
+<meta name="topic" content="Infrastructure"/>
+
+<meta name="publishDate" content="2014-07-01 03:38:14.000-0700"/>
+
+<meta name="author" content="Patrick Lee"/>
+
+<link rel="canonical" href="https://dropbox.tech/infrastructure/open-sourcing-our-go-libraries"/>
+
+
+
+
+<link rel="icon" href="/cms/content/dam/dropbox/aem/favicon32.ico" type="image/x-icon"/>
+
+
+
+
+
+<meta property="og:url" content="https://dropbox.tech/infrastructure/open-sourcing-our-go-libraries"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="Open Sourcing Our Go Libraries"/>
+
+<meta property="og:image" content="https://aem.dropbox.com/cms/content/dam/dropbox/tech-blog/en-us/infrastructure/dropbox-tech-infrastructure-1-1200-628.png"/>
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+
+<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport"/>
+
+
+
+    <link rel="alternate" hreflang="en-us" href="https://dropbox.tech/infrastructure/open-sourcing-our-go-libraries"/>
+
+
+
+        
+
+        
+
+
+
+
+
+
+
+
+
+<!-- /* Enable rebrand styles  */
+<sly data-sly-use.inheritUtil="com.dropbox.aem.common.models.utils.InheritanceUtilUse"
+     data-sly-test.pageStyle="" /> -->
+
+
+    
+<link rel="stylesheet" href="/cms/etc.clientlibs/settings/wcm/designs/dropbox-common/clientlib-cms-common.d447584064e3156f94659f83f57b2afd.css" type="text/css">
+<link rel="stylesheet" href="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-all.4d055e15fb1bf3ab07c40a2178e4dd85.css" type="text/css">
+
+
+
+<!--Knotch Integration should be added in header-->
+<script src="https://www.knotch-cdn.com/unit/latest/knotch.min.js" data-account="33c0d4ac-b5bc-4168-a95b-e963ec65974d" async></script>
+
+    
+<link rel="stylesheet" href="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-article-content.cb838e99dc152d682ec70104976a7367.css" type="text/css">
+
+
+
+
+    </head>
+    <body class="tech-blog-article-page__page    stormcrow-animate   " data-article-uuid="bcdc0f7c-11a3-43b6-98da-3d35e9b1db93">
+
+        
+
+        
+        <input type="hidden" id="wcmRunmode" name="wcmRunmode" value="publish,prod"/>
+        
+
+        
+
+
+
+
+
+    
+        <script type="text/javascript">
+            var attr = "tealium_event$cms".split(",");
+
+            var utag_data = {}
+            attr.forEach(function (item) {
+                if (item && item.indexOf("$") > -1)
+                    utag_data[item.split("$")[0]] = item.split("$")[1];
+            })
+        </script>
+
+        <script type="text/javascript">
+            (function (a, b, c, d) {
+                a = "\/\/tags.tiqcdn.com\/utag\/dropbox\/tech\u002Dblog\/prod\/utag.js";
+                b = document;
+                c = 'script';
+                d = b.createElement(c);
+                d.src = a;
+                d.type = 'text/java' + c;
+                d.async = true;
+                a = b.getElementsByTagName(c)[0];
+                a.parentNode.insertBefore(d, a);
+            })();
+        </script>
+    
+
+
+        
+
+<header class="dr-header">
+
+
+
+
+<div class="dr-header__sticky-container">
+  <section class="dr-header__section dr-flex dr-flex--align-center dr-padding-right-40 dr-padding-left-40 dr-header__sticky-content-container dr-header__sticky-content-container--opened dr-container--surface">
+    <div class="dr-flex-1">
+      <a class="dr-link dr-link--no-underline dr-link--no-underline-hover dr-typography-t1" href="https://dropbox.tech/">Dropbox.Tech</a>
+    </div>
+    
+
+<button class="dr-header__item dr-nav__menu-toggle-button dr-button dr-hide-from-md dr-flex dr-flex-align-center dr-flex-justify-center" data-dr-tooltip="Menu" data-dr-tooltip-theme="white">
+  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="dr-width-100 dr-height-100">
+    <rect x="0.501831" y="8" width="28" height="2" fill="white"></rect>
+    <rect x="0.500977" y="18" width="28" height="2" fill="white"></rect>
+  </svg>
+</button>
+<nav class="dr-show-block-from-md dr-nav__nav">
+  <button class="dr-button dr-nav__menu-close-button">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2875 2.15983L17.6683 0.566406L9.82597 8.28403L2.33211 0.909344L0.71294 2.50277L8.2068 9.87746L0.666992 17.2974L2.28617 18.8908L9.82597 11.4709L17.7143 19.2337L19.3334 17.6403L11.4451 9.87746L19.2875 2.15983Z" fill="white"/>
+    </svg>
+  </button>
+  <ul class="dr-unstyled-list dr-typography-t2 dr-flex dr-nav__nav-list">
+    <li class="dr-header__item dr-position-relative dr-header__item--with-subnav dr-header__list-item">
+      <button class="dr-button dr-button--link dr-header__link--with-subnav">Topics</button>
+      <ul class="dr-unstyled-list dr-display-none dr-header__subnav dr-position-absolute dr-container--surface dr-padding-top-30 dr-padding-left-40 dr-padding-bottom-20 dr-padding-right-40 dr-font-weight-500">
+        <li class="dr-header__list-item dr-header__list-item--subnav"><a href="https://dropbox.tech/application" class="dr-display-block dr-link dr-link--no-underline dr-container--application dr-link--primary">Application</a></li>
+      
+        <li class="dr-header__list-item dr-header__list-item--subnav"><a href="https://dropbox.tech/frontend" class="dr-display-block dr-link dr-link--no-underline dr-container--frontend dr-link--primary">Front End</a></li>
+      
+        <li class="dr-header__list-item dr-header__list-item--subnav"><a href="https://dropbox.tech/infrastructure" class="dr-display-block dr-link dr-link--no-underline dr-container--infrastructure dr-link--primary">Infrastructure</a></li>
+      
+        <li class="dr-header__list-item dr-header__list-item--subnav"><a href="https://dropbox.tech/machine-learning" class="dr-display-block dr-link dr-link--no-underline dr-container--machine-learning dr-link--primary">Machine Learning</a></li>
+      
+        <li class="dr-header__list-item dr-header__list-item--subnav"><a href="https://dropbox.tech/mobile" class="dr-display-block dr-link dr-link--no-underline dr-container--mobile dr-link--primary">Mobile</a></li>
+      
+        <li class="dr-header__list-item dr-header__list-item--subnav"><a href="https://dropbox.tech/security" class="dr-display-block dr-link dr-link--no-underline dr-container--security dr-link--primary">Security</a></li>
+      </ul>
+    </li>
+    <li class="dr-header__item dr-header__list-item">
+      <a href="https://dropbox.tech/developers" class="dr-link dr-link--no-underline dr-nav__main-category">Developers</a>
+    </li>
+    <li class="dr-header__item dr-header__list-item">
+      <a class="dr-link dr-link--no-underline dr-header__link" href="http://dropbox.com/jobs" target="_blank">Jobs</a>
+    </li>
+
+  </ul>
+</nav>
+
+    <button data-dark-mode-switcher class="dr-header__item dr-header__dark-mode-switcher dr-button dr-button--link dr-cursor-pointer" data-dr-tooltip="Dark Mode" data-dr-tooltip-theme="white" type="button">
+      <img alt="" height="30" src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-all/resources/button_dark-mode-new.svg" width="30" class="dr-header__mode-image"/>
+    </button>
+    <button class="dr-header__item dr-header__search-button dr-button dr-button--link dr-cursor-pointer" data-dr-tooltip="Search" data-dr-tooltip-theme="white" type="button">
+      <img alt="" height="20" src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-all/resources/button_search-new.svg" width="20"/>
+    </button>
+    <!--search-result-page-only-->
+    
+    <!--search-result-page-only-->
+    <div class="dr-header__search dr-display-none">
+      <button class="dr-header__search-close-button dr-header__item dr-button dr-button--link dr-cursor-pointer" type="button">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2875 2.15983L17.6683 0.566406L9.82597 8.28403L2.33211 0.909344L0.71294 2.50277L8.2068 9.87746L0.666992 17.2974L2.28617 18.8908L9.82597 11.4709L17.7143 19.2337L19.3334 17.6403L11.4451 9.87746L19.2875 2.15983Z" fill="white"/>
+        </svg>
+      </button>
+      <div class="dr-header__search-form-container">
+        <form class="dr-header__search-form dr-container__content dr-width-100" method="get" action="https://dropbox.tech/search-results">
+            <div class="coveo-search-section dr-header__search-input dr-typography-t3" data-coveo-api-url="https://search.cloud.coveo.com/rest/search" data-coveo-org-id="dropboxproductionpmlw0l3v" data-coveo-api-key="xx890c8cd9-7704-4dcd-a164-7b515a8f8449" data-searchPage="https://dropbox.tech/search-results.html">
+                <div class="CoveoSearchbox" data-placeholder="Search" data-enable-omnibox="true" data-number-of-suggestions="5" data-query-suggest-character-threshold="5"></div>
+            </div>
+            <p class="dr-header__search-hint dr-margin-top-30 dr-margin-bottom-0 dr-typography-t5 dr-display-none">
+                // Press enter to search
+            </p>
+        </form>
+      </div>
+    </div>
+  </section>
+</div></header>
+
+        
+
+        
+
+
+<script type="text/javascript">
+
+</script>
+
+<script type="text/javascript">
+    // Map of domains with the analytics properties they send.
+    var domain_map = {
+        "https://www.dropbox.com" : {
+            "properties" : {
+                "tealium_event": "cms"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/prod/utag.js"
+        },
+        "https://help.dropbox.com" : {
+            "properties" : {
+                "tealium_event": "cms"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/prod/utag.js"
+        },
+        "https://blog.dropbox.com" : {
+            "properties" : {
+                "tealium_event" : "blog"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/prod/utag.js"
+        },
+        "https://experience.dropbox.com" : {
+            "properties" : {
+                "tealium_event" : "blog"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/prod/utag.js"
+        },
+        "https://experience-stg.dropbox.com" : {
+            "properties" : {
+                "tealium_event" : "blog"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/dev/utag.js"
+        },
+        "https://dropbox.tech" : {
+            "properties" : {
+                "tealium_event" : "blog"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/tech-blog/prod/utag.js"
+        },
+        "https://dropbox-stg.tech" : {
+            "properties" : {
+                "tealium_event" : "blog"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/dev/utag.js"
+        },
+        "https://help-stg.dropbox.com" : {
+            "properties" : {
+                "tealium_event": "cms"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/dev/utag.js"
+        },
+        "https://dropbox-stage.adobemsbasic.com" : {
+            "properties" : {
+                "tealium_event": "cms"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/dev/utag.js"
+        },
+        "http://localhost:4503" : {
+            "properties" : {
+                "tealium_event": "cms"
+            },
+            "endpoint" : "//tags.tiqcdn.com/utag/dropbox/main/dev/utag.js"
+        }
+    }
+    var domain_data = domain_map[window.location.origin];
+    if (domain_data) {
+        var utag_data = domain_data["properties"];
+        (function(a,b,c,d){
+            a=domain_data["endpoint"];
+            b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
+            a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
+        })();
+    }
+</script>
+
+
+        <div class="dr-article-hero">
+<div class="dr-article-hero__background-container dr-container--infrastructure">
+	<picture class="dr-article-hero__background dr-article-hero__background--regular">
+		<source media="( max-width: 375px )" srcset="/cms/content/dam/dropbox/tech-blog/en-us/infrastructure/Infrastructure-1-375x150px-light.png"/>
+		<source media="( min-width: 376px ) and ( max-width: 1199px )" srcset="/cms/content/dam/dropbox/tech-blog/en-us/infrastructure/Infrastructure-1-1024x250px-light.png"/>
+		<img class="dr-article-hero__background-image" src="/cms/content/dam/dropbox/tech-blog/en-us/infrastructure/Infrastructure-1-1440x305px-light.png" alt=""/>
+	</picture>
+
+	<picture class="dr-article-hero__background dr-article-hero__background--dark">
+		<source media="( max-width: 375px )" srcset="/cms/content/dam/dropbox/tech-blog/en-us/infrastructure/Infrastructure-1-375x150px-dark.png"/>
+		<source media="( min-width: 376px ) and ( max-width: 1199px )" srcset="/cms/content/dam/dropbox/tech-blog/en-us/infrastructure/Infrastructure-1-1024x250px-dark.png"/>
+		<img class="dr-article-hero__background-image" src="/cms/content/dam/dropbox/tech-blog/en-us/infrastructure/Infrastructure-1-1440x305px-dark.png" alt=""/>
+	</picture>
+</div>
+<section class="dr-container__content">
+	<span class="dr-article-hero__title-container dr-container--infrastructure">
+		<h1 class="dr-display-inline dr-typography-t15 dr-container--surface dr-article-hero__title">Open Sourcing Our Go Libraries</h1>
+	</span>
+	<div class="dr-typography-no-space dr-margin-top-10 dr-margin-md-top-20">
+        <span class="dr-typography-t5">// By Patrick Lee &bull; Jul 01, 2014</span>
+    </div>
+</section></div>
+<div class="dr-article-content">
+
+
+
+
+
+
+
+
+
+<div class="dr-article-content__scroll-tracker-container dr-container--infrastructure">
+    <div class="dr-article-content__scroll-tracker"></div>
+</div>
+<div class="dr-container__content">
+    <div class="dr-article-content__content-container dr-padding-md-left-80 dr-padding-md-right-80 dr-typography-t12">
+        <nav class="dr-article-content__side-nav dr-article-content__side-nav--initial dr-typography-t5">
+            
+        </nav>
+        <div class="dr-article-content__content">
+            
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="text parbase aem-GridColumn aem-GridColumn--default--12">
+<p>Dropbox owes a large share of its success to Python, a language that enabled us to iterate and develop quickly. However, as our infrastructure matures to support our ever growing user base, we started exploring ways to scale our systems in a more efficient manner. About a year ago, we decided to migrate our performance-critical backends from Python to Go to leverage better concurrency support and faster execution speed. This was a massive effort–around 200,000 lines of Go code–undertaken by a small team of engineers. At this point, we have successfully moved major parts of our infrastructure to Go.</p>
+<p>One recurring theme that hindered our development progress was the lack of robust libraries needed for building large systems. This is not surprising since Go is still a very young language. To address this issue, our team started building various libraries to provide better abstractions, such as connection management and a memcache client. We are very excited to announce that we are open sourcing these libraries to help the broader community build large scale production systems.</p>
+<p>We have included several libraries to kickstart this effort. To highlight a few:</p>
+<ul>
+<li><a href="https://godoc.org/github.com/dropbox/godropbox/caching">caching</a>: provides a general abstraction for building caching layers.</li>
+<li><a href="https://godoc.org/github.com/dropbox/godropbox/errors">errors</a>: enhances the standard error interface and exposes stack trace information.</li>
+<li><a href="https://godoc.org/github.com/dropbox/godropbox/database/sqlbuilder">database/sqlbuilder</a>: allows developers to generate sql statements programmatically.</li>
+<li><a href="https://godoc.org/github.com/dropbox/godropbox/memcache">memcache</a>: implements a fully featured memcache client library which supports connection pooling and flexible sharding.</li>
+<li><a href="https://godoc.org/github.com/dropbox/godropbox/net2">net2</a>: adds functionality for connection management.</li>
+<li>(and my personal favorite, <a href="https://godoc.org/github.com/dropbox/godropbox/hash2">hash2</a>, which includes a space efficient permutation-based consistent hash algorithm)</li>
+</ul>
+<p>We will continue to expand the set of libraries in the repository:<br />
+<a href="https://github.com/dropbox/godropbox">https://github.com/dropbox/godropbox</a></p>
+<p>To make sure that we continue to invest in this open source effort, we are committed to using the public version of this repository internally. We are migrating our internal systems to use the libraries directly from this repository. This ensures all fixes and improvements are applied publicly before they are pulled back internally.</p>
+<p>We hope you will join our community and help make these libraries better!</p>
+
+</div>
+
+    
+</div>
+
+        </div>
+        <hr class="dr-typography-t5 dr-margin-top-50 dr-article-content__divider"/>
+        <div class="dr-typography-t5">
+          
+        </div>
+        
+        <div class="dr-typography-t5 dr-margin-top-20">
+            // Tags <br/>
+            <ul class="dr-unstyled-list dr-margin-top-10 dr-typography-t4">
+                <li class="dr-container--infrastructure dr-display-inline-block dr-margin-right-10  dr-margin-bottom-10">
+                    <a class="dr-link dr-pill dr-pill--primary dr-link--no-underline" href="https://dropbox.tech/infrastructure">
+                        Infrastructure
+                    </a>
+                </li>
+                
+                    <li class="dr-display-inline-block dr-margin-right-10"><a class="dr-link dr-pill dr-link--no-underline" href="https://dropbox.tech/tag-results.open-source">Open Source</a></li>
+                
+                    <li class="dr-display-inline-block dr-margin-right-10"><a class="dr-link dr-pill dr-link--no-underline" href="https://dropbox.tech/tag-results.go">Go</a></li>
+                
+                    <li class="dr-display-inline-block dr-margin-right-10"><a class="dr-link dr-pill dr-link--no-underline" href="https://dropbox.tech/tag-results.golang">Golang</a></li>
+                
+                    
+                
+            </ul>
+        </div>
+        
+        <div class="dr-article-content__knotch">
+            <div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+                <div class="plain-html c17-plain-html aem-GridColumn aem-GridColumn--default--12">
+                  <div class="knotch_placeholder"></div>
+                </div>
+            </div>
+        </div>
+        <div class="dr-typography-t5 dr-margin-top-20 dr-hide-from-md">
+            // Copy link <br/>
+            <div class="dr-article-content__social-links-tooltip dr-display-none">Link copied</div>
+            <button class="dr-button dr-button--link dr-link dr-link--no-underline dr-article-content__copy-link" data-dr-tooltip="Copy link">
+                <img alt="Copy link" class="dr-display-block dr-invert-on-theme-dark" src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-article-content/resources/copy.svg"/>
+            </button>
+        </div>
+        <div class="dr-article-content__social-links">
+            <ul class="dr-article-content__social-links-list dr-unstyled-list">
+                <li class="dr-margin-bottom-20">
+                    <div class="dr-article-content__social-links-tooltip dr-typography-t5 dr-display-none">Link copied</div>
+                    <button class="dr-button dr-display-block dr-link dr-link--no-underline dr-article-content__copy-link dr-button--link" data-dr-tooltip="Copy link" data-dr-tooltip-position="cl" data-dr-tooltip-theme="bw">
+                        <img alt="Copy link" class="dr-display-block dr-invert-on-theme-dark" src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-article-content/resources/copy.svg"/>
+                    </button>
+                </li>
+                <li class="dr-margin-bottom-20">
+                    <a class="dr-link dr-display-block dr-link--no-underline dr-article-content__share-link dr-article-content__twitter-link" data-dr-tooltip="Share on Twitter" data-dr-tooltip-position="cl" data-dr-tooltip-theme="bw" href="https://twitter.com/intent/tweet/?text=Open%20Sourcing%20Our%20Go%20Libraries&amp;url=https://dropbox.tech/infrastructure/open-sourcing-our-go-libraries" target="_blank">
+                        <img alt="Share on Twitter" class="dr-display-block dr-invert-on-theme-dark" src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-article-content/resources/twitter.svg"/>
+                    </a>
+                </li>
+                <li class="dr-margin-bottom-20">
+                    <a class="dr-link dr-display-block dr-link--no-underline dr-article-content__share-link dr-article-content__facebook-link" data-dr-tooltip="Share on Facebook" data-dr-tooltip-position="cl" data-dr-tooltip-theme="bw" href="https://facebook.com/sharer/sharer.php?u=https://dropbox.tech/infrastructure/open-sourcing-our-go-libraries" target="_blank">
+                        <img alt="Share on Facebook" class="dr-display-block dr-invert-on-theme-dark" src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-article-content/resources/facebook.svg"/>
+                    </a>
+                </li>
+                <li>
+                    <a class="dr-link dr-display-block dr-link--no-underline dr-article-content__share-link dr-article-content__linkedin-link" data-dr-tooltip="Share on Linkedin" data-dr-tooltip-position="cl" data-dr-tooltip-theme="bw" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://dropbox.tech/infrastructure/open-sourcing-our-go-libraries&amp;title=Open%20Sourcing%20Our%20Go%20Libraries&amp;source=https://dropbox.tech/infrastructure/open-sourcing-our-go-libraries" target="_blank">
+                        <img alt="Share on Linkedin" class="dr-display-block dr-invert-on-theme-dark" src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-article-content/resources/linkedin.svg"/>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="related-articles aem-GridColumn aem-GridColumn--default--12">
+<div class="dr-container--infrastructure dr-container--primary-surface">
+    <div class="dr-container__content dr-padding-top-50 dr-padding-bottom-50 dr-padding-md-top-75 dr-padding-md-bottom-75">
+        <div class="dr-flex dr-flex-align-center">
+            <div class="dr-typography-t3 dr-flex-1">
+                Related posts
+            </div>
+            <a href="https://dropbox.tech/infrastructure" class="dr-link dr-typography-t4">
+                See more
+            </a>
+        </div>
+        <ul class="dr-unstyled-list dr-margin-top-30 dr-margin-md-top-50">
+            <li>
+                <a href="https://dropbox.tech/infrastructure/making-dropbox-data-centers-carbon-neutral" class="dr-related-articles__title dr-link dr-link--no-underline dr-typography-t6 dr-container--primary-on-primary-surface">
+                    How we’re making Dropbox data centers 100% carbon neutral
+                </a>
+                <div class="dr-margin-top-10 dr-typography-t5 dr-margin-lg-top-5">
+                    // Aug 03, 2021
+                </div>
+            </li>
+        
+            <li class="dr-margin-top-30 dr-margin-md-top-20">
+                <a href="https://dropbox.tech/infrastructure/sharing-our-engineering-career-framework-with-the-world" class="dr-related-articles__title dr-link dr-link--no-underline dr-typography-t6 dr-container--primary-on-primary-surface">
+                    Sharing our Engineering Career Framework with the world
+                </a>
+                <div class="dr-margin-top-10 dr-typography-t5 dr-margin-lg-top-5">
+                    // Jul 12, 2021
+                </div>
+            </li>
+        
+            <li class="dr-margin-top-30 dr-margin-md-top-20">
+                <a href="https://dropbox.tech/infrastructure/covid-19-one-year-later" class="dr-related-articles__title dr-link dr-link--no-underline dr-typography-t6 dr-container--primary-on-primary-surface">
+                    How we managed our global supply chain through a year of lockdown
+                </a>
+                <div class="dr-margin-top-10 dr-typography-t5 dr-margin-lg-top-5">
+                    // May 20, 2021
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+    
+</div>
+
+
+        <footer class="dr-footer">
+<div class="dr-container--surface">
+  <section class="dr-container__content dr-footer__container">
+    
+
+<div class="dr-newsletter-subscription__succeed dr-display-none dr-typography-t5">
+    <hr class="dr-newsletter-subscription__form-divider"/>
+    <div class="dr-margin-bottom-30 dr-margin-top-30">
+        <!--// Thanks for subscribing.-->
+        <div class="dr-show-block-from-lg">
+            <img src="/cms/content/dam/dropbox/tech-blog/en-us/subscribe/thanksforsubscribing_desktop.png" title="subscription__success" alt="subscription__success"/>
+        </div>
+        <div class="dr-show-block-from-md dr-hide-from-lg dr-hide-from-sm">
+            <img src="/cms/content/dam/dropbox/tech-blog/en-us/subscribe/thanksforsubscribing_tablet.png" title="subscription__success" alt="subscription__success"/>
+        </div>
+        <div class="dr-show-block-from-sm dr-hide-from-lg dr-hide-from-md">
+            <img src="/cms/content/dam/dropbox/tech-blog/en-us/subscribe/thanksforsubscribing_mobile.png" title="subscription__success" alt="subscription__success"/>
+        </div>
+    </div>
+    <hr class="dr-newsletter-subscription__form-divider"/>
+</div>
+<form role="form" class="dr-typography-t5 dr-newsletter-subscription__form" novalidate>
+    <hr class="dr-newsletter-subscription__form-divider"/>
+    <div class="dr-margin-top-30 dr-margin-bottom-30 dr-margin-md-top-10 dr-margin-md-bottom-10">
+        // Subscribe to email updates by category
+    </div>
+    <div class="dr-margin-left-25">
+        <p class="dr-newsletter-subscription__topic-error dr-display-none dr-color-tangerine">
+            Select at least one topic
+		</p>
+        
+            <label class="dr-newsletter-subscription__form-label" for="newsletterForm.application">
+                <input class="dr-newsletter-subscription__form-checkbox dr-input" id="newsletterForm.application" name="categories[ ]" type="checkbox" value="Application" data-mid="127814"/>Application
+            </label>
+            
+        
+            <label class="dr-newsletter-subscription__form-label" for="newsletterForm.frontend">
+                <input class="dr-newsletter-subscription__form-checkbox dr-input" id="newsletterForm.frontend" name="categories[ ]" type="checkbox" value="Front End" data-mid="127842"/>Front End
+            </label>
+            
+        
+            <label class="dr-newsletter-subscription__form-label" for="newsletterForm.infrastructure">
+                <input class="dr-newsletter-subscription__form-checkbox dr-input" id="newsletterForm.infrastructure" name="categories[ ]" type="checkbox" value="Infrastructure" data-mid="127826"/>Infrastructure
+            </label>
+            
+        
+            <label class="dr-newsletter-subscription__form-label" for="newsletterForm.machine-learning">
+                <input class="dr-newsletter-subscription__form-checkbox dr-input" id="newsletterForm.machine-learning" name="categories[ ]" type="checkbox" value="Machine Learning" data-mid="127830"/>Machine Learning
+            </label>
+            <br class="dr-show-block-from-md"/>
+        
+            <label class="dr-newsletter-subscription__form-label" for="newsletterForm.mobile">
+                <input class="dr-newsletter-subscription__form-checkbox dr-input" id="newsletterForm.mobile" name="categories[ ]" type="checkbox" value="Mobile" data-mid="127834"/>Mobile
+            </label>
+            
+        
+            <label class="dr-newsletter-subscription__form-label" for="newsletterForm.security">
+                <input class="dr-newsletter-subscription__form-checkbox dr-input" id="newsletterForm.security" name="categories[ ]" type="checkbox" value="Security" data-mid="127838"/>Security
+            </label>
+            
+        
+        
+            <label class="dr-newsletter-subscription__form-label" for="newsletterForm.developers">
+                <input class="dr-newsletter-subscription__form-checkbox dr-input" id="newsletterForm.developers" name="categories[ ]" type="checkbox" value="Developers" data-mid="129642"/>Developers
+            </label>
+        
+        <label class="dr-newsletter-subscription__form-label" for="newsletterForm.all">
+            <input class="dr-newsletter-subscription__form-checkbox dr-newsletter-subscription__form-checkbox--all dr-input" id="newsletterForm.all" type="checkbox"/>All
+        </label>
+    </div>
+    <p class="dr-newsletter-subscription__error dr-display-none dr-color-tangerine">
+        Error occurred! <br/>Please try again later
+    </p>
+    <p class="dr-newsletter-subscription__email-error dr-display-none dr-color-tangerine">
+        Enter a valid address
+    </p>
+    <div class="dr-newsletter-subscription__email-container dr-margin-bottom-20 dr-margin-top-40 dr-margin-md-top-0">
+        <div>// Type your email address </div>
+        <input autocomplete="off" class="dr-newsletter-subscription__form-input dr-flex-1" name="email" type="email"/>
+        <div class="dr-newsletter-subscription__actions-container">
+            <div class="dr-newsletter-subscription__loading dr-display-none">
+                Submitting...
+            </div>
+            <button type="submit" disabled class="dr-newsletter-subscription__form-submit dr-button dr-typography-t5">
+                Subscribe
+            </button>
+        </div>
+    </div>
+    <hr class="dr-newsletter-subscription__form-divider"/>
+</form>
+
+    <div class="dr-grid dr-grid--md-2">
+      <div>
+        <a href="https://dropbox.com" target="_blank" class="dr-margin-bottom-20 dr-display-block">
+          <img alt="Dropbox" height="40" src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-all/resources/logo_dropbox.svg" width="164"/>
+        </a>
+      </div>
+      
+      <ul class="dr-footer-links dr-unstyled-list dr-typography-t10 dr-grid dr-grid--2 dr-grid--column-gap-15">
+        <li>
+          <a class="dr-link dr-link--no-underline" href="https://www.dropbox.com/jobs" target="_blank">
+            Jobs
+          </a>
+        </li>
+      
+        <li>
+          <a class="dr-link dr-link--no-underline" href="https://medium.com/@Dropbox" target="_blank">
+            Medium
+          </a>
+        </li>
+      
+        <li>
+          <a class="dr-link dr-link--no-underline" href="https://www.dropbox.com/privacy" target="_blank">
+            Privacy
+          </a>
+        </li>
+      
+        <li>
+          <a class="dr-link dr-link--no-underline" href="https://twitter.com/Dropbox" target="_blank">
+            twitter
+          </a>
+        </li>
+      
+        <li>
+          <a class="dr-link dr-link--no-underline" href="https://www.dropbox.com/terms" target="_blank">
+            Terms
+          </a>
+        </li>
+      
+        <li>
+          <a class="dr-link dr-link--no-underline" href="https://www.instagram.com/dropbox" target="_blank">
+            Instagram
+          </a>
+        </li>
+      
+        <li>
+          <a class="dr-link dr-link--no-underline" href="https://blog.dropbox.com/" target="_blank">
+            Work In Progress
+          </a>
+        </li>
+      
+        <li>
+          <a class="dr-link dr-link--no-underline" href="https://dropbox.tech/infrastructure/sharing-our-engineering-career-framework-with-the-world" target="_blank">
+            Engineering Career Frameworks
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>
+</footer>
+        
+
+        
+
+
+
+
+<div id="u04-snapengage-config" data-snapengage-widget-id="d5c1efed-d0ef-4fca-8c7d-faff398ad272" data-proactive-chat="false" style="display:none;"></div>
+
+
+<!-- /*CMS-2358, include Coveo scripts*/ -->
+<script class="coveo-script" src="https://static.cloud.coveo.com/searchui/v2.9856/8/js/CoveoJsSearch.Lazy.min.js" integrity="sha512-Y+MReNqrxNkBuYdZT/nHuUX4OoL5g+ein6s83/238O+j5P/8vCQwIvGsgeeKKxxdPq4xKdCqWZRUOEPW2Zi3eg==" crossorigin="anonymous"></script>
+<script src="https://static.cloud.coveo.com/searchui/v2.9856/8/js/templates/templates.js" integrity="sha512-M6j1bikjxD/4fhJfAHysJTc0odPUtz4Ifq5D2OP4GALdLxfwe5snMffMY/IxBJSK2sC+EGx4ydgo6V6EWwgIvg==" crossorigin="anonymous"></script>
+
+
+    <script src="https://static.cloud.coveo.com/searchui/v2.9856/js/cultures/en.js" integrity="sha512-0uM5mRixK3NWg864CuGf8YAiNVcoqnETK4HcsLBMBpZPBA3FK8iJ+2/TZzALqKILiGXOHSu2GmupG/WzJdhVcg==" crossorigin="anonymous"></script>
+
+
+
+    
+<script src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-common/clientlib-cms-common.js"></script>
+<script src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-common/clientlib-ux-analytics.js"></script>
+<script src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-all.js"></script>
+
+
+
+
+
+    
+<script src="/cms/etc.clientlibs/settings/wcm/designs/dropbox-tech-blog/clientlib-article-content.js"></script>
+
+
+
+
+
+        
+        <script type="application/javascript">document.body.classList.remove('stormcrow-animate');</script>
+        <noscript><style>body.stormcrow-animate{opacity:1;}</style></noscript>
+    </body>
+    </html>
+
